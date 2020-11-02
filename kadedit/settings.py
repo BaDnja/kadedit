@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'custom_user',
+    'subjects',
+    'professors'
 ]
 
 MIDDLEWARE = [
@@ -64,10 +67,8 @@ ROOT_URLCONF = 'kadedit.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates'
-        ,
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,7 +97,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -115,13 +115,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ] if not DEBUG else []
 
+AUTH_USER_MODEL = 'custom_user.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'bs-ba'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 
@@ -134,3 +135,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
