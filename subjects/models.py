@@ -1,25 +1,38 @@
 from django.db import models
-from django.db.models import SET_NULL, CASCADE
+from django.db.models import SET_NULL
 from django.utils.translation import ugettext_lazy as _
 
 
 class Faculty(models.Model):
     name = models.CharField(_('faculty'), max_length=70, unique=True)
-    short = models.CharField(max_length=10, unique=True)
+    short = models.CharField(_('short'), max_length=10, unique=True)
 
     def __str__(self):
         return f'{self.short}'
 
     class Meta:
         ordering = ['short']
+        verbose_name_plural = _("faculties")
 
 
 class StudyCycle(models.Model):
     name = models.CharField(_('study cycle'), max_length=70, unique=True)
 
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = _("study cycles")
+
 
 class SubjectType(models.Model):
     name = models.CharField(_('subject type'), max_length=30, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = _("subject types")
 
 
 class StudyProgram(models.Model):
@@ -29,31 +42,40 @@ class StudyProgram(models.Model):
     faculty = models.ForeignKey(Faculty, null=True, on_delete=SET_NULL)
 
     def __str__(self):
-        return
+        return f'{self.name}'
 
     class Meta:
         ordering = ['name']
+        verbose_name_plural = _("study programs")
 
 
 class Semester(models.Model):
     name = models.CharField(_('semester'), max_length=100, unique=True)
 
+    def __str__(self):
+        return f'{self.name}'
 
-class Ects(models.Model):
-    ects = models.IntegerField(_('european credit transfer system'), unique=True, default=5)
-    name = models.CharField(max_length=25, unique=True)
+    class Meta:
+        verbose_name_plural = _("semesters")
 
 
 class Subject(models.Model):
     code = models.CharField(max_length=20, unique=True, blank=True, null=True)
     name = models.CharField(_('subject'), max_length=120, unique=True)
     semester = models.ManyToManyField(Semester)
-    ects = models.ManyToManyField(Ects)
+    ects = models.IntegerField(_("ects"), blank=False, null=False)
     subject_type = models.ForeignKey(SubjectType, null=True, on_delete=SET_NULL)
-    study_program = models.ForeignKey(StudyProgram, null=True, on_delete=SET_NULL)
+    study_program = models.ManyToManyField(StudyProgram)
 
     def __str__(self):
         return f'{self.name}'
 
+    def semesters(self):
+        return ",\n".join([str(s.id) for s in self.semester.all()])
+
+    def study_programs(self):
+        return ",\n".join([s.short for s in self.study_program.all()])
+
     class Meta:
         ordering = ['name']
+        verbose_name_plural = _("subjects")
