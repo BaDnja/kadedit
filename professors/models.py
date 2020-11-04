@@ -12,25 +12,56 @@ class Professor(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    class Meta:
+        verbose_name_plural = _("professors")
+
 
 class WorkStatus(models.Model):
     name = models.CharField(_('work status'), max_length=35, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = _("work statuses")
 
 
 class Engagement(models.Model):
     name = models.CharField(_('engagement'), max_length=50, unique=True)
 
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name_plural = _("engagements")
+
 
 class AcademicTitle(models.Model):
     name = models.CharField(_('academic title'), max_length=65, unique=True)
 
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = _("academic titles")
+
 
 class ProfessorInfo(models.Model):
-    dissertation = models.CharField(max_length=200, blank=True, null=True)
+    dissertation = models.CharField(_("dissertation"), max_length=200, blank=True, null=True)
     professor = models.ForeignKey(Professor, on_delete=CASCADE)
     work_status = models.ForeignKey(WorkStatus, null=True, on_delete=SET_NULL)
     engagement = models.ForeignKey(Engagement, null=True, on_delete=SET_NULL)
     academic_title = models.ForeignKey(AcademicTitle, null=True, on_delete=SET_NULL)
+
+    def __str__(self):
+        title = str(self.academic_title).split(" ", 1)[0]
+        return f'{title} {self.professor}'
+
+    def dissertation_short(self):
+        return " ".join(self.dissertation.split(" ", 2)[:2]) + "..."
+
+    class Meta:
+        verbose_name = _("professor's information")
 
 
 class XProfessorSubject(models.Model):
@@ -38,5 +69,9 @@ class XProfessorSubject(models.Model):
     subject = models.ForeignKey(Subject, null=True, on_delete=SET_NULL)
     practice = models.BooleanField(default=False, blank=True)
 
+    def __str__(self):
+        return f'{self.professor}: {self.subject}'
+
     class Meta:
+        verbose_name = _("professor subject information")
         db_table = 'x_professor_subject'
