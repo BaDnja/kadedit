@@ -13,6 +13,7 @@ class Professor(models.Model):
         return f'{self.first_name} {self.last_name}'
 
     class Meta:
+        verbose_name = _("professor")
         verbose_name_plural = _("professors")
 
 
@@ -23,6 +24,7 @@ class WorkStatus(models.Model):
         return f'{self.name}'
 
     class Meta:
+        verbose_name = _("work status")
         verbose_name_plural = _("work statuses")
 
 
@@ -33,6 +35,7 @@ class Engagement(models.Model):
         return f"{self.name}"
 
     class Meta:
+        verbose_name = _("engagement")
         verbose_name_plural = _("engagements")
 
 
@@ -43,15 +46,17 @@ class AcademicTitle(models.Model):
         return f'{self.name}'
 
     class Meta:
+        verbose_name = _("academic title")
         verbose_name_plural = _("academic titles")
 
 
 class ProfessorInfo(models.Model):
     dissertation = models.CharField(_("dissertation"), max_length=200, blank=True, null=True)
-    professor = models.ForeignKey(Professor, on_delete=CASCADE)
-    work_status = models.ForeignKey(WorkStatus, null=True, on_delete=SET_NULL)
-    engagement = models.ForeignKey(Engagement, null=True, on_delete=SET_NULL)
-    academic_title = models.ForeignKey(AcademicTitle, null=True, on_delete=SET_NULL)
+    professor = models.ForeignKey(Professor, on_delete=CASCADE, verbose_name=_("professor"))
+    work_status = models.ForeignKey(WorkStatus, null=True, on_delete=SET_NULL,
+                                    verbose_name=_("work status"))
+    engagement = models.ForeignKey(Engagement, null=True, on_delete=SET_NULL, verbose_name=_("engagement"))
+    academic_title = models.ForeignKey(AcademicTitle, null=True, on_delete=SET_NULL, verbose_name=_("academic title"))
 
     def __str__(self):
         title = str(self.academic_title).split(" ", 1)[0]
@@ -59,19 +64,22 @@ class ProfessorInfo(models.Model):
 
     def dissertation_short(self):
         return " ".join(self.dissertation.split(" ", 2)[:2]) + "..."
+    dissertation_short.short_description = _("dissertation short")
 
     class Meta:
         verbose_name = _("professor's information")
+        verbose_name_plural = _("professors information")
 
 
 class XProfessorSubject(models.Model):
-    professor = models.ForeignKey(Professor, null=True, on_delete=SET_NULL)
-    subject = models.ForeignKey(Subject, null=True, on_delete=SET_NULL)
-    practice = models.BooleanField(default=False, blank=True)
+    professor = models.ForeignKey(Professor, null=True, on_delete=SET_NULL, verbose_name=_("professor"))
+    subject = models.ForeignKey(Subject, null=True, on_delete=SET_NULL, verbose_name=_("subject"))
+    practice = models.BooleanField(_("practice"), default=False, blank=True)
 
     def __str__(self):
         return f'{self.professor}: {self.subject}'
 
     class Meta:
         verbose_name = _("professor subject information")
+        verbose_name_plural = _("professor subjects information")
         db_table = 'x_professor_subject'
