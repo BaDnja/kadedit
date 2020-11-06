@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import environ
+import os
 
 # Configuring env
 env = environ.Env(
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'custom_user',
     'subjects',
-    'professors'
+    'professors',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,7 @@ AUTH_USER_MODEL = 'custom_user.User'
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'bs-ba'
+LANGUAGE_CODE = 'bs'
 
 TIME_ZONE = 'CET'
 
@@ -129,6 +130,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 
 # Static files (CSS, JavaScript, Images)

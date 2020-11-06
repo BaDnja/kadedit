@@ -33,5 +33,5 @@ class SemesterAdmin(admin.ModelAdmin):
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "ects", "subject_type", "semesters", "subject_type", "study_programs")
+    list_display = ("name", "ects", "subject_type", "semesters", "study_programs")
 
