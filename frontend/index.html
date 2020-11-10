@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Kadrovska Evidencija | Panevropski Univerzitet Apeiron</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
+  <main class="login">
+    <div class="login-form">
+      <h1 class="login-form-title">PRIJAVA</h1>
+      <div id="login-error"></div>
+      <input type="text" id="login-username" placeholder="Korisničko ime" class="login-text login-form-username">
+      <input type="password" id="login-password" placeholder="Šifra" class="login-text login-form-password">
+      <input type="button" id="login-btn" value="Prijava" class="login-form-submit-btn">
+    </div>
+  </main>
+
+  <script src="js/login.js"></script>
 </body>
 </html>
