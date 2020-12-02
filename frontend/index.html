@@ -9,13 +9,13 @@
 </head>
 <body>
   <main class="login">
-    <div class="login-form">
+    <form id="login-form" class="login-form" action="dashboard.html" method="GET">
       <h1 class="login-form-title">PRIJAVA</h1>
       <div id="login-error"></div>
       <input type="text" id="login-username" placeholder="Korisničko ime" class="login-text login-form-username">
       <input type="password" id="login-password" placeholder="Šifra" class="login-text login-form-password">
-      <input type="button" id="login-btn" value="Prijava" class="login-form-submit-btn">
-    </div>
+      <input type="submit" id="login-btn" value="Prijava" class="login-form-submit-btn">
+    </form>
   </main>
 
   <script src="js/login.js"></script>
