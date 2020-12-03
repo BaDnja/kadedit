@@ -63,6 +63,14 @@ msgstr "akademska titula"
 msgid "academic titles"
 msgstr "akademske titule"
 
+#: professors/models.py:57
+msgid "contract"
+msgstr "ugovor"
+
+#: professors/models.py:58
+msgid "contracts"
+msgstr "ugovori"
+
 #: professors/models.py:54
 msgid "dissertation"
 msgstr "disertacija"

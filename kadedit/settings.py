@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'custom_user',
     'subjects',
     'professors',
 ]
@@ -116,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ] if not DEBUG else []
 
-AUTH_USER_MODEL = 'custom_user.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
