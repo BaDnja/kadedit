@@ -48,3 +48,8 @@ class XProfessorSubjectAdmin(admin.ModelAdmin):
     search_fields = ("professor__first_name", "professor__last_name", "subject__name")
     list_editable = ("practice",)
     list_filter = ("practice",)
+
+
+@admin.register(Contract)
+class ContractAdmin(admin.ModelAdmin):
+    list_display = ("name",)
