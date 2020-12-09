@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <title>Kadrovska evidencija | Administracija</title>
+</head>
+<body id="dashboard">
+    <nav class="navbar">
+        <h1 class="navbar-title" name="Ime i prezime">Vesna Čičić</h1>
+        <h3 class="navbar-subtitle" name="Uloga">Kadrovi - Referent</h3>
+        <div class="navbar-navigation">
+            <a href="dashboard-profesor.html" class="navbar-navigation-item">PROFESORI</a>
+            <a href="dashboard-predmet.html" class="navbar-navigation-item">PREDMETI</a>
+            <a href="index.html" class="navbar-navigation-item">ODJAVA</a>
+        </div>
+    </nav>
+    <main class="main">
+        <!-- Modal to add new professor / subject-->
+        <div class="modal" id="modal-new-subject">
+            <div class="list-box-options form-add">
+                <div class="list-box-options-input-row close-container">
+                    <h1 class="list-box-options-title">Dodavanje novog asistenta</h1>
+                    <span id="btn-modal-add-close">X</span>
+                </div>
+                <div class="list-box-options-input-row">
+                    <div class="list-box-options-input-group">
+                        <label for="ime" class="list-box-options-label">Naziv</label>
+                        <input type="text" name="naziv" id="naziv" class="list-box-options-input">
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Profesor</label>
+                        <input type="text" name="profesor" id="profesor" class="list-box-options-input">
+                    </div>
+                </div>
+                <div class="list-box-options-input-row">
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Fakultet</label>
+                        <select class="list-box-options-select u-min-width-100" name="fakultet" id="fakultet">
+                            <option value="FZN">FZN</option>
+                        </select>
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Izbornost</label>
+                        <select class="list-box-options-select u-min-width-100" name="izbornost" id="izbornost">
+                            <option value="FZN">Izborni</option>
+                        </select>
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Semestar</label>
+                        <select class="list-box-options-select u-min-width-100" name="semestar" id="semestar">
+                            <option value="Stalni">I</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="list-box-options-input-row">
+                    <div class="list-box-options-input-group">
+                        <label for="predmeti" class="list-box-options-label">Asistenti</label>
+                        <select class="list-box-options-select u-min-width-100" name="asistenti" id="asistenti">
+                            <option value="Fizioterapija">Igor Lastric</option>
+                        </select>
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">ECTS</label>
+                        <select class="list-box-options-select u-min-width-100" name="ects" id="ects">
+                            <option value="Stalni">5</option>
+                        </select>
+                    </div>
+                </div>
+                <a href="#" class="btn list-box-options-btn-dodaj-predmet" id="btn-add-new-assistant1">Dodaj novog asistenta</a>
+                <a href="#" class="btn list-box-options-btn-obrisi-predmet">Obriši odabranog asistenta</a>
+                <div class="list-box-options-btn-group">
+                    <a href="#" class="btn list-box-options-sacuvaj-btn">Sačuvaj promjene</a>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modal-assistant">
+            <div class="list-box-options form-predmet">
+                <div class="list-box-options-input-row close-container">
+                    <h1 class="list-box-options-title">Dodavanje novog asistenta za predmet</h1>
+                    <span id="btn-modal-assistant-close">X</span>
+                </div>
+                    <div class="list-box-options-input-group">
+                        <label for="ime" class="list-box-options-label">Ime asistenta</label>
+                        <input type="text" name="naziv-predmeta" id="naziv-predmeta" class="list-box-options-input">
+                    </div>
+                    <a href="#" class="btn list-box-options-sacuvaj-btn">Dodaj asistenta</a>
+        </div>
+        </div>
+        
+
+
+        <!-- Search box with buttons -->
+        <div class="search-box">
+            <input type="text" name="search" id="search" class="search-box-input" placeholder="Pretraga...">
+            <a href="#" class="btn btn-search">Pretraga</a>
+            <a href="#" id="btn-advanced" class="btn btn-advanced">Napredno</a>
+            <a href="#" class="btn btn-add" id="btn-add-new-subject">Dodaj</a>
+        </div>
+
+        <!-- Filter box with radio buttons -->
+        <div class="filter-box" id="filter-box">
+            <!-- Filter Fakultet-->
+            <div class="filter-faculty">
+                <h3 class="filter-title">Fakultet</h3>
+                <div class="radios">
+                    <div class="radio-group">
+                        <label class="radio-group-title">FIT</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="FIT">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">FPE</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="FPE">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">FZN</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="FZN">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">FSN</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="FSN">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">FPN</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="FPN">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">FFN</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="FFN">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">SF</label>
+                        <input class="radio-input" type="radio" name="fakultet" id="SF">
+                    </div>
+                </div>
+            </div>
+            <!-- Filter izbornost -->
+            <div class="filter-izbornost">
+                <h3 class="filter-title">Izbornost</h3>
+                <div class="radios">
+                    <div class="radio-group">
+                        <label class="radio-group-title">Obavezan</label>
+                        <input class="radio-input" type="radio" name="izbornost" id="obavezan">
+                    </div>
+                    <div class="radio-group">
+                        <label class="radio-group-title">Izborni</label>
+                        <input class="radio-input" type="radio" name="izbornost" id="izborni">
+                    </div>
+            </div>
+            </div>
+            <!-- Filter Zvanje-->
+            <div class="filter-semester">
+            <h3 class="filter-title">Semestar</h3>
+            <div class="radios">
+                <div class="radio-group">
+                    <label class="radio-group-title">I</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-1">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">II</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-2">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">III</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-3">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">IV</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-4">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">V</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-5">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">VI</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-6">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">VII</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-7">
+                </div>
+                <div class="radio-group">
+                    <label class="radio-group-title">VIII</label>
+                    <input class="radio-input" type="radio" name="semester" id="semester-8">
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- List box with professors / subjects with options -->
+
+        <div class="list-box">
+            <div class="list-box-items">
+                <div class="list-box-items-item">
+                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Fizioterapija i radna terapija</span> <span class="list-box-item-title-faculty faculty-fzn">FZN</span></h1>
+                    <p class="list-box-item-desc"><span class="list-box-item-desc-calling">Obavezan</span><span class="list-box-item-desc-engagement">I ciklus</span><span class="list-box-item-desc-engagement">I semestar</span></p>
+                </div>
+                <div class="list-box-items-item">
+                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Fizioterapija i radna terapija</span> <span class="list-box-item-title-faculty faculty-fzn">FZN</span></h1>
+                    <p class="list-box-item-desc"><span class="list-box-item-desc-calling">Obavezan</span><span class="list-box-item-desc-engagement">I ciklus</span><span class="list-box-item-desc-engagement">I semestar</span></p>
+                </div>
+            </div>
+            <div class="list-box-options">
+                <h1 class="list-box-options-title">Ažuriranje predmeta</h1>
+                <div class="list-box-options-input-row">
+                    <div class="list-box-options-input-group">
+                        <label for="ime" class="list-box-options-label">Naziv</label>
+                        <input type="text" name="naziv-predmeta" id="naziv-predmeta" class="list-box-options-input">
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Profesor</label>
+                        <input type="text" name="profesor-predmet" id="profesor-predmet" class="list-box-options-input">
+                    </div>
+                </div>
+                <div class="list-box-options-input-row">
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Fakultet</label>
+                        <select class="list-box-options-select u-min-width-100" name="fakultet" id="fakultet">
+                            <option value="FZN">FZN</option>
+                        </select>
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Izbornost</label>
+                        <select class="list-box-options-select u-min-width-100" name="izbornost" id="izbornost">
+                            <option value="FZN">Izborni</option>
+                        </select>
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">Semestar</label>
+                        <select class="list-box-options-select u-min-width-100" name="semestar" id="semestar">
+                            <option value="Stalni">I</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="list-box-options-input-row">
+                    <div class="list-box-options-input-group">
+                        <label for="predmeti" class="list-box-options-label">Asistenti</label>
+                        <select class="list-box-options-select u-min-width-100" name="asistenti" id="asistenti">
+                            <option value="Fizioterapija">Igor Lastric</option>
+                        </select>
+                    </div>
+                    <div class="list-box-options-input-group">
+                        <label for="prezime" class="list-box-options-label">ECTS</label>
+                        <select class="list-box-options-select u-min-width-100" name="ects" id="ects">
+                            <option value="Stalni">5</option>
+                        </select>
+                    </div>
+                </div>
+                <a href="#" class="btn list-box-options-btn-dodaj-predmet" id="btn-add-new-assistant">Dodaj novog asistenta</a>
+                <a href="#" class="btn list-box-options-btn-obrisi-predmet">Obriši odabranog asistenta</a>
+                <div class="list-box-options-btn-group">
+                    <a href="#" class="btn list-box-options-sacuvaj-btn">Sačuvaj promjene</a>
+                    <a href="#" class="btn list-box-options-obrisi-btn">Obriši profesora</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="./js/dashboard-subject.js"></script>
+</body>
+</html>
