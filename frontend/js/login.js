@@ -2,7 +2,11 @@ const loginForm = document.getElementById('login-form');
 const loginError = document.getElementById('login-error');
 
 
+
+
+
 loginForm.addEventListener("submit", validateLogin);
+
 
 function showError(text) {
   loginError.style.visibility = "visible";
@@ -39,3 +43,4 @@ function validateLogin(e) {
     }
   }
 }
+
