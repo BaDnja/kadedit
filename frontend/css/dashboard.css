@@ -1,0 +1,313 @@
+#dashboard {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--color-gray-background);
+}
+
+/* Navbar */
+.navbar {
+  min-width: 15%;
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.navbar-title {
+  font-size: 2.5rem;
+  padding: 4rem 0 2rem 0;
+}
+.navbar-subtitle {
+  font-size: 2rem;
+  font-weight: 300;
+  padding: 2rem;
+}
+.navbar-navigation {
+  padding-top: 4rem;
+  position: relative;
+  height: inherit;
+}
+.navbar-navigation-item {
+  text-decoration: none;
+  color: var(--color-white);
+  font-size: 2rem;
+  display: block;
+  padding: 3rem 0;
+  font-weight: bold;
+}
+.navbar-navigation-item:hover {
+  background-color: var(--color-blue-light);
+}
+.navbar-navigation-item:last-child {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+
+/* Main */
+.main {
+  padding: 5rem 0 0 10%;
+}
+
+/* Search part */
+
+.search-box {
+  max-width: 80vw;
+}
+.search-box-input {
+  width: 40vw;
+  font-size: 2.2rem;
+  padding: 1rem 0;
+  border: 0.5px solid #ddd;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  outline: 0;
+  color: var(--color-gray-dark);
+  margin-right: 5rem;
+}
+.search-box-input::placeholder {
+  color: var(--color-gray-dark);
+}
+.search-box-input:focus {
+  border: 1px solid var(--color-blue-dark);
+}
+.btn-search {
+  background-color: var(--color-blue-dark);
+  margin-right: 5rem;
+}
+.btn-advanced {
+  background-color: var(--color-purple);
+  margin-right: 5rem;
+}
+.btn-add {
+  background-color: var(--color-green-light);
+  margin-right: 5rem;
+}
+
+/* Filters part */
+
+.filter-box {
+  max-width: 80vw;
+  margin-top: 3rem;
+  display: none;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.filter-faculty,
+.filter-calling {
+  min-width: 40%;
+}
+.filter-faculty,
+.filter-agreement,
+.filter-calling,
+.filter-engagement, .filter-izbornost, .filter-semester{
+  margin-right: 15rem;
+  margin-top: 2rem;
+}
+.filter-title {
+  font-size: 3rem;
+}
+.radios {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+.radio-group {
+  margin-right: 1rem;
+}
+.radio-group-title {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: var(--color-gray-dark);
+}
+.radio-input {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* List box part */
+
+.list-box {
+  border-top: 0.5px solid #ddd;
+  max-width: 60vw;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+/* First part for list of professors / subjects */
+.list-box-items {
+  width: 35%;
+  margin-right: 2rem;
+}
+.list-box-items-item {
+  background-color: var(--color-gray-light);
+  box-shadow: 0 3px 6px var(--color-shadow);
+  border-radius: 1rem;
+  padding: 4rem 0;
+  min-width: 100%;
+}
+.list-box-items-item:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.list-box-items-item:not(:last-child) {
+  margin: 2rem 0;
+}
+
+.list-box-item-title {
+  font-size: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+}
+.list-box-item-title-name {
+}
+.list-box-item-title-faculty {
+}
+
+.list-box-item-desc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 1.75rem;
+  color: var(--color-gray-dark);
+}
+.list-box-item-desc-calling {
+}
+.list-box-item-desc-engagement {
+}
+
+/* Second part for detailed information about professors / subjects */
+
+.list-box-options {
+  background-color: var(--color-gray-light);
+  box-shadow: 0 3px 6px var(--color-shadow);
+  border-radius: 1rem;
+  padding: 3rem;
+  margin-top: 2rem;
+  width: 70%;
+}
+.list-box-options-title {
+  font-size: 3rem;
+  color: var(--color-gray-dark);
+  margin-bottom: 2rem;
+}
+.list-box-options-input-row {
+  display: flex;
+  flex-direction: row;
+}
+.list-box-options-input-group {
+  width: 100%;
+}
+.list-box-options-input-group:not(:last-child) {
+  margin-right: 2rem;
+  margin-bottom: 3rem;
+}
+.list-box-options-label {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--color-gray-dark);
+}
+.list-box-options-input {
+  width: 100%;
+  font-size: 2rem;
+  padding: 1rem 0.5rem;
+  outline: 0;
+  border: 1px solid var(--color-gray-dark);
+  border-radius: 5px;
+}
+.list-box-options-select {
+  font-size: 2rem;
+  padding: 1rem 0.5rem;
+  outline: 0;
+  border: 1px solid var(--color-gray-dark);
+  border-radius: 5px;
+}
+.list-box-options-input:focus, .list-box-options-select:focus {
+  border: 1px solid var(--color-blue-dark);
+}
+.list-box-options-btn-dodaj-predmet, .list-box-options-btn-obrisi-predmet{
+  background-color: var(--color-green-light);
+  min-width: 50%;
+  padding: 1.5rem 0;
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.list-box-options-btn-obrisi-predmet {
+  background-color: var(--color-red);
+}
+
+.list-box-options-btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 4rem;
+}
+
+.list-box-options-sacuvaj-btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--color-blue-dark);
+  font-size: 2rem;
+  padding: 1.5rem 1.5rem;
+  border-radius: 5px;
+}
+
+.list-box-options-obrisi-btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--color-red);
+  font-size: 2rem;
+  padding: 1.5rem 1.5rem;
+  border-radius: 5px;
+}
+
+
+/* Modal to add new subject / professor*/
+
+.modal{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.487);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  display: none;
+}
+.form-add {
+  width: 50%;
+}
+.form-predmet {
+  width: 30%;
+}
+.close-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.close-container span {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  color: var(--color-gray-dark);
+  font-weight: bold;
+}
+.close-container span:hover {
+  cursor: pointer;
+}
