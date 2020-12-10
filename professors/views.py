@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def professors(request):
+    """Handle processing main page for professors"""
+    return render(request, 'professors/dashboard-professors.html')

@@ -1,0 +1,4 @@
+{% extends 'base_test.html' %} {% block content %}
+<p>Dobrodosli {{ request.user }}</p>
+    <a href="{% url 'logout' %}">Odjava</a>
+{% endblock %}
