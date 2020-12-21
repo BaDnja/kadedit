@@ -10,8 +10,10 @@
 </head>
 <body id="dashboard">
     <nav class="navbar">
-        <h1 class="navbar-title" name="Ime i prezime">Vesna Čičić</h1>
-        <h3 class="navbar-subtitle" name="Uloga">Kadrovi - Referent</h3>
+        <h1 class="navbar-title" name="Ime i prezime">{{ request.user.get_full_name }}</h1>
+        {% if request.user.groups %}
+            <h3 class="navbar-subtitle" name="Uloga">{{ request.user.groups.all.0 }}</h3>
+        {% endif %}
         <div class="navbar-navigation">
             <a href="{% url 'professors' %}" class="navbar-navigation-item">PROFESORI</a>
             <a href="{% url 'subjects' %}" class="navbar-navigation-item">PREDMETI</a>

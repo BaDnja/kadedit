@@ -1,5 +1,5 @@
 const filterBox = document.getElementById('filter-box');
-const btnAdvanced = document.getElementById('btn-advanced');
+//const btnAdvanced = document.getElementById('btn-advanced');
 
 // Modals
 const modalNewProfessor = document.getElementById("modal-new-professor");
@@ -24,18 +24,18 @@ btnCloseModalAddNewProfessor.addEventListener("click", switchModalProfessor);
 
 
 
-// Event to handle advanced filters 
-btnAdvanced.addEventListener("click", showFilters);
-
-function showFilters(e) {
-    e.preventDefault();
-    if(filterBox.style.display === "flex") {
-      filterBox.style.display = "none";
-    }
-    else {
-      filterBox.style.display = "flex";
-    }
-  }
+// Event to handle advanced filters
+// btnAdvanced.addEventListener("click", showFilters);
+//
+// function showFilters(e) {
+//     e.preventDefault();
+//     if(filterBox.style.display === "flex") {
+//       filterBox.style.display = "none";
+//     }
+//     else {
+//       filterBox.style.display = "flex";
+//     }
+//   }
 
   // Event to show / hide Subject modal
   function switchModalSubject() {

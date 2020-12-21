@@ -1,5 +1,5 @@
 const filterBox = document.getElementById('filter-box');
-const btnAdvanced = document.getElementById('btn-advanced');
+//const btnAdvanced = document.getElementById('btn-advanced');
 
 // Modals
 const modalNewSubject = document.getElementById("modal-new-subject");
@@ -8,11 +8,16 @@ const modalAssistant = document.getElementById("modal-assistant");
 // Buttons to open modals
 const btnAddAssistant = document.getElementById("btn-add-new-assistant");
 const btnAddAssistantModal = document.getElementById("btn-add-new-assistant1");
+document.getElementById("btn-add-new-professor").id = "btn-add-new-subject";
 const btnAddNewSubject = document.getElementById("btn-add-new-subject");
 
 // Buttons to close modals
 const btnCloseModalAddAssistant = document.getElementById("btn-modal-assistant-close");
 const btnCloseModalAddNewSubject = document.getElementById("btn-modal-add-close");
+
+document.onload = function() {
+  btnAddNewSubject.id = "btn-add-new-subject";
+}
 
 btnAddAssistant.addEventListener("click", switchModalSubject);
 btnAddAssistantModal.addEventListener("click", switchModalSubject);
@@ -25,17 +30,17 @@ btnCloseModalAddNewSubject.addEventListener("click", switchModalProfessor);
 
 
 // Event to handle advanced filters 
-btnAdvanced.addEventListener("click", showFilters);
-
-function showFilters(e) {
-    e.preventDefault();
-    if(filterBox.style.display === "flex") {
-      filterBox.style.display = "none";
-    }
-    else {
-      filterBox.style.display = "flex";
-    }
-  }
+// btnAdvanced.addEventListener("click", showFilters);
+//
+// function showFilters(e) {
+//     e.preventDefault();
+//     if(filterBox.style.display === "flex") {
+//       filterBox.style.display = "none";
+//     }
+//     else {
+//       filterBox.style.display = "flex";
+//     }
+//   }
 
   // Event to show / hide Subject modal
   function switchModalSubject() {
