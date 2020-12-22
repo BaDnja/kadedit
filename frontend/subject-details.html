@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <title>Kadrovska evidencija | Administracija</title>
+</head>
+<body id="dashboard">
+      <!-- Modal -->
+      <div class="modal" id="modal-assistant">
+        <div class="options-box form-predmet">
+            <div class="options-box-input-row close-container">
+                <h1 class="options-box-title">Novi predmet</h1>
+                <span id="btn-modal-assistant-close">X</span>
+            </div>
+                <div class="options-box-input-group">
+                    <label for="ime" class="options-box-label">Naziv predmeta</label>
+                    <input type="text" name="naziv-predmeta" id="naziv-predmeta" class="options-box-input">
+                </div>
+                <a href="#" class="btn options-box-sacuvaj-btn">Dodaj predmet</a>
+
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <h1 class="navbar-title" name="Ime i prezime">Vesna Čičić</h1>
+        <h3 class="navbar-subtitle" name="Uloga">Kadrovi - Referent</h3>
+        <div class="navbar-navigation">
+            <a href="dashboard-profesor.html" class="navbar-navigation-item">PROFESORI</a>
+            <a href="dashboard-predmet.html" class="navbar-navigation-item">PREDMETI</a>
+            <a href="index.html" class="navbar-navigation-item">ODJAVA</a>
+        </div>
+    </nav>
+
+
+    <main class="main">
+        <!-- Search box with buttons -->
+        <div class="search-box">
+            <input type="text" name="search" id="search" class="search-box-input" placeholder="Pretraga...">
+            <a href="#" class="btn btn-search">Pretraga</a>
+            <!-- <a href="#" id="btn-advanced" class="btn btn-advanced">Napredno</a> -->
+            <a href="professor-details.html" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
+        </div>
+        
+    <div class="options-box">
+        <h1 class="options-box-title">Ažuriranje predmeta</h1>
+        <div class="options-box-input-row">
+            <div class="options-box-input-group">
+                <label for="ime" class="options-box-label">Naziv</label>
+                <input type="text" name="naziv-predmeta" id="naziv-predmeta" class="options-box-input">
+            </div>
+            <div class="options-box-input-group">
+                <label for="prezime" class="options-box-label">Profesor</label>
+                <input type="text" name="profesor-predmet" id="profesor-predmet" class="options-box-input">
+            </div>
+        </div>
+        <div class="options-box-input-row">
+            <div class="options-box-input-group">
+                <label for="prezime" class="options-box-label">Fakultet</label>
+                <select class="options-box-select u-min-width-100" name="fakultet" id="fakultet">
+                    <option value="FZN">FZN</option>
+                </select>
+            </div>
+            <div class="options-box-input-group">
+                <label for="prezime" class="options-box-label">Izbornost</label>
+                <select class="options-box-select u-min-width-100" name="izbornost" id="izbornost">
+                    <option value="FZN">Izborni</option>
+                </select>
+            </div>
+            <div class="options-box-input-group">
+                <label for="prezime" class="options-box-label">Semestar</label>
+                <select class="options-box-select u-min-width-100" name="semestar" id="semestar">
+                    <option value="Stalni">I</option>
+                </select>
+            </div>
+        </div>
+        <div class="options-box-input-row">
+            <div class="options-box-input-group">
+                <label for="predmeti" class="options-box-label">Asistenti</label>
+                <select class="options-box-select u-min-width-100" name="asistenti" id="asistenti">
+                    <option value="Fizioterapija">Igor Lastric</option>
+                </select>
+            </div>
+            <div class="options-box-input-group">
+                <label for="prezime" class="options-box-label">ECTS</label>
+                <select class="options-box-select u-min-width-100" name="ects" id="ects">
+                    <option value="Stalni">5</option>
+                </select>
+            </div>
+        </div>
+        <a href="#" class="btn options-box-btn-dodaj-predmet" id="btn-modal-assistant-open">Dodaj novog asistenta</a>
+        <a href="#" class="btn options-box-btn-obrisi-predmet">Obriši odabranog asistenta</a>
+        <div class="options-box-btn-group">
+            <a href="#" class="btn options-box-sacuvaj-btn">Sačuvaj promjene</a>
+            <a href="#" class="btn options-box-obrisi-btn">Obriši profesora</a>
+        </div>
+    </div>   
+    </main> 
+
+    <script src="static/js/dashboard-subject.js"></script>
+</body>
+</html>
