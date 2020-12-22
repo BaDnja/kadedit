@@ -1,20 +1,8 @@
 from django.db import models
+from kadedit.models import TimeModelMixin, DeletionModelMixin
 from django.db.models import SET_NULL, CASCADE
 from subjects.models import Subject
 from django.utils.translation import ugettext_lazy as _
-
-
-class Professor(models.Model):
-    first_name = models.CharField(_('first name'), max_length=30)
-    last_name = models.CharField(_('last name'), max_length=80)
-    birthdate = models.DateField(_('birthdate'))
-
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
-
-    class Meta:
-        verbose_name = _("professor")
-        verbose_name_plural = _("professors")
 
 
 class WorkStatus(models.Model):
@@ -50,25 +38,22 @@ class AcademicTitle(models.Model):
         verbose_name_plural = _("academic titles")
 
 
-class ProfessorInfo(models.Model):
+class Professor(TimeModelMixin, DeletionModelMixin):
+    first_name = models.CharField(_('first name'), max_length=30)
+    last_name = models.CharField(_('last name'), max_length=80)
+    birthdate = models.DateField(_('birthdate'))
     dissertation = models.CharField(_("dissertation"), max_length=200, blank=True, null=True)
-    professor = models.ForeignKey(Professor, on_delete=CASCADE, verbose_name=_("professor"))
     work_status = models.ForeignKey(WorkStatus, null=True, on_delete=SET_NULL,
                                     verbose_name=_("work status"))
     engagement = models.ForeignKey(Engagement, null=True, on_delete=SET_NULL, verbose_name=_("engagement"))
     academic_title = models.ForeignKey(AcademicTitle, null=True, on_delete=SET_NULL, verbose_name=_("academic title"))
 
     def __str__(self):
-        title = str(self.academic_title).split(" ", 1)[0]
-        return f'{title} {self.professor}'
-
-    def dissertation_short(self):
-        return " ".join(self.dissertation.split(" ", 2)[:2]) + "..."
-    dissertation_short.short_description = _("dissertation short")
+        return f'{self.first_name} {self.last_name}'
 
     class Meta:
-        verbose_name = _("professor's information")
-        verbose_name_plural = _("professors information")
+        verbose_name = _("professor")
+        verbose_name_plural = _("professors")
 
 
 class XProfessorSubject(models.Model):

@@ -4,10 +4,13 @@ from .models import *
 
 @admin.register(Professor)
 class ProfessorAdmin(admin.ModelAdmin):
-    list_display = ("first_name", "last_name", "birthdate")
+    list_display = ("first_name", "last_name", "birthdate", "engagement", "academic_title", "work_status")
     list_per_page = 25
-    list_display_links = ("first_name", "last_name")
-    search_fields = ("first_name", "last_name")
+    list_display_links = ("first_name", "last_name", "academic_title")
+    search_fields = ("first_name", "last_name", "engagement__name", "academic_title__name", "work_status__name")
+    list_filter = ("engagement", "work_status", "academic_title")
+    list_editable = ("engagement", "work_status")
+    exclude = ['deletion_date']
 
 
 @admin.register(WorkStatus)
@@ -27,17 +30,6 @@ class AcademicTitleAdmin(admin.ModelAdmin):
     list_display = ("name",)
     list_per_page = 10
     search_fields = ("name",)
-
-
-@admin.register(ProfessorInfo)
-class ProfessorInfoAdmin(admin.ModelAdmin):
-    list_display = ("professor", "engagement", "academic_title", "dissertation_short", "work_status")
-    list_per_page = 25
-    list_display_links = ("professor", "academic_title")
-    search_fields = ("professor__first_name", "professor__last_name",
-                     "engagement__name", "academic_title__name", "work_status__name")
-    list_filter = ("engagement", "work_status", "academic_title")
-    list_editable = ("engagement", "work_status")
 
 
 @admin.register(XProfessorSubject)

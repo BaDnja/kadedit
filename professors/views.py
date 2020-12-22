@@ -6,8 +6,9 @@ def professors(request):
     """Handle getting main page for professors"""
     if request.user.is_authenticated:
         all_professors = models.Professor.objects.all()
+
         context = {
-            'all_professors': all_professors,
+            'professors': all_professors,
         }
         return render(request, 'professors/dashboard-professors.html', context)
     else:

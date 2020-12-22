@@ -83,73 +83,28 @@
         {% include 'partials/search.html' %}
 
         <!-- List box with professors / subjects with options -->
-        <div class="list-box">
-            <div class="list-box-items">
-                <div class="list-box-items-item">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span> <span class="list-box-item-title-faculty faculty-fzn">FZN</span></h1>
-                    <p class="list-box-item-desc"><span class="list-box-item-desc-calling">Vanredni profesor</span><span class="list-box-item-desc-engagement">Odgovorni nastavnik</span></p>
-                </div>
-                <div class="list-box-items-item">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span> <span class="list-box-item-title-faculty faculty-fzn">FZN</span></h1>
-                    <p class="list-box-item-desc"><span class="list-box-item-desc-calling">Vanredni profesor</span><span class="list-box-item-desc-engagement">Odgovorni nastavnik</span></p>
-                </div>
+
+            <div class="list-box">
+            {% if professors %}
+                {% for professor in professors %}
+                    <div class="list-box-item">
+                        <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ professor }}</span></h1>
+                        <p class="list-box-item-desc list-box-item-calling">{{ professor.academic_title }}</p>
+                        <p class="list-box-item-desc list-box-item-engagement">{{ professor.engagement }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h1>Nema dodanih profesora</h1>
+            {% endif %}
             </div>
-            <div class="list-box-options">
-                <h1 class="list-box-options-title">Ažuriranje profesora</h1>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="ime" class="list-box-options-label">Ime</label>
-                        <input type="text" name="ime" id="ime" class="list-box-options-input">
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="prezime" class="list-box-options-label">Prezime</label>
-                        <input type="text" name="prezime" id="prezime" class="list-box-options-input">
-                    </div>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="ime" class="list-box-options-label">Broj telefona</label>
-                        <input type="text" name="telefon" id="telefon" class="list-box-options-input">
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="prezime" class="list-box-options-label">Fakultet</label>
-                        <select class="list-box-options-select u-min-width-100" name="fakultet" id="fakultet">
-                            <option value="FZN">FZN</option>
-                        </select>
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="prezime" class="list-box-options-label">Tip ugovora</label>
-                        <select class="list-box-options-select u-min-width-100" name="ugovor" id="ugovor">
-                            <option value="Stalni">Stalni</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="calling" class="list-box-options-label">Akademsko zvanje</label>
-                        <input type="text" name="calling" id="calling" class="list-box-options-input">
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="engagement" class="list-box-options-label">Angažovanje</label>
-                        <input type="text" name="engagement" id="engagement" class="list-box-options-input">
-                    </div>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="predmeti" class="list-box-options-label">Predmeti</label>
-                        <select class="list-box-options-select u-min-width-50" name="predmeti" id="predmeti">
-                            <option value="Fizioterapija">Fizioterapija</option>
-                        </select>
-                    </div>
-                </div>
-                <a href="#" class="btn list-box-options-btn-dodaj-predmet" id="btn-add-new-subject">Dodaj novi predmet</a>
-                <a href="#" class="btn list-box-options-btn-obrisi-predmet">Obriši odabrani predmet</a>
-                <div class="list-box-options-btn-group">
-                    <a href="#" class="btn list-box-options-sacuvaj-btn">Sačuvaj promjene</a>
-                    <a href="#" class="btn list-box-options-obrisi-btn">Obriši profesora</a>
-                </div>
+
+            <div class="pagination">
+                <div class="pagination-item">&larr;</div>
+                <div class="pagination-item">1</div>
+                <div class="pagination-item">2</div>
+                <div class="pagination-item">3</div>
+                <div class="pagination-item">&rarr;</div>
             </div>
-        </div>
 
     </main>
 

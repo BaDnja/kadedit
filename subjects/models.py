@@ -1,4 +1,5 @@
 from django.db import models
+from kadedit.models import TimeModelMixin, DeletionModelMixin
 from django.db.models import SET_NULL
 from django.utils.translation import ugettext_lazy as _
 
@@ -64,7 +65,7 @@ class Semester(models.Model):
         verbose_name_plural = _("semesters")
 
 
-class Subject(models.Model):
+class Subject(TimeModelMixin, DeletionModelMixin):
     code = models.CharField(max_length=20, unique=True, blank=True, null=True)
     name = models.CharField(_('subject'), max_length=120, unique=True)
     semester = models.ManyToManyField(Semester)

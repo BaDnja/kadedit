@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   background-color: var(--color-gray-background);
+  position: relative;
 }
 
 /* Navbar */
@@ -13,6 +14,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  position: fixed;
 }
 .navbar-title {
   font-size: 2.5rem;
@@ -49,8 +51,9 @@
 /* Main */
 .main {
   padding: 5rem 0 0 10%;
+  position: relative;
+  margin-left: 35rem;
 }
-
 /* Search part */
 
 .search-box {
@@ -66,6 +69,7 @@
   outline: 0;
   color: var(--color-gray-dark);
   margin-right: 5rem;
+  margin-bottom: 2rem;
 }
 .search-box-input::placeholder {
   color: var(--color-gray-dark);
@@ -132,91 +136,94 @@
 
 .list-box {
   border-top: 0.5px solid #ddd;
-  max-width: 60vw;
   margin-top: 2rem;
   padding-top: 2rem;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  width: 56vw;
+  justify-content: center;
 }
-
-/* First part for list of professors / subjects */
-.list-box-items {
-  width: 35%;
-  margin-right: 2rem;
-}
-.list-box-items-item {
+.list-box-item {
   background-color: var(--color-gray-light);
   box-shadow: 0 3px 6px var(--color-shadow);
   border-radius: 1rem;
-  padding: 4rem 0;
-  min-width: 100%;
+  padding: 4rem 3rem;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
 }
-.list-box-items-item:hover {
+.list-box-item:hover {
   cursor: pointer;
   transform: scale(1.05);
 }
-.list-box-items-item:not(:last-child) {
-  margin: 2rem 0;
-}
 
 .list-box-item-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 2rem;
 }
-.list-box-item-title-name {
-}
-.list-box-item-title-faculty {
-}
-
 .list-box-item-desc {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  font-size: 1.75rem;
+  font-size: 1.6rem;
+  text-align: center;
+  padding: 1rem 0;
   color: var(--color-gray-dark);
 }
-.list-box-item-desc-calling {
+
+.pagination {
+  border: 5px solid var(--color-blue-dark);
+  border-radius: 1rem;
+  float: right;
+  margin-bottom: 1rem;
 }
-.list-box-item-desc-engagement {
+.pagination-item {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem;
+  border-bottom: 2px solid transparent;
+  font-weight: bold;
+}
+.pagination-item:hover {
+  color: var(--color-blue-dark);
+  border-bottom: 2px solid var(--color-blue-dark);
+  cursor: pointer;
 }
 
 /* Second part for detailed information about professors / subjects */
 
-.list-box-options {
+.options-box {
   background-color: var(--color-gray-light);
   box-shadow: 0 3px 6px var(--color-shadow);
   border-radius: 1rem;
   padding: 3rem;
   margin-top: 2rem;
-  width: 70%;
+  width: 90%;
 }
-.list-box-options-title {
+.options-box-title {
   font-size: 3rem;
   color: var(--color-gray-dark);
   margin-bottom: 2rem;
 }
-.list-box-options-input-row {
+.options-box-input-row {
   display: flex;
   flex-direction: row;
 }
-.list-box-options-input-group {
+.options-box-input-group {
   width: 100%;
 }
-.list-box-options-input-group:not(:last-child) {
+.options-box-input-group:not(:last-child) {
   margin-right: 2rem;
   margin-bottom: 3rem;
 }
-.list-box-options-label {
+.options-box-label {
   display: block;
   font-size: 2rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
   color: var(--color-gray-dark);
 }
-.list-box-options-input {
+.options-box-input {
   width: 100%;
   font-size: 2rem;
   padding: 1rem 0.5rem;
@@ -224,17 +231,17 @@
   border: 1px solid var(--color-gray-dark);
   border-radius: 5px;
 }
-.list-box-options-select {
+.options-box-select {
   font-size: 2rem;
   padding: 1rem 0.5rem;
   outline: 0;
   border: 1px solid var(--color-gray-dark);
   border-radius: 5px;
 }
-.list-box-options-input:focus, .list-box-options-select:focus {
+.options-box-input:focus, .options-box-select:focus {
   border: 1px solid var(--color-blue-dark);
 }
-.list-box-options-btn-dodaj-predmet, .list-box-options-btn-obrisi-predmet{
+.options-box-btn-dodaj-predmet, .options-box-btn-obrisi-predmet{
   background-color: var(--color-green-light);
   min-width: 50%;
   padding: 1.5rem 0;
@@ -242,18 +249,18 @@
   font-size: 2rem;
 }
 
-.list-box-options-btn-obrisi-predmet {
+.options-box-btn-obrisi-predmet {
   background-color: var(--color-red);
 }
 
-.list-box-options-btn-group {
+.options-box-btn-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 4rem;
 }
 
-.list-box-options-sacuvaj-btn {
+.options-box-sacuvaj-btn {
   display: inline-block;
   text-decoration: none;
   color: #fff;
@@ -263,7 +270,7 @@
   border-radius: 5px;
 }
 
-.list-box-options-obrisi-btn {
+.options-box-obrisi-btn {
   display: inline-block;
   text-decoration: none;
   color: #fff;
@@ -289,6 +296,7 @@
   align-items: center;
   overflow: hidden;
   display: none;
+  z-index: 5000;
 }
 .form-add {
   width: 50%;

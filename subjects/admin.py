@@ -3,7 +3,7 @@ from .models import *
 
 
 @admin.register(Faculty)
-class SubjectsAdmin(admin.ModelAdmin):
+class FacultiesAdmin(admin.ModelAdmin):
     list_display = ("name", "short")
 
 
@@ -34,4 +34,4 @@ class SemesterAdmin(admin.ModelAdmin):
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ("name", "ects", "subject_type", "semesters", "study_programs")
-
+    exclude = ['deletion_date']
