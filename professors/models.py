@@ -50,14 +50,6 @@ class AcademicTitle(models.Model):
         verbose_name_plural = _("academic titles")
 
 
-class Contract(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-
-    class Meta:
-        verbose_name = _("contract")
-        verbose_name_plural = _("contracts")
-
-
 class ProfessorInfo(models.Model):
     dissertation = models.CharField(_("dissertation"), max_length=200, blank=True, null=True)
     professor = models.ForeignKey(Professor, on_delete=CASCADE, verbose_name=_("professor"))
@@ -65,7 +57,6 @@ class ProfessorInfo(models.Model):
                                     verbose_name=_("work status"))
     engagement = models.ForeignKey(Engagement, null=True, on_delete=SET_NULL, verbose_name=_("engagement"))
     academic_title = models.ForeignKey(AcademicTitle, null=True, on_delete=SET_NULL, verbose_name=_("academic title"))
-    contract = models.ForeignKey(Contract, null=True, on_delete=SET_NULL, verbose_name=_("contract"))
 
     def __str__(self):
         title = str(self.academic_title).split(" ", 1)[0]
