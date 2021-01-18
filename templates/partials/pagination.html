@@ -1,0 +1,22 @@
+{% load static %}
+{% if obj_list.has_other_pages %}
+    <div class="pagination">
+        {% if obj_list.has_previous %}
+            <a class="pagination-item" href="?page={{ obj_list.previous_page_number }}">&larr;</a>
+        {% else %}
+            <a class="pagination-item disabled" href="#">&larr;</a>
+        {% endif %}
+        {% for i in obj_list.paginator.page_range %}
+            {% if obj_list.number == i %}
+                <a class="pagination-item active">{{ i }}</a>
+            {% else %}
+                <a class="pagination-item" href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if obj_list.has_next %}
+            <a class="pagination-item" href="?page={{ obj_list.next_page_number }}">&rarr;</a>
+        {% else %}
+            <a class="pagination-item disabled">&rarr;</a>
+        {% endif %}
+    </div>
+{% endif %}

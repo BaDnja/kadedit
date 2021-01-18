@@ -11,12 +11,12 @@
         <!-- List box with professors / subjects with options -->
 
             <div class="list-box">
-            {% if professors %}
-                {% for professor in professors %}
+            {% if obj_list %}
+                {% for obj_list in obj_list %}
                     <div class="list-box-item">
-                        <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ professor }}</span></h1>
-                        <p class="list-box-item-desc list-box-item-calling">{{ professor.academic_title }}</p>
-                        <p class="list-box-item-desc list-box-item-engagement">{{ professor.engagement }}</p>
+                        <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ obj_list }}</span></h1>
+                        <p class="list-box-item-desc list-box-item-calling">{{ obj_list.academic_title }}</p>
+                        <p class="list-box-item-desc list-box-item-engagement">{{ obj_list.engagement }}</p>
                     </div>
                 {% endfor %}
             {% else %}
@@ -24,13 +24,7 @@
             {% endif %}
             </div>
 
-            <div class="pagination">
-                <a class="pagination-item disabled" href="#">&larr;</a>
-                <a class="pagination-item" href="#">1</a>
-                <a class="pagination-item" href="#">2</a>
-                <a class="pagination-item" href="#">3</a>
-                <a class="pagination-item" href="#">&rarr;</a>
-            </div>
+            {% include 'partials/pagination.html' %}
 
     </main>
 

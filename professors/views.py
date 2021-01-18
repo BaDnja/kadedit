@@ -1,4 +1,4 @@
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 
@@ -8,8 +8,18 @@ def professors(request):
     if request.user.is_authenticated:
         all_professors = models.Professor.objects.filter(active=True).order_by('-id')
 
+        paginator = Paginator(all_professors, 15)
+        page = request.GET.get('page')
+
+        try:
+            paged_professors = paginator.get_page(page)
+        except PageNotAnInteger:
+            paged_professors = paginator.page(1)
+        except EmptyPage:
+            paged_professors = paginator.page(paginator.num_pages)
+
         context = {
-            'professors': all_professors,
+            'obj_list': paged_professors,
         }
         return render(request, 'professors/dashboard-professors.html', context)
     else:
