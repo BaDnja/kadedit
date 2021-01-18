@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 
@@ -5,7 +6,7 @@ from . import models
 def professors(request):
     """Handle getting main page for professors"""
     if request.user.is_authenticated:
-        all_professors = models.Professor.objects.all()
+        all_professors = models.Professor.objects.filter(active=True).order_by('-id')
 
         context = {
             'professors': all_professors,

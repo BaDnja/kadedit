@@ -10,7 +10,8 @@ class ProfessorAdmin(admin.ModelAdmin):
     search_fields = ("first_name", "last_name", "engagement__name", "academic_title__name", "work_status__name")
     list_filter = ("engagement", "work_status", "academic_title")
     list_editable = ("engagement", "work_status")
-    exclude = ['deletion_date']
+
+
 
 
 @admin.register(WorkStatus)

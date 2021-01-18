@@ -1,6 +1,6 @@
 from django.db import models
-from kadedit.models import TimeModelMixin, DeletionModelMixin
 from django.db.models import SET_NULL, CASCADE
+from kadedit.models import TimeModelMixin
 from subjects.models import Subject
 from django.utils.translation import ugettext_lazy as _
 
@@ -38,11 +38,12 @@ class AcademicTitle(models.Model):
         verbose_name_plural = _("academic titles")
 
 
-class Professor(TimeModelMixin, DeletionModelMixin):
+class Professor(TimeModelMixin):
     first_name = models.CharField(_('first name'), max_length=30)
     last_name = models.CharField(_('last name'), max_length=80)
     birthdate = models.DateField(_('birthdate'))
     dissertation = models.CharField(_("dissertation"), max_length=200, blank=True, null=True)
+    active = models.BooleanField(_("active"), default=True)
     work_status = models.ForeignKey(WorkStatus, null=True, on_delete=SET_NULL,
                                     verbose_name=_("work status"))
     engagement = models.ForeignKey(Engagement, null=True, on_delete=SET_NULL, verbose_name=_("engagement"))
@@ -50,6 +51,7 @@ class Professor(TimeModelMixin, DeletionModelMixin):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
 
     class Meta:
         verbose_name = _("professor")

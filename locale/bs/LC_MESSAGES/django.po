@@ -19,9 +19,17 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: kadedit/models.py:7
-msgid "deleted"
-msgstr "obrisan"
+#: kadedit/models.py:9
+msgid "creation date"
+msgstr "datum kreiranja"
+
+#: kadedit/models.py:10
+msgid "modification date"
+msgstr "datum izmjene"
+
+#: kadedit/models.py:11
+msgid "deactivation date"
+msgstr "datum deaktivacije"
 
 #: professors/apps.py:7 professors/models.py:17
 msgid "professors"
@@ -79,9 +87,10 @@ msgstr "ugovori"
 msgid "dissertation"
 msgstr "disertacija"
 
-#: professors/models.py:67
-msgid "dissertation short"
-msgstr "disertacija"
+#: professors/models.py:46 subjects/models.py:73
+msgid "active"
+msgstr "aktivan"
+
 
 #: professors/models.py:70
 msgid "professor's information"

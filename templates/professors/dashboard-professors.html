@@ -5,80 +5,6 @@
 {% block content %}
 
     <main class="main">
-        <!-- Modal to add new professor / subject-->
-        <div class="modal" id="modal-new-professor">
-            <div class="list-box-options form-add">
-                <div class="list-box-options-input-row close-container">
-                    <h1 class="list-box-options-title">Dodavanje novog profesora</h1>
-                    <span id="btn-modal-add-close">X</span>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="ime" class="list-box-options-label">Ime</label>
-                        <input type="text" name="ime" id="ime" class="list-box-options-input">
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="prezime" class="list-box-options-label">Prezime</label>
-                        <input type="text" name="prezime" id="prezime" class="list-box-options-input">
-                    </div>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="ime" class="list-box-options-label">Broj telefona</label>
-                        <input type="text" name="telefon" id="telefon" class="list-box-options-input">
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="prezime" class="list-box-options-label">Fakultet</label>
-                        <select class="list-box-options-select u-min-width-100" name="fakultet" id="fakultet">
-                            <option value="FZN">FZN</option>
-                        </select>
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="prezime" class="list-box-options-label">Tip ugovora</label>
-                        <select class="list-box-options-select u-min-width-100" name="ugovor" id="ugovor">
-                            <option value="Stalni">Stalni</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="calling" class="list-box-options-label">Akademsko zvanje</label>
-                        <input type="text" name="calling" id="calling" class="list-box-options-input">
-                    </div>
-                    <div class="list-box-options-input-group">
-                        <label for="engagement" class="list-box-options-label">Angažovanje</label>
-                        <input type="text" name="engagement" id="engagement" class="list-box-options-input">
-                    </div>
-                </div>
-                <div class="list-box-options-input-row">
-                    <div class="list-box-options-input-group">
-                        <label for="predmeti" class="list-box-options-label">Predmeti</label>
-                        <select class="list-box-options-select u-min-width-50" name="predmeti" id="predmeti">
-                            <option value="Fizioterapija">Fizioterapija</option>
-                        </select>
-                    </div>
-                </div>
-                <a href="#" class="btn list-box-options-btn-dodaj-predmet" id="btn-add-new-subject1">Dodaj novi predmet</a>
-                <a href="#" class="btn list-box-options-btn-obrisi-predmet">Obriši odabrani predmet</a>
-                <div class="list-box-options-btn-group">
-                    <a href="#" class="btn list-box-options-sacuvaj-btn">Dodaj profesora</a>
-                </div>
-            </div>
-        </div>
-        <div class="modal" id="modal-subject">
-            <div class="list-box-options form-predmet">
-                <div class="list-box-options-input-row close-container">
-                    <h1 class="list-box-options-title">Dodavanje predmeta određenom profesoru</h1>
-                    <span id="btn-modal-subject-close">X</span>
-                </div>
-                    <div class="list-box-options-input-group">
-                        <label for="ime" class="list-box-options-label">Naziv predmeta</label>
-                        <input type="text" name="naziv-predmeta" id="naziv-predmeta" class="list-box-options-input">
-                    </div>
-                    <a href="#" class="btn list-box-options-sacuvaj-btn">Dodaj predmet</a>
-
-        </div>
-        </div>
 
         {% include 'partials/search.html' %}
 
@@ -99,11 +25,11 @@
             </div>
 
             <div class="pagination">
-                <div class="pagination-item">&larr;</div>
-                <div class="pagination-item">1</div>
-                <div class="pagination-item">2</div>
-                <div class="pagination-item">3</div>
-                <div class="pagination-item">&rarr;</div>
+                <a class="pagination-item disabled" href="#">&larr;</a>
+                <a class="pagination-item" href="#">1</a>
+                <a class="pagination-item" href="#">2</a>
+                <a class="pagination-item" href="#">3</a>
+                <a class="pagination-item" href="#">&rarr;</a>
             </div>
 
     </main>

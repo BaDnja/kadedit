@@ -5,9 +5,9 @@ from . import models
 def subjects(request):
     """Handle getting main page for professors"""
     if request.user.is_authenticated:
-        all_subjects = models.Subject.objects.all()
+        all_subjects = models.Subject.objects.filter(active=True)
         context = {
-            'all_professors': all_subjects,
+            'obj_list': all_subjects,
         }
 
         return render(request, 'subjects/dashboard-subjects.html', context)

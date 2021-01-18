@@ -177,12 +177,17 @@
   float: right;
   margin-bottom: 1rem;
 }
-.pagination-item {
+.pagination-item{
   display: inline-block;
   font-size: 2rem;
   padding: 1rem;
   border-bottom: 2px solid transparent;
   font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+.disabled {
+  pointer-events: none;
 }
 .pagination-item:hover {
   color: var(--color-blue-dark);
