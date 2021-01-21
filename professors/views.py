@@ -37,3 +37,71 @@ def professor(request, professor_id):
         return render(request, 'professors/professor.html', context)
     else:
         return redirect('user_login')
+
+
+def work_statuses(request):
+    """Handles getting page for listing all work statuses in the system."""
+    if request.user.is_authenticated:
+        all_work_statuses = models.WorkStatus.objects.all().order_by('id')
+
+        paginator = Paginator(all_work_statuses, 10)
+        page = request.GET.get('page')
+
+        try:
+            paged_statuses = paginator.get_page(page)
+        except PageNotAnInteger:
+            paged_statuses = paginator.page(1)
+        except EmptyPage:
+            paged_statuses = paginator.page(paginator.num_pages)
+
+        context = {
+            'statuses': paged_statuses,
+        }
+
+        return render(request, 'professors/work_statuses.html', context)
+    else:
+        return redirect('user_login')
+
+
+def work_status_add(request):
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        if models.WorkStatus.objects.filter(name=name).exists():
+            return redirect('work_status_add')
+        else:
+            status = models.WorkStatus(name=name)
+            status.save()
+            return redirect('work_statuses')
+    return render(request, 'professors/work_status_add.html')
+
+
+def single_work_status(request, status_id):
+    if request.user.is_authenticated:
+        status = get_object_or_404(models.WorkStatus, pk=status_id)
+
+        context = {
+            'status': status,
+        }
+        return render(request, 'professors/single_work_status.html', context)
+    else:
+        return redirect('user_login')
+
+
+def work_status_update(request, status_id):
+    status = get_object_or_404(models.WorkStatus, pk=status_id)
+
+    if request.method == 'POST':
+        status.name = request.POST.get("Name")
+        status.save()
+        return redirect('single_work_status', status_id=status_id)
+    else:
+        return redirect('work_statuses')
+
+
+def work_status_delete(request, status_id):
+    status = get_object_or_404(models.WorkStatus, pk=status_id)
+
+    if request.method == 'POST':
+        status.delete()
+        return redirect('work_statuses')

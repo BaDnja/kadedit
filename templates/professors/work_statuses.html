@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radni statusi</title>
+</head>
+<body>
+{% if statuses %}
+    {% for status in statuses %}
+        <a href="{% url 'single_work_status' status.id %}">{{ status.id }}: {{ status.name }}- | -</a>
+    {% endfor %}
+{% endif %}
+</body>
+</html>
