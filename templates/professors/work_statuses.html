@@ -5,9 +5,10 @@
     <title>Radni statusi</title>
 </head>
 <body>
+{% include 'partials/_alerts.html' %}
 {% if statuses %}
     {% for status in statuses %}
-        <a href="{% url 'single_work_status' status.id %}">{{ status.id }}: {{ status.name }}- | -</a>
+        <a href="{% url 'single_work_status' status.id %}">{{ status.id }}: {{ status.name }}</a>
     {% endfor %}
 {% endif %}
 </body>

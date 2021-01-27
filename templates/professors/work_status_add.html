@@ -5,6 +5,7 @@
     <title>Dodaj radni status</title>
 </head>
 <body>
+    {% include "partials/_alerts.html" %}
     <form action="{% url 'work_status_add' %}" method="POST">
         {% csrf_token %}
         <label for="Name">Naziv:</label>

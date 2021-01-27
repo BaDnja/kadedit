@@ -11,6 +11,7 @@
         <!-- List box with professors / subjects with options -->
 
             <div class="list-box">
+            {% include 'partials/_alerts.html' %}
             {% if obj_list %}
                 {% for obj_list in obj_list %}
                     <div class="list-box-item">

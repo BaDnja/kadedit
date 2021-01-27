@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from . import models
 
 
@@ -60,48 +61,69 @@ def work_statuses(request):
 
         return render(request, 'professors/work_statuses.html', context)
     else:
+        messages.error(request, "Prijavite se na sistem")
         return redirect('user_login')
-
-
-def work_status_add(request):
-    if request.method == 'POST':
-        name = request.POST['Name']
-
-        if models.WorkStatus.objects.filter(name=name).exists():
-            return redirect('work_status_add')
-        else:
-            status = models.WorkStatus(name=name)
-            status.save()
-            return redirect('work_statuses')
-    return render(request, 'professors/work_status_add.html')
 
 
 def single_work_status(request, status_id):
     if request.user.is_authenticated:
-        status = get_object_or_404(models.WorkStatus, pk=status_id)
-
-        context = {
-            'status': status,
-        }
-        return render(request, 'professors/single_work_status.html', context)
+        if request.user.has_perm("professors.view_workstatus"):
+            status = get_object_or_404(models.WorkStatus, pk=status_id)
+            context = {
+                'status': status,
+            }
+            return render(request, 'professors/single_work_status.html', context)
+        else:
+            messages.error(request, "Niste ovlašteni za pregled radnog statusa")
+            return redirect('work_statuses')
     else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
+
+
+def work_status_add(request):
+    if request.user.is_authenticated:
+        if request.user.has_perm("professors.add_workstatus"):
+            if request.method == 'POST':
+                name = request.POST['Name']
+
+                if models.WorkStatus.objects.filter(name=name).exists():
+                    messages.error(request, "Status već postoji")
+                    return redirect('work_status_add')
+                else:
+                    status = models.WorkStatus(name=name)
+                    status.save()
+                    messages.success(request, "Uspješno dodan status")
+                    return redirect('work_statuses')
+            return render(request, 'professors/work_status_add.html')
+        else:
+            messages.error(request, "Nemate ovlaštenje za dodavanje radnog statusa")
+            return redirect('work_statuses')
+    else:
+        messages.error(request, "Prijavite se na sistem")
         return redirect('user_login')
 
 
 def work_status_update(request, status_id):
     status = get_object_or_404(models.WorkStatus, pk=status_id)
-
-    if request.method == 'POST':
-        status.name = request.POST.get("Name")
-        status.save()
-        return redirect('single_work_status', status_id=status_id)
+    if request.user.has_perm("professors.change_workstatus"):
+        if request.method == 'POST':
+            status.name = request.POST.get("Name")
+            status.save()
+            messages.success(request, "Uspješna izmjena")
+            return redirect('single_work_status', status_id=status_id)
     else:
-        return redirect('work_statuses')
+        messages.error(request, "Nemate ovlaštenje za izmjenu radnog statusa")
+        return redirect("work_statuses")
 
 
 def work_status_delete(request, status_id):
     status = get_object_or_404(models.WorkStatus, pk=status_id)
-
-    if request.method == 'POST':
-        status.delete()
-        return redirect('work_statuses')
+    if request.user.has_perm("professors.delete_workstatus"):
+        if request.method == 'POST':
+            status.delete()
+            messages.success(request, "Uspješno obrisan status")
+            return redirect('work_statuses')
+    else:
+        messages.error(request, "Nemate ovlaštenje za brisanje radnog statusa")
+        return redirect('single_work_status', status_id=status_id)
