@@ -41,7 +41,11 @@ def professor(request, professor_id):
 
 
 def work_statuses(request):
-    """Handles getting page for listing all work statuses in the system."""
+    """
+    Handles getting page for listing all work statuses in the system.
+    Function check if request user is authenticated. If not, it redirects the user to the login page.
+    If user is authenticated, it creates pagination and lists all work statuses for that pagination page.
+    """
     if request.user.is_authenticated:
         all_work_statuses = models.WorkStatus.objects.all().order_by('id')
 
@@ -66,6 +70,11 @@ def work_statuses(request):
 
 
 def single_work_status(request, status_id):
+    """
+    Handles listing single work status for given status id.
+    Function checks if user is authenticated and has permission to view status. If user is not authenticated
+    or doesn't have permission to view status, system redirects request user to other pages with corresponding messages.
+    """
     if request.user.is_authenticated:
         if request.user.has_perm("professors.view_workstatus"):
             status = get_object_or_404(models.WorkStatus, pk=status_id)
@@ -82,6 +91,10 @@ def single_work_status(request, status_id):
 
 
 def work_status_add(request):
+    """
+    Handles adding status to database while checking if the user is authenticated and has permission to add work status.
+    Function also checks if there already exists work status by the same name.
+    """
     if request.user.is_authenticated:
         if request.user.has_perm("professors.add_workstatus"):
             if request.method == 'POST':
@@ -105,6 +118,11 @@ def work_status_add(request):
 
 
 def work_status_update(request, status_id):
+    """
+    Updating work status only checks if user has permission to update status by it's id.
+    If request user doesn't have permission to update status, system redirects user to all statuses and shows
+    corresponding message.
+    """
     status = get_object_or_404(models.WorkStatus, pk=status_id)
     if request.user.has_perm("professors.change_workstatus"):
         if request.method == 'POST':
@@ -118,6 +136,10 @@ def work_status_update(request, status_id):
 
 
 def work_status_delete(request, status_id):
+    """
+    Deleting work status checks if request user has permission to delete, and if not, system redirects user to
+    page for viewing that status and shows corresponding message.
+    """
     status = get_object_or_404(models.WorkStatus, pk=status_id)
     if request.user.has_perm("professors.delete_workstatus"):
         if request.method == 'POST':
