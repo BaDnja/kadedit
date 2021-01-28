@@ -216,3 +216,19 @@ def academic_title_update(request, title_id):
     else:
         messages.error(request, "Nemate ovlaštenje za izmjenu akademske titule")
         return redirect('academic_titles')
+
+
+def academic_title_delete(request, title_id):
+    """
+    Deleting academic title checks if request user has permission to delete, and if not, system redirects user to
+    page for viewing that title and shows corresponding message.
+    """
+    title = get_object_or_404(models.AcademicTitle, pk=title_id)
+    if request.user.has_perm("professors.delete_academictitle"):
+        if request.method == 'POST':
+            title.delete()
+            messages.success(request, "Uspješno obrisana akademska titula")
+            return redirect('academic_titles')
+    else:
+        messages.error(request, "Nemate ovlaštenje za brisanje akademske titule")
+        return redirect('single_academic_title', title_id=title_id)

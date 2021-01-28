@@ -16,5 +16,12 @@
 </form>
 
 {% include 'partials/_alerts.html' %}
+
+{% if perms.professors.delete_academictitle %}
+    <form action="{% url 'academic_title_delete' title.id %}" method='POST'>
+    {% csrf_token %}
+    <button type="submit" value="Delete">Obrisi akademsku titulu</button>
+    </form>
+{% endif %}
 </body>
 </html>
