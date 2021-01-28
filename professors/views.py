@@ -200,6 +200,32 @@ def single_academic_title(request, title_id):
         return redirect('user_login')
 
 
+def academic_title_add(request):
+    """
+    Handles adding academic title to database while checking if the user is authenticated and has permission to add
+    academic title.
+    Function also checks if there already exists academic title by the same name.
+    """
+    if request.user.is_authenticated:
+        if request.user.has_perm("professors.add_academictitle"):
+            if request.method == 'POST':
+                name = request.POST['Name']
+                if models.AcademicTitle.objects.filter(name=name).exists():
+                    messages.error(request, "Titula već postoji u bazi")
+                    return redirect('academic_title_add')
+                else:
+                    title = models.AcademicTitle(name=name)
+                    title.save()
+                    messages.success(request, "Uspješno dodana akademska titula")
+                    return redirect('academic_titles')
+            return render(request, 'professors/academic_titles/academic_title_add.html')
+        else:
+            messages.error(request, "Nemate ovlaštenje za dodavanje akademske titule")
+            return redirect('academic_titles')
+    else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
+
 def academic_title_update(request, title_id):
     """
     Updating academic title only checks if user has permission to update academic title by it's id.

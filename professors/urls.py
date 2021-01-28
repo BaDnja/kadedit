@@ -12,6 +12,7 @@ work_statuses_patterns = [
 academic_title_patterns = [
     path('', views.academic_titles, name='academic_titles'),
     path('title/<int:title_id>/', views.single_academic_title, name='single_academic_title'),
+    path('title/add', views.academic_title_add, name="academic_title_add"),
     path('title/update/<int:title_id>/', views.academic_title_update, name='academic_title_update'),
     path('title/delete/<int:title_id>/', views.academic_title_delete, name='academic_title_delete'),
 ]
