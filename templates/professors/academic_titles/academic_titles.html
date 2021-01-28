@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Akademske titule</title>
+</head>
+<body>
+{% if titles %}
+    {% for title in titles %}
+        {{ title.id }}. - {{ title.name }}
+    {% endfor %}
+{% endif %}
+</body>
+</html>

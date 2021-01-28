@@ -9,8 +9,13 @@ work_statuses_patterns = [
     path('status/delete/<int:status_id>/', views.work_status_delete, name="work_status_delete"),
 ]
 
+academic_title_patterns = [
+    path('', views.academic_titles, name='academic_titles'),
+]
+
 urlpatterns = [
     path('', views.professors, name='professors'),
     path('<int:professor_id>', views.professor, name='professor'),
     path('work_statuses/', include(work_statuses_patterns)),
+    path('academic_titles/', include(academic_title_patterns)),
 ]

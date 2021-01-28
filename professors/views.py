@@ -24,6 +24,7 @@ def professors(request):
         }
         return render(request, 'professors/dashboard-professors.html', context)
     else:
+        messages.error(request, "Prijavite se na sistem")
         return redirect('user_login')
 
 
@@ -47,7 +48,7 @@ def work_statuses(request):
     If user is authenticated, it creates pagination and lists all work statuses for that pagination page.
     """
     if request.user.is_authenticated:
-        all_work_statuses = models.WorkStatus.objects.all().order_by('id')
+        all_work_statuses = models.WorkStatus.objects.all()
 
         paginator = Paginator(all_work_statuses, 10)
         page = request.GET.get('page')
@@ -149,3 +150,30 @@ def work_status_delete(request, status_id):
     else:
         messages.error(request, "Nemate ovlaštenje za brisanje radnog statusa")
         return redirect('single_work_status', status_id=status_id)
+
+
+def academic_titles(request):
+    """
+    Handle getting all academic titles objects with pagination.
+    If user is not authenticated, system redirects to login page with corresponding message.
+    """
+    if request.user.is_authenticated:
+        titles = models.AcademicTitle.objects.all()
+        paginator = Paginator(titles, 10)
+        page = request.GET.get('page')
+
+        try:
+            paged_titles = paginator.get_page(page)
+        except PageNotAnInteger:
+            paged_titles = paginator.page(1)
+        except EmptyPage:
+            paged_titles = paginator.page(paginator.num_pages)
+
+        context = {
+            'titles': paged_titles,
+        }
+
+        return render(request, "professors/academic_titles/academic_titles.html", context)
+    else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
