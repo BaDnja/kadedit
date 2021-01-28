@@ -177,3 +177,28 @@ def academic_titles(request):
     else:
         messages.error(request, "Prijavite se na sistem")
         return redirect('user_login')
+
+
+def single_academic_title(request, title_id):
+    """
+    Handles listing single academic title for given title id.
+    Function checks if user is authenticated and has permission to view title. If user is not authenticated
+    or doesn't have permission to view title, system redirects request user to other pages with corresponding messages.
+    """
+    if request.user.is_authenticated:
+        if request.user.has_perm("professors.view_academictitle"):
+            title = get_object_or_404(models.AcademicTitle, pk=title_id)
+            context = {
+                'title': title,
+            }
+            return render(request, "professors/academic_titles/single_academic_title.html", context)
+        else:
+            messages.error(request, "Niste ovlašteni za pregled akademske titule")
+            return redirect('academic_titles')
+    else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
+
+
+def academic_title_update(request, title_id):
+    pass

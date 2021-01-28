@@ -5,9 +5,10 @@
     <title>Akademske titule</title>
 </head>
 <body>
+{% include 'partials/_alerts.html' %}
 {% if titles %}
     {% for title in titles %}
-        {{ title.id }}. - {{ title.name }}
+        <a href="{% url 'single_academic_title' title.id %}">{{ title.id }}. - {{ title.name }}</a>
     {% endfor %}
 {% endif %}
 </body>

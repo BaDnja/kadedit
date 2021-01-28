@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if title %} {{ title.name|capfirst }} {% else %} Akademska titula {% endif %}</title>
+</head>
+<body>
+<form action="{% url 'academic_title_update' title.id %}" method="POST">
+{% csrf_token %}
+
+<label for="Name"></label>
+<input id="Name" type="text" value="{{ title.name }}" name="Name"/>
+{% if perms.professors.change_academictitle %}
+    <button type="submit" value="Save">Spremi promjene</button>
+{% endif %}
+</form>
+
+{% include 'partials/_alerts.html' %}
+</body>
+</html>
