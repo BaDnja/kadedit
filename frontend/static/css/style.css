@@ -53,3 +53,45 @@ html {
   color: var(--color-green-fzn);
 }
 
+/* ALERTS */
+.container {
+  width: 50%;
+}
+@keyframes alertFadeOut {
+  from {
+    opacity: 1;
+    display: block;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+.alert {
+  font-size: 1.5rem;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  animation-name: alertFadeOut;
+  animation-delay: 3s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  margin: 1rem;
+}
+.alert-danger {
+  background-color: #F8D7DA;
+  color: #975057;
+  border: 1px solid #F5C6CB;
+
+}
+.alert-info {
+  background-color: #D1ECF1;
+  color: #689BA3;
+  border: 1px solid #C3E6CB;
+}
+.alert-success {
+  background-color: #D4EDDA;
+  color: #2C693B;
+  border: 1px solid #BEE5EB;
+}
+
