@@ -48,7 +48,7 @@ def work_statuses(request):
     If user is authenticated, it creates pagination and lists all work statuses for that pagination page.
     """
     if request.user.is_authenticated:
-        all_work_statuses = models.WorkStatus.objects.all()
+        all_work_statuses = models.WorkStatus.objects.all().order_by('id')
 
         paginator = Paginator(all_work_statuses, 10)
         page = request.GET.get('page')
@@ -158,7 +158,7 @@ def academic_titles(request):
     If user is not authenticated, system redirects to login page with corresponding message.
     """
     if request.user.is_authenticated:
-        titles = models.AcademicTitle.objects.all()
+        titles = models.AcademicTitle.objects.all().order_by('id')
         paginator = Paginator(titles, 10)
         page = request.GET.get('page')
 
@@ -201,4 +201,18 @@ def single_academic_title(request, title_id):
 
 
 def academic_title_update(request, title_id):
-    pass
+    """
+    Updating academic title only checks if user has permission to update academic title by it's id.
+    If request user doesn't have permission to update, system redirects user to all academic titles and shows
+    corresponding message.
+    """
+    title = get_object_or_404(models.AcademicTitle, pk=title_id)
+    if request.user.has_perm("professors.change_academictitle"):
+        if request.method == 'POST':
+            title.name = request.POST.get("Name")
+            title.save()
+            messages.success(request, "Uspješna izmjena")
+            return redirect('single_academic_title', title_id=title_id)
+    else:
+        messages.error(request, "Nemate ovlaštenje za izmjenu akademske titule")
+        return redirect('academic_titles')
