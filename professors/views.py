@@ -64,7 +64,7 @@ def work_statuses(request):
             'statuses': paged_statuses,
         }
 
-        return render(request, 'professors/work_statuses.html', context)
+        return render(request, 'professors/work_statuses/work_statuses.html', context)
     else:
         messages.error(request, "Prijavite se na sistem")
         return redirect('user_login')
@@ -82,7 +82,7 @@ def single_work_status(request, status_id):
             context = {
                 'status': status,
             }
-            return render(request, 'professors/single_work_status.html', context)
+            return render(request, 'professors/work_statuses/single_work_status.html', context)
         else:
             messages.error(request, "Niste ovlašteni za pregled radnog statusa")
             return redirect('work_statuses')
@@ -109,7 +109,7 @@ def work_status_add(request):
                     status.save()
                     messages.success(request, "Uspješno dodan status")
                     return redirect('work_statuses')
-            return render(request, 'professors/work_status_add.html')
+            return render(request, 'professors/work_statuses/work_status_add.html')
         else:
             messages.error(request, "Nemate ovlaštenje za dodavanje radnog statusa")
             return redirect('work_statuses')
@@ -226,6 +226,7 @@ def academic_title_add(request):
         messages.error(request, "Prijavite se na sistem")
         return redirect('user_login')
 
+
 def academic_title_update(request, title_id):
     """
     Updating academic title only checks if user has permission to update academic title by it's id.
@@ -258,3 +259,46 @@ def academic_title_delete(request, title_id):
     else:
         messages.error(request, "Nemate ovlaštenje za brisanje akademske titule")
         return redirect('single_academic_title', title_id=title_id)
+
+
+def engagements(request):
+    """
+    Handle getting all engagements objects with pagination.
+    If user is not authenticated, system redirects to login page with corresponding message.
+    """
+    if request.user.is_authenticated:
+        all_engagements = models.Engagement.objects.all().order_by('id')
+        paginator = Paginator(all_engagements, 10)
+        page = request.GET.get('page')
+
+        try:
+            paged_engagements = paginator.get_page(page)
+        except PageNotAnInteger:
+            paged_engagements = paginator.page(1)
+        except EmptyPage:
+            paged_engagements = paginator.page(paginator.num_pages)
+
+        context = {
+            'engagements': paged_engagements,
+        }
+
+        return render(request, "professors/engagements/engagements.html", context)
+    else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
+
+
+def single_engagement(request, engagement_id):
+    return render(request, "professors/engagements/single_engagement.html")
+
+
+def engagement_add(request):
+    pass
+
+
+def engagement_update(request, engagement_id):
+    pass
+
+
+def engagement_delete(request, engagement_id):
+    pass

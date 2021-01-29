@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angazovanja</title>
+</head>
+<body>
+{% include 'partials/_alerts.html' %}
+{% if engagements %}
+    {% for engagement in engagements %}
+        <a href="{% url 'single_engagement' engagement.id %}">{{ engagement.id }}. - {{ engagement.name }}</a>
+    {% endfor %}
+{% endif %}
+</body>
+</html>

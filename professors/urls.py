@@ -1,6 +1,14 @@
 from django.urls import path, include
 from . import views
 
+engagements_patterns = [
+    path('', views.engagements, name='engagements'),
+    path('engagement/<int:engagement_id>/', views.single_engagement, name='single_engagement'),
+    path('engagement/add', views.engagement_add, name='engagement_add'),
+    path('engagement/update/<int:engagement_id>/', views.engagement_update, name='engagement_update'),
+    path('engagement/delete/<int:engagement_id>/', views.engagement_delete, name='engagement_delete'),
+]
+
 work_statuses_patterns = [
     path('', views.work_statuses, name='work_statuses'),
     path('status/<int:status_id>/', views.single_work_status, name='single_work_status'),
@@ -22,4 +30,5 @@ urlpatterns = [
     path('<int:professor_id>', views.professor, name='professor'),
     path('work_statuses/', include(work_statuses_patterns)),
     path('academic_titles/', include(academic_title_patterns)),
+    path('engagements/', include(engagements_patterns)),
 ]
