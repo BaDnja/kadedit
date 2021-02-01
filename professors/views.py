@@ -289,16 +289,82 @@ def engagements(request):
 
 
 def single_engagement(request, engagement_id):
-    return render(request, "professors/engagements/single_engagement.html")
+    """
+    Handles listing single engagement for given title id.
+    Function checks if user is authenticated and has permission to view engagement. If user is not authenticated
+    or doesn't have permission to view, system redirects request user to other pages with corresponding messages.
+    """
+    if request.user.is_authenticated:
+        if request.user.has_perm("professors.view_engagement"):
+            engagement = get_object_or_404(models.Engagement, pk=engagement_id)
+            context = {
+                'engagement': engagement,
+            }
+            return render(request, "professors/engagements/single_engagement.html", context)
+        else:
+            messages.error(request, "Niste ovlašteni za pregled angažovanja")
+            return redirect('engagements')
+    else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
 
 
 def engagement_add(request):
-    pass
+    """
+    Handles adding new engagement to database while checking if the user is authenticated and has permission to add
+    engagement.
+    Function also checks if there already exists engagement by the same name.
+    """
+    if request.user.is_authenticated:
+        if request.user.has_perm("professors.add_engagement"):
+            if request.method == 'POST':
+                name = request.POST['Name']
+                if models.Engagement.objects.filter(name=name).exists():
+                    messages.error(request, "Angazovanje već postoji u bazi")
+                    return redirect('engagement_add')
+                else:
+                    engagement = models.Engagement(name=name)
+                    engagement.save()
+                    messages.success(request, "Uspješno dodano angazovanje")
+                    return redirect('engagements')
+            return render(request, 'professors/engagements/engagement_add.html')
+        else:
+            messages.error(request, "Nemate ovlaštenje za dodavanje angazovanja")
+            return redirect('engagements')
+    else:
+        messages.error(request, "Prijavite se na sistem")
+        return redirect('user_login')
 
 
 def engagement_update(request, engagement_id):
-    pass
+    """
+    Updating engagement only checks if user has permission to update engagement by it's id.
+    If request user doesn't have permission to update, system redirects user to all engagements and shows
+    corresponding message.
+    """
+    engagement = get_object_or_404(models.Engagement, pk=engagement_id)
+    if request.user.has_perm("professors.change_engagement"):
+        if request.method == 'POST':
+            engagement.name = request.POST.get("Name")
+            engagement.save()
+            messages.success(request, "Uspješna izmjena")
+            return redirect('single_engagement', engagement_id=engagement_id)
+    else:
+        messages.error(request, "Nemate ovlaštenje za izmjenu radnog statusa")
+        return redirect("work_statuses")
 
 
 def engagement_delete(request, engagement_id):
-    pass
+    """
+    Deleting engagement checks if request user has permission to delete, and if not, system redirects user to
+    page for viewing that engagement and shows corresponding message.
+    """
+    engagement = get_object_or_404(models.Engagement, pk=engagement_id)
+    if request.user.has_perm("professors.delete_engagement"):
+        if request.method == 'POST':
+            engagement.delete()
+            messages.success(request, "Uspješno obrisano angazovanje")
+            return redirect('engagements')
+    else:
+        messages.error(request, "Nemate ovlaštenje za brisanje angazovanja")
+        return redirect('single_engagement', engagement_id=engagement_id)

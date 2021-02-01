@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj angazovanje</title>
+</head>
+<body>
+    {% include "partials/_alerts.html" %}
+    <form action="{% url 'engagement_add' %}" method="POST">
+        {% csrf_token %}
+        <label for="Name">Naziv:</label>
+        <input id="Name" name="Name" type="text" required />
+        <button type="submit" value="Add">Dodaj</button>
+    </form>
+</body>
+</html>

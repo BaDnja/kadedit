@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import SET_NULL, CASCADE
+from django.db.models import SET_NULL
 from kadedit.models import TimeModelMixin
 from subjects.models import Subject
 from django.utils.translation import ugettext_lazy as _
