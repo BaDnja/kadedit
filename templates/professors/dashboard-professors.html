@@ -13,11 +13,11 @@
             <div class="list-box">
             {% include 'partials/_alerts.html' %}
             {% if obj_list %}
-                {% for obj_list in obj_list %}
+                {% for obj in obj_list %}
                     <div class="list-box-item">
-                        <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ obj_list }}</span></h1>
-                        <p class="list-box-item-desc list-box-item-calling">{{ obj_list.academic_title }}</p>
-                        <p class="list-box-item-desc list-box-item-engagement">{{ obj_list.engagement }}</p>
+                        <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ obj }}</span></h1>
+                        <p class="list-box-item-desc list-box-item-calling">{{ obj.academic_title|default_if_none:'' }}</p>
+                        <p class="list-box-item-desc list-box-item-engagement">{{ obj.engagement|default_if_none:'' }}</p>
                     </div>
                 {% endfor %}
             {% else %}

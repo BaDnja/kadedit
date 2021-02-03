@@ -1,31 +1,36 @@
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from . import models
 
 
+@login_required
+def view_multiple_objects(request, queryset, template):
+    """Handle getting and displaying multiple objects"""
+    query = queryset
+
+    paginator = Paginator(query, 15)
+    page = request.GET.get('page')
+
+    try:
+        paged_query = paginator.get_page(page)
+    except PageNotAnInteger:
+        paged_query = paginator.page(1)
+    except EmptyPage:
+        paged_query = paginator.page(paginator.num_pages)
+
+    context = {
+        'obj_list': paged_query,
+    }
+    return render(request, template, context)
+
+
 def professors(request):
     """Handle getting main page for professors"""
-    if request.user.is_authenticated:
-        all_professors = models.Professor.objects.filter(active=True).order_by('-id')
-
-        paginator = Paginator(all_professors, 15)
-        page = request.GET.get('page')
-
-        try:
-            paged_professors = paginator.get_page(page)
-        except PageNotAnInteger:
-            paged_professors = paginator.page(1)
-        except EmptyPage:
-            paged_professors = paginator.page(paginator.num_pages)
-
-        context = {
-            'obj_list': paged_professors,
-        }
-        return render(request, 'professors/dashboard-professors.html', context)
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    queryset = models.Professor.objects.filter(active=True).order_by('-id')
+    template = 'professors/dashboard-professors.html'
+    return view_multiple_objects(request, queryset, template)
 
 
 def professor(request, professor_id):
@@ -47,27 +52,9 @@ def work_statuses(request):
     Function check if request user is authenticated. If not, it redirects the user to the login page.
     If user is authenticated, it creates pagination and lists all work statuses for that pagination page.
     """
-    if request.user.is_authenticated:
-        all_work_statuses = models.WorkStatus.objects.all().order_by('id')
-
-        paginator = Paginator(all_work_statuses, 10)
-        page = request.GET.get('page')
-
-        try:
-            paged_statuses = paginator.get_page(page)
-        except PageNotAnInteger:
-            paged_statuses = paginator.page(1)
-        except EmptyPage:
-            paged_statuses = paginator.page(paginator.num_pages)
-
-        context = {
-            'statuses': paged_statuses,
-        }
-
-        return render(request, 'professors/work_statuses/work_statuses.html', context)
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    queryset = models.WorkStatus.objects.all().order_by('id')
+    template = 'professors/work_statuses/work_statuses.html'
+    return view_multiple_objects(request, queryset, template)
 
 
 def single_work_status(request, status_id):
@@ -157,26 +144,9 @@ def academic_titles(request):
     Handle getting all academic titles objects with pagination.
     If user is not authenticated, system redirects to login page with corresponding message.
     """
-    if request.user.is_authenticated:
-        titles = models.AcademicTitle.objects.all().order_by('id')
-        paginator = Paginator(titles, 10)
-        page = request.GET.get('page')
-
-        try:
-            paged_titles = paginator.get_page(page)
-        except PageNotAnInteger:
-            paged_titles = paginator.page(1)
-        except EmptyPage:
-            paged_titles = paginator.page(paginator.num_pages)
-
-        context = {
-            'titles': paged_titles,
-        }
-
-        return render(request, "professors/academic_titles/academic_titles.html", context)
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    queryset = models.AcademicTitle.objects.all().order_by('id')
+    template = 'professors/academic_titles/academic_titles.html'
+    return view_multiple_objects(request, queryset, template)
 
 
 def single_academic_title(request, title_id):
@@ -266,26 +236,9 @@ def engagements(request):
     Handle getting all engagements objects with pagination.
     If user is not authenticated, system redirects to login page with corresponding message.
     """
-    if request.user.is_authenticated:
-        all_engagements = models.Engagement.objects.all().order_by('id')
-        paginator = Paginator(all_engagements, 10)
-        page = request.GET.get('page')
-
-        try:
-            paged_engagements = paginator.get_page(page)
-        except PageNotAnInteger:
-            paged_engagements = paginator.page(1)
-        except EmptyPage:
-            paged_engagements = paginator.page(paginator.num_pages)
-
-        context = {
-            'engagements': paged_engagements,
-        }
-
-        return render(request, "professors/engagements/engagements.html", context)
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    queryset = models.Engagement.objects.all().order_by('id')
+    template = 'professors/engagements/engagements.html'
+    return view_multiple_objects(request, queryset, template)
 
 
 def single_engagement(request, engagement_id):

@@ -16,6 +16,7 @@
           {% include 'partials/_alerts.html' %}
           <input name="username" type="text" id="login-username" placeholder="Korisničko ime" class="login-text login-form-username">
           <input name="password" type="password" id="login-password" placeholder="Šifra" class="login-text login-form-password">
+          <input type="hidden" name="next" value="{{ request.GET.next }}">
           <input type="submit" id="login-btn" value="Prijava" class="login-form-submit-btn">
         </form>
 

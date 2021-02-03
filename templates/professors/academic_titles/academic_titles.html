@@ -6,9 +6,9 @@
 </head>
 <body>
 {% include 'partials/_alerts.html' %}
-{% if titles %}
-    {% for title in titles %}
-        <a href="{% url 'single_academic_title' title.id %}">{{ title.id }}. - {{ title.name }}</a>
+{% if obj_list %}
+    {% for obj in obj_list %}
+        <a href="{% url 'single_academic_title' obj.id %}">{{ obj.id }}. - {{ obj.name }}</a>
     {% endfor %}
 {% endif %}
 </body>

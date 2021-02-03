@@ -6,9 +6,9 @@
 </head>
 <body>
 {% include 'partials/_alerts.html' %}
-{% if statuses %}
-    {% for status in statuses %}
-        <a href="{% url 'single_work_status' status.id %}">{{ status.id }}: {{ status.name }}</a>
+{% if obj_list %}
+    {% for obj in obj_list %}
+        <a href="{% url 'single_work_status' obj.id %}">{{ obj.id }}: {{ obj.name }}</a>
     {% endfor %}
 {% endif %}
 </body>

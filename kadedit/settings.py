@@ -115,6 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ] if not DEBUG else []
 
+LOGIN_REDIRECT_URL = '/professors/'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
