@@ -38,6 +38,14 @@
   padding: 3rem 0;
   font-weight: bold;
 }
+.navbar-navigation-subitem {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.navbar-navigation-item-active {
+  background-color: var(--color-blue-light);
+}
 .navbar-navigation-item:hover {
   background-color: var(--color-blue-light);
 }
