@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% if title %} {{ title.name|capfirst }} {% else %} Akademska titula {% endif %}</title>
+    <title>{% if obj %} {{ obj.name|capfirst }} {% else %} Akademska titula {% endif %}</title>
 </head>
 <body>
-<form action="{% url 'academic_title_update' title.id %}" method="POST">
+<form action="{% url 'academic_title_update' object.id %}" method="POST">
 {% csrf_token %}
 
 <label for="Name"></label>
-<input id="Name" type="text" value="{{ title.name }}" name="Name"/>
+<input id="Name" type="text" value="{{ object.name }}" name="Name"/>
 {% if perms.professors.change_academictitle %}
     <button type="submit" value="Save">Spremi promjene</button>
 {% endif %}
@@ -18,7 +18,7 @@
 {% include 'partials/_alerts.html' %}
 
 {% if perms.professors.delete_academictitle %}
-    <form action="{% url 'academic_title_delete' title.id %}" method='POST'>
+    <form action="{% url 'academic_title_delete' object.id %}" method='POST'>
     {% csrf_token %}
     <button type="submit" value="Delete">Obrisi akademsku titulu</button>
     </form>

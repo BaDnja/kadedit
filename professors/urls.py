@@ -25,9 +25,13 @@ academic_title_patterns = [
     path('title/delete/<int:title_id>/', views.academic_title_delete, name='academic_title_delete'),
 ]
 
-urlpatterns = [
+professors_patterns = [
     path('', views.professors, name='professors'),
-    path('<int:professor_id>', views.professor, name='professor'),
+    path('professor/<int:professor_id>', views.professor, name='professor'),
+]
+
+urlpatterns = [
+    path('', include(professors_patterns)),
     path('work_statuses/', include(work_statuses_patterns)),
     path('academic_titles/', include(academic_title_patterns)),
     path('engagements/', include(engagements_patterns)),

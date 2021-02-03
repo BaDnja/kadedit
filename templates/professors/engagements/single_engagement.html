@@ -5,11 +5,11 @@
     <title>Angažovanje</title>
 </head>
 <body>
-<form action="{% url 'engagement_update' engagement.id %}" method="POST">
+<form action="{% url 'engagement_update' object.id %}" method="POST">
     {% csrf_token %}
 
     <label for="Name"></label>
-    <input id="Name" type="text" value="{{ engagement.name }}" name="Name"/>
+    <input id="Name" type="text" value="{{ object.name }}" name="Name"/>
     {% if perms.professors.change_engagement %}
         <button type="submit" value="Save">Spremi promjene</button>
     {% endif %}
@@ -18,7 +18,7 @@
 {% include 'partials/_alerts.html' %}
 
 {% if perms.professors.delete_engagement %}
-    <form action="{% url 'engagement_delete' engagement.id %}" method='POST'>
+    <form action="{% url 'engagement_delete' object.id %}" method='POST'>
     {% csrf_token %}
     <button type="submit" value="Delete">Obrisi angazovanje</button>
     </form>

@@ -5,11 +5,11 @@
     <title>Radni status</title>
 </head>
 <body>
-<form action="{% url 'work_status_update' status.id %}" method="POST">
+<form action="{% url 'work_status_update' object.id %}" method="POST">
     {% csrf_token %}
 
     <label for="Name"></label>
-    <input id="Name" type="text" value="{{ status.name }}" name="Name"/>
+    <input id="Name" type="text" value="{{ object.name }}" name="Name"/>
     {% if perms.professors.change_workstatus %}
         <button type="submit" value="Save">Spremi promjene</button>
     {% endif %}
@@ -18,7 +18,7 @@
 {% include 'partials/_alerts.html' %}
 
 {% if perms.professors.delete_workstatus %}
-    <form action="{% url 'work_status_delete' status.id %}" method='POST'>
+    <form action="{% url 'work_status_delete' object.id %}" method='POST'>
     {% csrf_token %}
     <button type="submit" value="Delete">Obrisi radni status</button>
     </form>

@@ -26,24 +26,30 @@ def view_multiple_objects(request, queryset, template):
     return render(request, template, context)
 
 
+@login_required
+def view_single_object(request, query, template):
+    """Handle getting single object page"""
+    obj = query
+    context = {
+        'object': obj,
+    }
+
+    return render(request, template, context)
+
+
 def professors(request):
     """Handle getting main page for professors"""
     queryset = models.Professor.objects.filter(active=True).order_by('-id')
-    template = 'professors/dashboard-professors.html'
+    template = 'professors/professors/dashboard-professors.html'
     return view_multiple_objects(request, queryset, template)
 
 
+@permission_required('professors.view_professor', raise_exception=True)
 def professor(request, professor_id):
     """Handle getting single page for professor"""
-    if request.user.is_authenticated:
-        prof = get_object_or_404(models.Professor, pk=professor_id)
-        context = {
-            'professor': prof
-        }
-
-        return render(request, 'professors/professor.html', context)
-    else:
-        return redirect('user_login')
+    obj = get_object_or_404(models.Professor, pk=professor_id)
+    template = 'professors/professors/professor.html'
+    return view_single_object(request, obj, template)
 
 
 def work_statuses(request):
@@ -57,25 +63,16 @@ def work_statuses(request):
     return view_multiple_objects(request, queryset, template)
 
 
+@permission_required('professors.view_workstatus', raise_exception=True)
 def single_work_status(request, status_id):
     """
     Handles listing single work status for given status id.
     Function checks if user is authenticated and has permission to view status. If user is not authenticated
     or doesn't have permission to view status, system redirects request user to other pages with corresponding messages.
     """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.view_workstatus"):
-            status = get_object_or_404(models.WorkStatus, pk=status_id)
-            context = {
-                'status': status,
-            }
-            return render(request, 'professors/work_statuses/single_work_status.html', context)
-        else:
-            messages.error(request, "Niste ovlašteni za pregled radnog statusa")
-            return redirect('work_statuses')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    obj = get_object_or_404(models.WorkStatus, pk=status_id)
+    template = 'professors/work_statuses/single_work_status.html'
+    return view_single_object(request, obj, template)
 
 
 def work_status_add(request):
@@ -149,25 +146,16 @@ def academic_titles(request):
     return view_multiple_objects(request, queryset, template)
 
 
+@permission_required('professors.view_academictitle', raise_exception=True)
 def single_academic_title(request, title_id):
     """
     Handles listing single academic title for given title id.
     Function checks if user is authenticated and has permission to view title. If user is not authenticated
     or doesn't have permission to view title, system redirects request user to other pages with corresponding messages.
     """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.view_academictitle"):
-            title = get_object_or_404(models.AcademicTitle, pk=title_id)
-            context = {
-                'title': title,
-            }
-            return render(request, "professors/academic_titles/single_academic_title.html", context)
-        else:
-            messages.error(request, "Niste ovlašteni za pregled akademske titule")
-            return redirect('academic_titles')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    obj = get_object_or_404(models.AcademicTitle, pk=title_id)
+    template = 'professors/academic_titles/single_academic_title.html'
+    return view_single_object(request, obj, template)
 
 
 def academic_title_add(request):
@@ -241,25 +229,16 @@ def engagements(request):
     return view_multiple_objects(request, queryset, template)
 
 
+@permission_required('professors.view_engagement', raise_exception=True)
 def single_engagement(request, engagement_id):
     """
     Handles listing single engagement for given title id.
     Function checks if user is authenticated and has permission to view engagement. If user is not authenticated
     or doesn't have permission to view, system redirects request user to other pages with corresponding messages.
     """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.view_engagement"):
-            engagement = get_object_or_404(models.Engagement, pk=engagement_id)
-            context = {
-                'engagement': engagement,
-            }
-            return render(request, "professors/engagements/single_engagement.html", context)
-        else:
-            messages.error(request, "Niste ovlašteni za pregled angažovanja")
-            return redirect('engagements')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    obj = get_object_or_404(models.Engagement, pk=engagement_id)
+    template = 'professors/engagements/single_engagement.html'
+    return view_single_object(request, obj, template)
 
 
 def engagement_add(request):
