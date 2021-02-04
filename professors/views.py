@@ -107,6 +107,63 @@ def professor(request, professor_id):
     return view_single_object(request, obj, template)
 
 
+@permission_required('professor.add_professor', raise_exception=True)
+def professor_add(request):
+    """Handle adding new professor to database"""
+    if request.method == 'POST':
+        # Get data of the form submit
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
+        dissertation = request.POST['dissertation']
+        active = True if request.POST.get('active') else False
+        workstatus = None if request.POST.get('workstatus') == '-----' else request.POST['workstatus']
+        engagement = None if request.POST.get('engagement') == '-----' else request.POST['engagement']
+        academictitle = None if request.POST.get('academictitle') == '-----' else request.POST['academictitle']
+
+        if models.Professor.objects.filter(first_name=first_name, last_name=last_name).exists():
+            messages.error(request, "Akademski radnik već postoji")
+            return redirect('professor_add')
+        else:
+            prof = models.Professor(first_name=first_name.capitalize(),
+                                    last_name=last_name.capitalize(),
+                                    birthdate=birthdate,
+                                    dissertation=dissertation.capitalize(),
+                                    active=active)
+            prof.save()
+
+            if workstatus:
+                prof = models.Professor(
+                    work_status=models.WorkStatus.objects.get(id=workstatus)
+                )
+            if engagement:
+                prof = models.Professor(
+                    engagement=models.Engagement.objects.get(id=engagement)
+                )
+            if academictitle:
+                prof = models.Professor(
+                    academic_title=models.AcademicTitle.objects.get(id=academictitle)
+                )
+
+            prof.save()
+            messages.success(request, 'Objekat uspješno dodan')
+            return redirect('professors')
+
+    # Get statuses, engagements and titles for drop down menus
+    # Add context to html and display page to user
+    statuses_queryset = models.WorkStatus.objects.all().order_by('id')
+    engagements_queryset = models.Engagement.objects.all().order_by('id')
+    academictitles_queryset = models.AcademicTitle.objects.all().order_by('id')
+
+    context = {
+        'statuses': statuses_queryset,
+        'engagements': engagements_queryset,
+        'academictitles': academictitles_queryset,
+    }
+
+    return render(request, 'professors/professors/professor_add.html', context)
+
+
 def work_statuses(request):
     """
     Handles getting page for listing all work statuses in the system.
