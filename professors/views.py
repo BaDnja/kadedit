@@ -80,6 +80,18 @@ def update_single_object(request, object_to_update, object_id, success_redirect)
         return redirect(success_redirect, object_id)
 
 
+@login_required
+def delete_single_object(request, object_to_update, success_redirect):
+    """
+    Deleting single object checks if request user has permission to delete, and if not, system redirects user 403 page
+    """
+    obj = object_to_update
+    if request.method == 'POST':
+        obj.delete()
+        messages.success(request, "Objekat uspješno obrisan")
+        return redirect(success_redirect)
+
+
 def professors(request):
     """Handle getting main page for professors"""
     queryset = models.Professor.objects.filter(active=True).order_by('-id')
@@ -135,20 +147,11 @@ def work_status_update(request, status_id):
     return update_single_object(request, obj, obj_id, succ_redirect)
 
 
+@permission_required('professors.delete_workstatus', raise_exception=True)
 def work_status_delete(request, status_id):
-    """
-    Deleting work status checks if request user has permission to delete, and if not, system redirects user to
-    page for viewing that status and shows corresponding message.
-    """
-    status = get_object_or_404(models.WorkStatus, pk=status_id)
-    if request.user.has_perm("professors.delete_workstatus"):
-        if request.method == 'POST':
-            status.delete()
-            messages.success(request, "Uspješno obrisan status")
-            return redirect('work_statuses')
-    else:
-        messages.error(request, "Nemate ovlaštenje za brisanje radnog statusa")
-        return redirect('single_work_status', status_id=status_id)
+    obj = get_object_or_404(models.WorkStatus, pk=status_id)
+    succ_redirect = 'work_statuses'
+    return delete_single_object(request, obj, succ_redirect)
 
 
 def academic_titles(request):
@@ -190,20 +193,11 @@ def academic_title_update(request, title_id):
     return update_single_object(request, obj, object_id, succ_redirect)
 
 
+@permission_required('professors.delete_academictitle', raise_exception=True)
 def academic_title_delete(request, title_id):
-    """
-    Deleting academic title checks if request user has permission to delete, and if not, system redirects user to
-    page for viewing that title and shows corresponding message.
-    """
-    title = get_object_or_404(models.AcademicTitle, pk=title_id)
-    if request.user.has_perm("professors.delete_academictitle"):
-        if request.method == 'POST':
-            title.delete()
-            messages.success(request, "Uspješno obrisana akademska titula")
-            return redirect('academic_titles')
-    else:
-        messages.error(request, "Nemate ovlaštenje za brisanje akademske titule")
-        return redirect('single_academic_title', title_id=title_id)
+    obj = get_object_or_404(models.AcademicTitle, pk=title_id)
+    succ_redirect = 'academic_titles'
+    return delete_single_object(request, obj, succ_redirect)
 
 
 def engagements(request):
@@ -245,17 +239,8 @@ def engagement_update(request, engagement_id):
     return update_single_object(request, obj, object_id, succ_redirect)
 
 
+@permission_required('professors.delete_engagement', raise_exception=True)
 def engagement_delete(request, engagement_id):
-    """
-    Deleting engagement checks if request user has permission to delete, and if not, system redirects user to
-    page for viewing that engagement and shows corresponding message.
-    """
-    engagement = get_object_or_404(models.Engagement, pk=engagement_id)
-    if request.user.has_perm("professors.delete_engagement"):
-        if request.method == 'POST':
-            engagement.delete()
-            messages.success(request, "Uspješno obrisano angazovanje")
-            return redirect('engagements')
-    else:
-        messages.error(request, "Nemate ovlaštenje za brisanje angazovanja")
-        return redirect('single_engagement', engagement_id=engagement_id)
+    obj = get_object_or_404(models.Engagement, pk=engagement_id)
+    succ_redirect = 'engagements'
+    return delete_single_object(request, obj, succ_redirect)
