@@ -37,6 +37,33 @@ def view_single_object(request, query, template):
     return render(request, template, context)
 
 
+@login_required
+def add_single_object(request, model, template, error_redirect, success_redirect):
+    """
+    Function adds new object to a database with only one field: name.
+    Handles adding new object to database while checking if the user is authenticated.
+    Function also checks if there already exists object with the same name.
+
+    query: checks if the particular object already exists.
+    model: which model gets checked of form submit.
+    template: returns template for rendering.
+    error_redirect: redirects to error view if object exists.
+    success_redirect: redirects to success view after saving new object.
+    """
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        if model.objects.filter(name=name).exists():
+            messages.error(request, "Objekat već postoji")
+            return redirect(error_redirect)
+        else:
+            new_object = model(name=name)
+            new_object.save()
+            messages.success(request, "Objekat uspješno dodan")
+            return redirect(success_redirect)
+    return render(request, template)
+
+
 def professors(request):
     """Handle getting main page for professors"""
     queryset = models.Professor.objects.filter(active=True).order_by('-id')
@@ -75,31 +102,13 @@ def single_work_status(request, status_id):
     return view_single_object(request, obj, template)
 
 
+@permission_required('professors.add_workstatus', raise_exception=True)
 def work_status_add(request):
-    """
-    Handles adding status to database while checking if the user is authenticated and has permission to add work status.
-    Function also checks if there already exists work status by the same name.
-    """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.add_workstatus"):
-            if request.method == 'POST':
-                name = request.POST['Name']
-
-                if models.WorkStatus.objects.filter(name=name).exists():
-                    messages.error(request, "Status već postoji")
-                    return redirect('work_status_add')
-                else:
-                    status = models.WorkStatus(name=name)
-                    status.save()
-                    messages.success(request, "Uspješno dodan status")
-                    return redirect('work_statuses')
-            return render(request, 'professors/work_statuses/work_status_add.html')
-        else:
-            messages.error(request, "Nemate ovlaštenje za dodavanje radnog statusa")
-            return redirect('work_statuses')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    model = models.WorkStatus
+    template = 'professors/work_statuses/work_status_add.html'
+    err_redirect = 'work_status_add'
+    succ_redirect = 'work_statuses'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
 def work_status_update(request, status_id):
@@ -158,31 +167,13 @@ def single_academic_title(request, title_id):
     return view_single_object(request, obj, template)
 
 
+@permission_required('professors.add_academictitle', raise_exception=True)
 def academic_title_add(request):
-    """
-    Handles adding academic title to database while checking if the user is authenticated and has permission to add
-    academic title.
-    Function also checks if there already exists academic title by the same name.
-    """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.add_academictitle"):
-            if request.method == 'POST':
-                name = request.POST['Name']
-                if models.AcademicTitle.objects.filter(name=name).exists():
-                    messages.error(request, "Titula već postoji u bazi")
-                    return redirect('academic_title_add')
-                else:
-                    title = models.AcademicTitle(name=name)
-                    title.save()
-                    messages.success(request, "Uspješno dodana akademska titula")
-                    return redirect('academic_titles')
-            return render(request, 'professors/academic_titles/academic_title_add.html')
-        else:
-            messages.error(request, "Nemate ovlaštenje za dodavanje akademske titule")
-            return redirect('academic_titles')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    model = models.AcademicTitle
+    template = 'professors/academic_titles/academic_title_add.html'
+    err_redirect = 'academic_title_add'
+    succ_redirect = 'academic_titles'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
 def academic_title_update(request, title_id):
@@ -241,31 +232,13 @@ def single_engagement(request, engagement_id):
     return view_single_object(request, obj, template)
 
 
+@permission_required('professors.add_engagement', raise_exception=True)
 def engagement_add(request):
-    """
-    Handles adding new engagement to database while checking if the user is authenticated and has permission to add
-    engagement.
-    Function also checks if there already exists engagement by the same name.
-    """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.add_engagement"):
-            if request.method == 'POST':
-                name = request.POST['Name']
-                if models.Engagement.objects.filter(name=name).exists():
-                    messages.error(request, "Angazovanje već postoji u bazi")
-                    return redirect('engagement_add')
-                else:
-                    engagement = models.Engagement(name=name)
-                    engagement.save()
-                    messages.success(request, "Uspješno dodano angazovanje")
-                    return redirect('engagements')
-            return render(request, 'professors/engagements/engagement_add.html')
-        else:
-            messages.error(request, "Nemate ovlaštenje za dodavanje angazovanja")
-            return redirect('engagements')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    model = models.Engagement
+    template = 'professors/engagements/engagement_add.html'
+    err_redirect = 'engagement_add'
+    succ_redirect = 'engagements'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
 def engagement_update(request, engagement_id):
