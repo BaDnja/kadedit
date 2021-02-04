@@ -64,6 +64,22 @@ def add_single_object(request, model, template, error_redirect, success_redirect
     return render(request, template)
 
 
+@login_required
+def update_single_object(request, object_to_update, object_id, success_redirect):
+    """
+    Updating single object checks if user is logged in,
+    and function that calls this one, checks is user has permission to update object by it's id.
+    If request user doesn't have permission to update object, system redirects user to all objects of that view and shows
+    corresponding message.
+    """
+    obj = object_to_update
+    if request.method == 'POST':
+        obj.name = request.POST.get("Name")
+        obj.save()
+        messages.success(request, "Uspješna izmjena")
+        return redirect(success_redirect, object_id)
+
+
 def professors(request):
     """Handle getting main page for professors"""
     queryset = models.Professor.objects.filter(active=True).order_by('-id')
@@ -111,22 +127,12 @@ def work_status_add(request):
     return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
+@permission_required('professors.change_workstatus', raise_exception=True)
 def work_status_update(request, status_id):
-    """
-    Updating work status only checks if user has permission to update status by it's id.
-    If request user doesn't have permission to update status, system redirects user to all statuses and shows
-    corresponding message.
-    """
-    status = get_object_or_404(models.WorkStatus, pk=status_id)
-    if request.user.has_perm("professors.change_workstatus"):
-        if request.method == 'POST':
-            status.name = request.POST.get("Name")
-            status.save()
-            messages.success(request, "Uspješna izmjena")
-            return redirect('single_work_status', status_id=status_id)
-    else:
-        messages.error(request, "Nemate ovlaštenje za izmjenu radnog statusa")
-        return redirect("work_statuses")
+    obj = get_object_or_404(models.WorkStatus, pk=status_id)
+    obj_id = status_id
+    succ_redirect = 'single_work_status'
+    return update_single_object(request, obj, obj_id, succ_redirect)
 
 
 def work_status_delete(request, status_id):
@@ -176,22 +182,12 @@ def academic_title_add(request):
     return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
+@permission_required('professors.change_academictitle', raise_exception=True)
 def academic_title_update(request, title_id):
-    """
-    Updating academic title only checks if user has permission to update academic title by it's id.
-    If request user doesn't have permission to update, system redirects user to all academic titles and shows
-    corresponding message.
-    """
-    title = get_object_or_404(models.AcademicTitle, pk=title_id)
-    if request.user.has_perm("professors.change_academictitle"):
-        if request.method == 'POST':
-            title.name = request.POST.get("Name")
-            title.save()
-            messages.success(request, "Uspješna izmjena")
-            return redirect('single_academic_title', title_id=title_id)
-    else:
-        messages.error(request, "Nemate ovlaštenje za izmjenu akademske titule")
-        return redirect('academic_titles')
+    obj = get_object_or_404(models.AcademicTitle, pk=title_id)
+    object_id = title_id
+    succ_redirect = 'single_academic_title'
+    return update_single_object(request, obj, object_id, succ_redirect)
 
 
 def academic_title_delete(request, title_id):
@@ -241,22 +237,12 @@ def engagement_add(request):
     return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
+@permission_required('professors.change_engagement', raise_exception=True)
 def engagement_update(request, engagement_id):
-    """
-    Updating engagement only checks if user has permission to update engagement by it's id.
-    If request user doesn't have permission to update, system redirects user to all engagements and shows
-    corresponding message.
-    """
-    engagement = get_object_or_404(models.Engagement, pk=engagement_id)
-    if request.user.has_perm("professors.change_engagement"):
-        if request.method == 'POST':
-            engagement.name = request.POST.get("Name")
-            engagement.save()
-            messages.success(request, "Uspješna izmjena")
-            return redirect('single_engagement', engagement_id=engagement_id)
-    else:
-        messages.error(request, "Nemate ovlaštenje za izmjenu radnog statusa")
-        return redirect("work_statuses")
+    obj = get_object_or_404(models.Engagement, pk=engagement_id)
+    object_id = engagement_id
+    succ_redirect = 'single_engagement'
+    return update_single_object(request, obj, object_id, succ_redirect)
 
 
 def engagement_delete(request, engagement_id):

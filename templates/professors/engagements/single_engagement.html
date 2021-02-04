@@ -9,7 +9,7 @@
     {% csrf_token %}
 
     <label for="Name"></label>
-    <input id="Name" type="text" value="{{ object.name }}" name="Name"/>
+    <input id="Name" type="text" value="{{ object.name }}" name="Name" required/>
     {% if perms.professors.change_engagement %}
         <button type="submit" value="Save">Spremi promjene</button>
     {% endif %}
