@@ -15,7 +15,9 @@
             {% if obj_list %}
                 {% for obj in obj_list %}
                     <div class="list-box-item">
-                        <a href="{% url 'professor' obj.id %}">{{ obj.id }}</a>
+                        {% if perms.professors.view_professor %}
+                            <a href="{% url 'professor' obj.id %}">{{ obj.id }}</a>
+                        {% endif %}
                         <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ obj }}</span></h1>
                         <p class="list-box-item-desc list-box-item-calling">{{ obj.academic_title|default_if_none:'' }}</p>
                         <p class="list-box-item-desc list-box-item-engagement">{{ obj.engagement|default_if_none:'' }}</p>

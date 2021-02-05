@@ -46,7 +46,8 @@ class Professor(TimeModelMixin):
     active = models.BooleanField(_("active"), default=True)
     work_status = models.ForeignKey(WorkStatus, blank=True, null=True, on_delete=SET_NULL,
                                     verbose_name=_("work status"))
-    engagement = models.ForeignKey(Engagement, blank=True, null=True, on_delete=SET_NULL, verbose_name=_("engagement"))
+    engagement = models.ForeignKey(Engagement, blank=True, null=True, on_delete=SET_NULL,
+                                   verbose_name=_("engagement"))
     academic_title = models.ForeignKey(AcademicTitle, blank=True, null=True, on_delete=SET_NULL,
                                        verbose_name=_("academic title"))
 

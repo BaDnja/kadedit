@@ -6,10 +6,10 @@ from .models import *
 class ProfessorAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", "birthdate", "engagement", "academic_title", "work_status")
     list_per_page = 25
-    list_display_links = ("first_name", "last_name", "academic_title")
+    list_display_links = ("first_name", "last_name")
     search_fields = ("first_name", "last_name", "engagement__name", "academic_title__name", "work_status__name")
     list_filter = ("engagement", "work_status", "academic_title")
-    list_editable = ("engagement", "work_status")
+    list_editable = ("engagement", "academic_title", "work_status")
 
 
 

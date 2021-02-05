@@ -103,8 +103,17 @@ def professors(request):
 def professor(request, professor_id):
     """Handle getting single page for professor"""
     obj = get_object_or_404(models.Professor, pk=professor_id)
-    template = 'professors/professors/professor.html'
-    return view_single_object(request, obj, template)
+    statuses_queryset = models.WorkStatus.objects.all().order_by('-id')
+    engagements_queryset = models.Engagement.objects.all().order_by('-id')
+    titles_queryset = models.AcademicTitle.objects.all().order_by('-id')
+
+    context = {
+        'object': obj,
+        'statuses': statuses_queryset,
+        'engagements': engagements_queryset,
+        'academictitles': titles_queryset,
+    }
+    return render(request, 'professors/professors/professor.html', context)
 
 
 @permission_required('professor.add_professor', raise_exception=True)
@@ -117,11 +126,12 @@ def professor_add(request):
         birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
         dissertation = request.POST['dissertation']
         active = True if request.POST.get('active') else False
-        workstatus = None if request.POST.get('workstatus') == '-----' else request.POST['workstatus']
-        engagement = None if request.POST.get('engagement') == '-----' else request.POST['engagement']
-        academictitle = None if request.POST.get('academictitle') == '-----' else request.POST['academictitle']
+        workstatus = None if request.POST.get('workstatus') == '' else request.POST['workstatus']
+        engagement = None if request.POST.get('engagement') == '' else request.POST['engagement']
+        academictitle = None if request.POST.get('academictitle') == '' else request.POST['academictitle']
 
-        if models.Professor.objects.filter(first_name=first_name, last_name=last_name).exists():
+        if models.Professor.objects.filter(first_name=first_name.capitalize(),
+                                           last_name=last_name.capitalize()).exists():
             messages.error(request, "Akademski radnik već postoji")
             return redirect('professor_add')
         else:
@@ -162,6 +172,38 @@ def professor_add(request):
     }
 
     return render(request, 'professors/professors/professor_add.html', context)
+
+
+@permission_required('professors.change_professor', raise_exception=True)
+def professor_update(request, professor_id):
+    if request.method == 'POST':
+        prof = get_object_or_404(models.Professor, pk=professor_id)
+        # Get data of the form submit
+        prof.first_name = request.POST['first_name']
+        prof.last_name = request.POST['last_name']
+        prof.birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
+        prof.dissertation = request.POST['dissertation']
+        prof.active = True if request.POST.get('active') else False
+        prof.work_status = None if request.POST.get('workstatus') == '' \
+            else models.WorkStatus.objects.get(id=request.POST['workstatus'])
+        prof.engagement = None if request.POST.get('engagement') == '' \
+            else models.Engagement.objects.get(id=request.POST['engagement'])
+        prof.academic_title = None if request.POST.get('academictitle') == '' \
+            else models.AcademicTitle.objects.get(id=request.POST['academictitle'])
+
+        prof.save()
+        messages.success(request, "Uspješna izmjena")
+
+        return redirect('professor', professor_id)
+
+
+def professor_delete(request, professor_id):
+    # TODO: Define permission handling while deleting an object. It should be reusable.
+    # TODO: When permission is declared on particular object,
+    #  delete permission should do SOFT delete, NOT standard delete.
+    # TODO: Define URL dispatcher for professor_delete view
+    # TODO: Soft delete professor object
+    pass
 
 
 def work_statuses(request):

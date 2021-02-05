@@ -27,8 +27,9 @@ academic_title_patterns = [
 
 professors_patterns = [
     path('', views.professors, name='professors'),
-    path('professor/<int:professor_id>', views.professor, name='professor'),
+    path('professor/<int:professor_id>/', views.professor, name='professor'),
     path('professor/add/', views.professor_add, name='professor_add'),
+    path('professor/update/<int:professor_id>/', views.professor_update, name='professor_update'),
 ]
 
 urlpatterns = [
