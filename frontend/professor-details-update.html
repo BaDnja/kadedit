@@ -44,7 +44,7 @@
                     <input type="text" name="search" id="search" class="search-box-input" placeholder="Pretraga...">
                     <a href="#" class="btn btn-search">Pretraga</a>
                     <!-- <a href="#" id="btn-advanced" class="btn btn-advanced">Napredno</a> -->
-                    <a href="professor-details.html" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
+                    <a href="professor-details-add.html" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
                 </div>
 
                 <div class="options-box">
@@ -52,42 +52,45 @@
                     <div class="options-box-input-row">
                         <div class="options-box-input-group">
                             <label for="ime" class="options-box-label">Ime</label>
-                            <input type="text" name="ime" id="ime" class="options-box-input">
+                            <input type="text" name="ime" id="ime" class="options-box-input" required>
                         </div>
                         <div class="options-box-input-group">
                             <label for="prezime" class="options-box-label">Prezime</label>
-                            <input type="text" name="prezime" id="prezime" class="options-box-input">
+                            <input type="text" name="prezime" id="prezime" class="options-box-input" required> 
                         </div>
                     </div>
                     <div class="options-box-input-row">
                         <div class="options-box-input-group">
-                            <label for="ime" class="options-box-label">Broj telefona</label>
-                            <input type="text" name="telefon" id="telefon" class="options-box-input">
+                            <label for="ime" class="options-box-label">Datum rođenja</label>
+                            <input type="date" name="telefon" id="telefon" class="options-box-input">
                         </div>
                         <div class="options-box-input-group">
-                            <label for="prezime" class="options-box-label">Fakultet</label>
+                            <label for="calling" class="options-box-label">Disertacija</label>
+                            <input type="text" name="calling" id="calling" class="options-box-input">
+                        </div>
+                    </div>
+
+                    <div class="options-box-input-row">
+                        <div class="options-box-input-group">
+                            <label for="engagement" class="options-box-label">Radni status</label>
                             <select class="options-box-select u-min-width-100" name="fakultet" id="fakultet">
                                 <option value="FZN">FZN</option>
                             </select>
                         </div>
                         <div class="options-box-input-group">
-                            <label for="prezime" class="options-box-label">Tip ugovora</label>
+                            <label for="prezime" class="options-box-label">Angažovanje</label>
+                            <select class="options-box-select u-min-width-100" name="fakultet" id="fakultet">
+                                <option value="FZN">FZN</option>
+                            </select>
+                        </div>
+                        <div class="options-box-input-group">
+                            <label for="prezime" class="options-box-label">Akademska titula</label>
                             <select class="options-box-select u-min-width-100" name="ugovor" id="ugovor">
                                 <option value="Stalni">Stalni</option>
                             </select>
                         </div>
                     </div>
-                    <div class="options-box-input-row">
-                        <div class="options-box-input-group">
-                            <label for="calling" class="options-box-label">Akademsko zvanje</label>
-                            <input type="text" name="calling" id="calling" class="options-box-input">
-                        </div>
-                        <div class="options-box-input-group">
-                            <label for="engagement" class="options-box-label">Angažovanje</label>
-                            <input type="text" name="engagement" id="engagement" class="options-box-input">
-                        </div>
-                    </div>
-                    <div class="options-box-input-row">
+                    <!-- <div class="options-box-input-row">
                         <div class="options-box-input-group">
                             <label for="predmeti" class="options-box-label">Predmeti</label>
                             <select class="options-box-select u-min-width-50" name="predmeti" id="predmeti">
@@ -96,7 +99,7 @@
                         </div>
                     </div>
                     <a href="#" class="btn options-box-btn-dodaj-predmet" id="btn-modal-subject-open">Dodaj novi predmet</a>
-                    <a href="#" class="btn options-box-btn-obrisi-predmet">Obriši odabrani predmet</a>
+                    <a href="#" class="btn options-box-btn-obrisi-predmet">Obriši odabrani predmet</a> -->
                     <div class="options-box-btn-group">
                         <a href="#" class="btn options-box-sacuvaj-btn">Sačuvaj promjene</a>
                         <a href="#" class="btn options-box-obrisi-btn">Obriši profesora</a>

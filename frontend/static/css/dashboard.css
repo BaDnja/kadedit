@@ -159,6 +159,8 @@
   padding: 4rem 3rem;
   margin-bottom: 2rem;
   margin-right: 2rem;
+  text-decoration: none;
+  color: var(--color-black);
 }
 .list-box-item:hover {
   cursor: pointer;
