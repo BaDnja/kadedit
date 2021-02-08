@@ -99,6 +99,7 @@ def professors(request):
     return view_multiple_objects(request, queryset, template)
 
 
+@login_required
 @permission_required('professors.view_professor', raise_exception=True)
 def professor(request, professor_id):
     """Handle getting single page for professor"""
@@ -116,6 +117,7 @@ def professor(request, professor_id):
     return render(request, 'professors/professors/professor.html', context)
 
 
+@login_required
 @permission_required('professor.add_professor', raise_exception=True)
 def professor_add(request):
     """Handle adding new professor to database"""
@@ -174,6 +176,7 @@ def professor_add(request):
     return render(request, 'professors/professors/professor_add.html', context)
 
 
+@login_required
 @permission_required('professors.change_professor', raise_exception=True)
 def professor_update(request, professor_id):
     if request.method == 'POST':
@@ -183,7 +186,6 @@ def professor_update(request, professor_id):
         prof.last_name = request.POST['last_name']
         prof.birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
         prof.dissertation = request.POST['dissertation']
-        prof.active = True if request.POST.get('active') else False
         prof.work_status = None if request.POST.get('workstatus') == '' \
             else models.WorkStatus.objects.get(id=request.POST['workstatus'])
         prof.engagement = None if request.POST.get('engagement') == '' \
@@ -197,13 +199,29 @@ def professor_update(request, professor_id):
         return redirect('professor', professor_id)
 
 
+@login_required
+@permission_required('professors.delete_professor', raise_exception=True)
 def professor_delete(request, professor_id):
-    # TODO: Define permission handling while deleting an object. It should be reusable.
-    # TODO: When permission is declared on particular object,
-    #  delete permission should do SOFT delete, NOT standard delete.
-    # TODO: Define URL dispatcher for professor_delete view
-    # TODO: Soft delete professor object
-    pass
+    prof = get_object_or_404(models.Professor, pk=professor_id)
+    if request.method == 'POST':
+        if request.user.is_superuser:
+            prof.delete()
+            messages.success(request, "Objekat uspješno obrisan")
+            return redirect('professors')
+        else:
+            messages.error(request, "Niste ovlašteni za brisanje")
+            return redirect('professors')
+
+
+@login_required
+@permission_required('professors.change_professor', raise_exception=True)
+def professor_deactivate(request, professor_id):
+    prof = get_object_or_404(models.Professor, pk=professor_id)
+    if request.method == 'POST':
+        prof.active = False
+        prof.save()
+        messages.success(request, "Objekat uspješno deaktiviran")
+        return redirect('professors')
 
 
 def work_statuses(request):

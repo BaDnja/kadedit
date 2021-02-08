@@ -11,7 +11,8 @@ class ProfessorAdmin(admin.ModelAdmin):
     list_filter = ("engagement", "work_status", "academic_title")
     list_editable = ("engagement", "academic_title", "work_status")
 
-
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
 
 
 @admin.register(WorkStatus)

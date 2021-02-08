@@ -26,10 +26,6 @@
         <input {{ object.dissertation }} id="dissertation" name="dissertation" type="text" maxlength="200">
         <br>
         <br>
-        <label for="active">Aktivan:</label>
-        <input id="active" name="active" type="checkbox" {% if object.active %} checked {% endif %}>
-        <br>
-        <br>
 
 
         <label for="workstatus">Radni status:</label>
@@ -102,10 +98,28 @@
                 {% endif %}
             {% endif %}
         </select>
-        <br>
         {% if perms.professors.change_professor %}
+            <br>
+            <br>
             <button type="submit" value="Update">Azuriraj informacije</button>
         {% endif %}
     </form>
+        {% if perms.professors.change_professor %}
+            <br>
+            <br>
+            <form action="{% url 'professor_deactivate' object.id %}" method='POST'>
+                {% csrf_token %}
+                <button type="submit" value="Deactivate">Deaktiviraj profesora</button>
+            </form>
+        {% endif %}
+        {% if perms.professor.delete_professor and request.user.is_superuser %}
+            <br>
+            <br>
+             <form action="{% url 'professor_delete' object.id %}" method='POST'>
+                {% csrf_token %}
+                <button type="submit" value="Delete">Obrisi profesora</button>
+            </form>
+        {% endif %}
+        <br>
 </body>
 </html>

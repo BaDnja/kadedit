@@ -30,6 +30,8 @@ professors_patterns = [
     path('professor/<int:professor_id>/', views.professor, name='professor'),
     path('professor/add/', views.professor_add, name='professor_add'),
     path('professor/update/<int:professor_id>/', views.professor_update, name='professor_update'),
+    path('professor/delete/<int:professor_id>/', views.professor_delete, name='professor_delete'),
+    path('professor/deactivate/<int:professor_id>/', views.professor_deactivate, name='professor_deactivate'),
 ]
 
 urlpatterns = [
