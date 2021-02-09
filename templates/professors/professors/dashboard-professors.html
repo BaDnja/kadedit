@@ -6,7 +6,11 @@
 
     <main class="main">
 
-        {% include 'partials/search.html' %}
+        <form action="{% url 'professor_search' %}" method='POST'>
+            {% csrf_token %}
+            <input type="text" name="Name" placeholder="Pretraga...">
+            <button type="submit">Pretraga</button>
+        </form>
 
         <!-- List box with professors / subjects with options -->
 

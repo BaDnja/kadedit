@@ -92,6 +92,20 @@ def delete_single_object(request, object_to_update, success_redirect):
         return redirect(success_redirect)
 
 
+@login_required
+def single_field_object_search(request, search_object, template):
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        obj = search_object.objects.filter(name__icontains=name)
+
+        context = {
+            'obj_list': obj,
+        }
+
+        return render(request, template, context)
+
+
 def professors(request):
     """Handle getting main page for professors"""
     queryset = models.Professor.objects.filter(active=True).order_by('-id')
@@ -224,6 +238,21 @@ def professor_deactivate(request, professor_id):
         return redirect('professors')
 
 
+@login_required
+def professor_search(request):
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        profs = models.Professor.objects.filter(first_name__icontains=name).filter(active=True) or \
+                models.Professor.objects.filter(last_name__icontains=name).filter(active=True)
+
+        context = {
+            'obj_list': profs,
+        }
+
+        return render(request, 'professors/professors/dashboard-professors.html', context)
+
+
 def work_statuses(request):
     """
     Handles getting page for listing all work statuses in the system.
@@ -269,6 +298,12 @@ def work_status_delete(request, status_id):
     obj = get_object_or_404(models.WorkStatus, pk=status_id)
     succ_redirect = 'work_statuses'
     return delete_single_object(request, obj, succ_redirect)
+
+
+def work_status_search(request):
+    obj = models.WorkStatus
+    template = 'professors/work_statuses/work_statuses.html'
+    return single_field_object_search(request, obj, template)
 
 
 def academic_titles(request):
@@ -317,6 +352,12 @@ def academic_title_delete(request, title_id):
     return delete_single_object(request, obj, succ_redirect)
 
 
+def academic_title_search(request):
+    obj = models.AcademicTitle
+    template = 'professors/academic_titles/academic_titles.html'
+    return single_field_object_search(request, obj, template)
+
+
 def engagements(request):
     """
     Handle getting all engagements objects with pagination.
@@ -361,3 +402,10 @@ def engagement_delete(request, engagement_id):
     obj = get_object_or_404(models.Engagement, pk=engagement_id)
     succ_redirect = 'engagements'
     return delete_single_object(request, obj, succ_redirect)
+
+
+@login_required
+def engagement_search(request):
+    obj = models.Engagement
+    template = 'professors/engagements/engagements.html'
+    return single_field_object_search(request, obj, template)

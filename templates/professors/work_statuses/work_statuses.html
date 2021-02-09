@@ -5,6 +5,11 @@
     <title>Radni statusi</title>
 </head>
 <body>
+<form action="{% url 'work_status_search' %}" method='POST'>
+    {% csrf_token %}
+    <input type="text" name="Name" placeholder="Pretraga...">
+    <button type="submit">Pretraga</button>
+</form>
 {% include 'partials/_alerts.html' %}
 {% if obj_list %}
     {% for obj in obj_list %}
