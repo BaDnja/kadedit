@@ -1,0 +1,64 @@
+#template {
+    background-color: var(---color-gray-mid );
+}
+#template .title {
+    font-size: 3rem;
+    padding: 2rem;
+    color: var(--color-blue-dark);
+
+}
+
+#template .template-aside {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#template .main {
+  margin-left: 20rem;
+}
+#template .list-box {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 5rem;
+    justify-content: flex-start;
+    border: none;
+  }
+#template .list-box-item {
+    background-color: var(--color-gray-light);
+    box-shadow: 0 3px 6px var(--color-shadow);
+    border-radius: 1rem;
+    padding: 4rem 3rem;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+    text-align: center;
+  }
+#template .list-box-item:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+  
+#template .list-box-item-title {
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+  }
+#template .list-box-item-edit {
+  font-size: 2.5rem;
+  color: var(--color-green-fzn);
+  text-decoration: none;
+  display: inline-block;
+}
+
+#template .list-box-item-edit:hover {
+  transform: scale(1.5);
+}
+
+#template .btn-templates-add {
+    background-color: var(--color-blue-dark);
+}

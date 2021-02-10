@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Kadrovska Evidencija | Panevropski Univerzitet Apeiron</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/style.css">
-  <link rel="stylesheet" href="static/css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadrovska Evidencija | Panevropski Univerzitet Apeiron</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/landing.css">
 </head>
-<body>
-  <main class="login">
-    <form id="login-form" class="login-form" action="dashboard-profesor.html" method="GET">
-      <h1 class="login-form-title">PRIJAVA</h1>
-      <div id="login-error"></div>
-      <input type="text" id="login-username" placeholder="Korisničko ime" class="login-text login-form-username">
-      <input type="password" id="login-password" placeholder="Šifra" class="login-text login-form-password">
-      <input type="submit" id="login-btn" value="Prijava" class="login-form-submit-btn">
-    </form>
-  </main>
-
-  <script src="static/js/login.js"></script>
-</body>
+<body class="landing">
+    <div class="landing-logo">
+        <img src="./static/img/logo.png" alt="Logo Panevropski univerzitet Apeiron">
+    </div>
+    <div class="landing-hero">
+        <h1 class="landing-hero-title">KADROVSKA <br /> EVIDENCIJA</h1>
+        <h3 class="landing-hero-subtitle">Administracija kadrova <br /> na jednom mjestu.</h3>
+        <div class="landing-hero-btn-container">
+            <a href= "#" class="landing-hero-btn-outline">Admin panel</a>
+            <a href= "./index.html" class="landing-hero-btn-fill">Prijava</a>
+        </div>
+    </div>
+    
+</body> 
 </html>
