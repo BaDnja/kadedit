@@ -107,3 +107,9 @@ input[type="submit"] {
   color: #2c693b;
   border: 1px solid #bee5eb;
 }
+
+.title {
+  font-size: 3rem;
+  padding: 2rem;
+  color: var(--color-blue-dark);
+}
