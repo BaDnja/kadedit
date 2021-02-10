@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/dashboard.css">
+</head>
+<body id="dashboard">
+    <nav class="navbar">
+        <h1 class="navbar-title" name="Ime i prezime">Vesna Čičić</h1>
+        <h3 class="navbar-subtitle" name="Uloga">Kadrovi - Referent</h3>
+        <div class="navbar-navigation">
+            <a href="../../dashboard-profesor.html" class="navbar-navigation-item">PROFESORI</a>
+            <a href="./engagements.html" class="navbar-navigation-item navbar-navigation-subitem navbar-navigation-item-active">ANGAŽOVANJA</a>
+            <a href="../work_status/work_statuses.html" class="navbar-navigation-item navbar-navigation-subitem">RADNI STATUSI</a>
+            <a href="../academic_title/academic_titles.html" class="navbar-navigation-item navbar-navigation-subitem">AKADEMSKE TITULE</a>
+            <a href="../../dashboard-predmet.html" class="navbar-navigation-item">PREDMETI</a>
+            <a href="../../index.html" class="navbar-navigation-item">ODJAVA</a>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="form-group u-w-50">
+            <h1 class="form-group-title">Ažuriranje angažovanja</h1>
+            <div class="form-group-input-row">
+                <div class="form-group-input-group">
+                    <label for="ime" class="form-group-label" name="Name">Naziv</label>
+                    <input type="text" name="ime" id="ime" class="form-group-input">
+                </div>
+        </div>
+        <div class="form-group-btn-group">
+            <a href="#" class="btn form-group-btn-save">Sačuvaj promjene</a>
+            <a href="#" class="btn form-group-btn-delete">Obriši status</a>
+        </div>
+    </main>
+    
+</body>
+</html>

@@ -17,7 +17,7 @@
 }
 
 .landing-hero .landing-hero-title {
-    color: #5096F2;
+    color: var(--color-blue-light);
     font-size: 5rem;
     letter-spacing: 1rem;
 }
@@ -43,27 +43,27 @@
     border-radius: 3px;
 }
 .landing-hero .landing-hero-btn-outline {
-    color: #2272DB;
+    color: var(--color-blue-dark);
     padding: 1rem 3rem;
-    border: 1px solid #2272DB;
+    border: 1px solid var(--color-blue-light);
     transition: ease-in .3s;
 }
 
 .landing-hero .landing-hero-btn-outline:hover {
-    background-color: #2272DB;
+    background-color: var(--color-blue-light);
     color: var(--color-white);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 3px 6px var(--color-shadow);
     transform: scale(1.1);
 }
 
 .landing-hero .landing-hero-btn-fill {
-    background-color: #2272DB;
+    background-color: var(--color-blue-dark);
     padding: 1rem 5rem;
     color: var(--color-white);
     transition: .3s ease-in;
 }
 .landing-hero .landing-hero-btn-fill:hover {
-    background-color: #5e98e4;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    background-color: var(--color-blue-light);
+    box-shadow: 0 3px 6px var(--color-shadow);
     transform: scale(1.1);
 }
