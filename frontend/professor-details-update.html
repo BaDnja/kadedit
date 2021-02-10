@@ -9,30 +9,13 @@
     <title>Kadrovska evidencija | Administracija</title>
 </head>
 <body id="dashboard">
-
-    <!-- Modal -->
-    <div class="modal" id="modal-subject">
-        <div class="options-box form-predmet">
-            <div class="options-box-input-row close-container">
-                <h1 class="options-box-title">Novi predmet</h1>
-                <span id="btn-modal-subject-close">X</span>
-            </div>
-                <div class="options-box-input-group">
-                    <label for="ime" class="options-box-label">Naziv predmeta</label>
-                    <input type="text" name="naziv-predmeta" id="naziv-predmeta" class="options-box-input">
-                </div>
-                <a href="#" class="btn options-box-sacuvaj-btn">Dodaj predmet</a>
-
-        </div>
-    </div>
-
     <nav class="navbar">
         <h1 class="navbar-title" name="Ime i prezime">Vesna Čičić</h1>
         <h3 class="navbar-subtitle" name="Uloga">Kadrovi - Referent</h3>
         <div class="navbar-navigation">
             <a href="dashboard-profesor.html" class="navbar-navigation-item navbar-navigation-item-active">PROFESORI</a>
             <a href="./templates/engagement.html" class="navbar-navigation-item navbar-navigation-subitem">ANGAŽOVANJA</a>
-            <a href="./templates/work_statuses.html" class="navbar-navigation-item navbar-navigation-subitem">RADNI STATUSI</a>
+            <a href="./templates/work_status/work_statuses.html" class="navbar-navigation-item navbar-navigation-subitem">RADNI STATUSI</a>
             <a href="./templates/academic_title.html" class="navbar-navigation-item navbar-navigation-subitem">AKADEMSKE TITULE</a>
             <a href="dashboard-predmet.html" class="navbar-navigation-item">PREDMETI</a>
             <a href="index.html" class="navbar-navigation-item">ODJAVA</a>
@@ -40,52 +23,52 @@
     </nav>
     <main class="main">
                 <!-- Search box with buttons -->
-                <div class="search-box">
+                <form class="search-box">
                     <input type="text" name="search" id="search" class="search-box-input" placeholder="Pretraga...">
-                    <a href="#" class="btn btn-search">Pretraga</a>
+                    <input type="submit" value="Pretraga" class="btn btn-search">
                     <!-- <a href="#" id="btn-advanced" class="btn btn-advanced">Napredno</a> -->
                     <a href="professor-details-add.html" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
-                </div>
+                </form>
 
-                <div class="options-box">
-                    <h1 class="options-box-title">Ažuriranje profesora</h1>
-                    <div class="options-box-input-row">
-                        <div class="options-box-input-group">
-                            <label for="ime" class="options-box-label">Ime</label>
-                            <input type="text" name="ime" id="ime" class="options-box-input" required>
+                <div class="form-group">
+                    <h1 class="form-group-title">Ažuriranje profesora</h1>
+                    <div class="form-group-input-row">
+                        <div class="form-group-input-group">
+                            <label for="name" class="form-group-label">Ime</label>
+                            <input type="text" name="name" id="name" class="form-group-input" required>
                         </div>
-                        <div class="options-box-input-group">
-                            <label for="prezime" class="options-box-label">Prezime</label>
-                            <input type="text" name="prezime" id="prezime" class="options-box-input" required> 
+                        <div class="form-group-input-group">
+                            <label for="last_name" class="form-group-label">Prezime</label>
+                            <input type="text" name="last_name" id="last_name" class="form-group-input" required> 
                         </div>
                     </div>
-                    <div class="options-box-input-row">
-                        <div class="options-box-input-group">
-                            <label for="ime" class="options-box-label">Datum rođenja</label>
-                            <input type="date" name="telefon" id="telefon" class="options-box-input">
+                    <div class="form-group-input-row">
+                        <div class="form-group-input-group">
+                            <label for="birth_date" class="form-group-label">Datum rođenja</label>
+                            <input type="date" name="birth_date" id="birth_date" class="form-group-input">
                         </div>
-                        <div class="options-box-input-group">
-                            <label for="calling" class="options-box-label">Disertacija</label>
-                            <input type="text" name="calling" id="calling" class="options-box-input">
+                        <div class="form-group-input-group">
+                            <label for="calling" class="form-group-label">Disertacija</label>
+                            <input type="text" name="calling" id="calling" class="form-group-input">
                         </div>
                     </div>
 
-                    <div class="options-box-input-row">
-                        <div class="options-box-input-group">
-                            <label for="engagement" class="options-box-label">Radni status</label>
-                            <select class="options-box-select u-min-width-100" name="fakultet" id="fakultet">
+                    <div class="form-group-input-row">
+                        <div class="form-group-input-group">
+                            <label for="work_status" class="form-group-label">Radni status</label>
+                            <select name="work_status" id="work_status" class="form-group-select u-min-width-100">
                                 <option value="FZN">FZN</option>
                             </select>
                         </div>
-                        <div class="options-box-input-group">
-                            <label for="prezime" class="options-box-label">Angažovanje</label>
-                            <select class="options-box-select u-min-width-100" name="fakultet" id="fakultet">
+                        <div class="form-group-input-group">
+                            <label for="engagement" class="form-group-label">Angažovanje</label>
+                            <select class="form-group-select u-min-width-100" name="engagement" id="engagement">
                                 <option value="FZN">FZN</option>
                             </select>
                         </div>
-                        <div class="options-box-input-group">
-                            <label for="prezime" class="options-box-label">Akademska titula</label>
-                            <select class="options-box-select u-min-width-100" name="ugovor" id="ugovor">
+                        <div class="form-group-input-group">
+                            <label for="academic_title" class="form-group-label">Akademska titula</label>
+                            <select class="form-group-select u-min-width-100" name="academic_title" id="academic_title">
                                 <option value="Stalni">Stalni</option>
                             </select>
                         </div>
@@ -100,13 +83,11 @@
                     </div>
                     <a href="#" class="btn options-box-btn-dodaj-predmet" id="btn-modal-subject-open">Dodaj novi predmet</a>
                     <a href="#" class="btn options-box-btn-obrisi-predmet">Obriši odabrani predmet</a> -->
-                    <div class="options-box-btn-group">
-                        <a href="#" class="btn options-box-sacuvaj-btn">Sačuvaj promjene</a>
-                        <a href="#" class="btn options-box-obrisi-btn">Obriši profesora</a>
+                    <div class="form-group-btn-group">
+                        <a href="#" class="btn form-group-btn-save">Sačuvaj</a>
+                        <a href="#" class="btn form-group-btn-delete">Obriši profesora</a>
                     </div>
                 </div>
     </main>
-
-    <script src="./static/js/dashboard-professor.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
         <div class="navbar-navigation">
             <a href="dashboard-profesor.html" class="navbar-navigation-item">PROFESORI</a>
             <a href="./templates/engagement.html" class="navbar-navigation-item navbar-navigation-subitem">ANGAŽOVANJA</a>
-            <a href="./templates/work_statuses.html" class="navbar-navigation-item navbar-navigation-subitem">RADNI STATUSI</a>
+            <a href="./templates/work_status/work_statuses.html" class="navbar-navigation-item navbar-navigation-subitem">RADNI STATUSI</a>
             <a href="./templates/academic_title.html" class="navbar-navigation-item navbar-navigation-subitem">AKADEMSKE TITULE</a>
             <a href="dashboard-predmet.html" class="navbar-navigation-item navbar-navigation-item-active">PREDMETI</a>
 
@@ -27,12 +27,12 @@
 
         
         <!-- Search box with buttons -->
-        <div class="search-box">
+        <form class="search-box">
             <input type="text" name="search" id="search" class="search-box-input" placeholder="Pretraga...">
-            <a href="#" class="btn btn-search">Pretraga</a>
+            <input type="submit" value="Pretraga" class="btn btn-search">
             <!-- <a href="#" id="btn-advanced" class="btn btn-advanced">Napredno</a> -->
             <a href="subject-details.html" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
-        </div>
+        </form>
 
         <!-- Filter box with radio buttons -->
         <div class="filter-box" id="filter-box">
@@ -127,67 +127,67 @@
         </div>
 
         <!-- List box with professors / subjects with options -->
-
-            <div class="list-box">
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+            <div class="seperator">&nbsp;</div>
+            <div class="card">
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Ajša Meholjić</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Ajša Meholjić</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Zoran Avramovic</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Zoran Avramovic</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Zoran Avramovic</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Zoran Avramovic</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Zoran Avramovic</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Zoran Avramovic</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
-                <a class="list-box-item" href="./subject-details.html">
-                    <h1 class="list-box-item-title"><span class="list-box-item-title-name">Zoran Avramovic</span></h1>
-                    <p class="list-box-item-desc list-box-item-calling">Vanredni profesor</p>
-                    <p class="list-box-item-desc list-box-item-engagement">Odgovorni nastavnik</p>
+                <a class="card-item" href="./subject-details.html">
+                    <h1 class="card-item-title"><span class="card-item-title-name">Zoran Avramovic</span></h1>
+                    <p class="card-item-desc card-item-calling">Vanredni profesor</p>
+                    <p class="card-item-desc card-item-engagement">Odgovorni nastavnik</p>
                 </a>
             </div>
 
@@ -201,6 +201,5 @@
 
 
     </main>
-    <script src="static/js/dashboard.js"></script>
 </body>
 </html>
