@@ -33,4 +33,4 @@ def user_logout(request):
     """Handle logging out current user"""
     logout(request)
     messages.success(request, "Uspješna odjava")
-    return redirect('user_login')
+    return redirect('index')

@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: row;
   background-color: var(--color-gray-background);
-  position: relative;
 }
 
 /* Navbar */
+
 .navbar {
-  min-width: 15%;
+  width: 20%;
   background-color: var(--color-blue-dark);
   color: var(--color-white);
   text-align: center;
@@ -37,6 +37,15 @@
   display: block;
   padding: 3rem 0;
   font-weight: bold;
+  transition: .8s ease;
+}
+.navbar-navigation-subitem {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.navbar-navigation-item-active {
+  background-color: var(--color-blue-light);
 }
 .navbar-navigation-item:hover {
   background-color: var(--color-blue-light);
@@ -49,11 +58,13 @@
 }
 
 /* Main */
+
 .main {
   padding: 5rem 0 0 10%;
   position: relative;
   margin-left: 35rem;
 }
+
 /* Search part */
 
 .search-box {
@@ -70,6 +81,7 @@
   color: var(--color-gray-dark);
   margin-right: 5rem;
   margin-bottom: 2rem;
+  transition: 1s ease;
 }
 .search-box-input::placeholder {
   color: var(--color-gray-dark);
@@ -134,8 +146,7 @@
 
 /* List box part */
 
-.list-box {
-  border-top: 0.5px solid #ddd;
+.card {
   margin-top: 2rem;
   padding-top: 2rem;
   display: flex;
@@ -144,27 +155,37 @@
   width: 56vw;
   justify-content: center;
 }
-.list-box-item {
+.card-item {
   background-color: var(--color-gray-light);
+  color: var(--color-black);
   box-shadow: 0 3px 6px var(--color-shadow);
   border-radius: 1rem;
   padding: 4rem 3rem;
   margin-bottom: 2rem;
   margin-right: 2rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: .5s ease-out;
+  min-width: 15%;
+  height: 12rem;
+  min-height: 10rem;
 }
-.list-box-item:hover {
+.card-item:hover {
   cursor: pointer;
-  transform: scale(1.05);
+  box-shadow: 0 3px 2rem rgba(0,0,0,0.5);
 }
 
-.list-box-item-title {
+.card-item-title {
   font-size: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 2rem;
 }
-.list-box-item-desc {
+.card-item-desc {
   font-size: 1.6rem;
   text-align: center;
   padding: 1rem 0;
@@ -172,32 +193,32 @@
 }
 
 .pagination {
-  border: 5px solid var(--color-blue-dark);
+  border: 3px solid var(--color-blue-dark);
   border-radius: 1rem;
   float: right;
   margin-bottom: 1rem;
+  background-color: var(--color-white);
+  box-shadow: 0 3px 1.5rem rgba(0,0,0,0.15);
 }
 .pagination-item{
   display: inline-block;
-  font-size: 2rem;
+  font-size: 2.25rem;
   padding: 1rem;
   border-bottom: 2px solid transparent;
   font-weight: bold;
   text-decoration: none;
   color: #000;
+  transition: .5s ease;
 }
-.disabled {
-  pointer-events: none;
-}
+
 .pagination-item:hover {
   color: var(--color-blue-dark);
-  border-bottom: 2px solid var(--color-blue-dark);
   cursor: pointer;
 }
 
-/* Second part for detailed information about professors / subjects */
+/* Forms for adding stuff (professors, subjects) */
 
-.options-box {
+.form-group {
   background-color: var(--color-gray-light);
   box-shadow: 0 3px 6px var(--color-shadow);
   border-radius: 1rem;
@@ -205,30 +226,30 @@
   margin-top: 2rem;
   width: 90%;
 }
-.options-box-title {
+.form-group-title {
   font-size: 3rem;
   color: var(--color-gray-dark);
   margin-bottom: 2rem;
 }
-.options-box-input-row {
+.form-group-input-row {
   display: flex;
   flex-direction: row;
 }
-.options-box-input-group {
+.form-group-input-group {
   width: 100%;
 }
-.options-box-input-group:not(:last-child) {
+.form-group-input-group:not(:last-child) {
   margin-right: 2rem;
   margin-bottom: 3rem;
 }
-.options-box-label {
+.form-group-label {
   display: block;
   font-size: 2rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
   color: var(--color-gray-dark);
 }
-.options-box-input {
+.form-group-input {
   width: 100%;
   font-size: 2rem;
   padding: 1rem 0.5rem;
@@ -236,17 +257,17 @@
   border: 1px solid var(--color-gray-dark);
   border-radius: 5px;
 }
-.options-box-select {
+.form-group-select {
   font-size: 2rem;
   padding: 1rem 0.5rem;
   outline: 0;
   border: 1px solid var(--color-gray-dark);
   border-radius: 5px;
 }
-.options-box-input:focus, .options-box-select:focus {
+.form-group-input:focus, .form-group-select:focus {
   border: 1px solid var(--color-blue-dark);
 }
-.options-box-btn-dodaj-predmet, .options-box-btn-obrisi-predmet{
+.form-group-btn-dodaj-predmet, .form-group-btn-obrisi-predmet{
   background-color: var(--color-green-light);
   min-width: 50%;
   padding: 1.5rem 0;
@@ -254,73 +275,22 @@
   font-size: 2rem;
 }
 
-.options-box-btn-obrisi-predmet {
+.form-group-btn-obrisi-predmet {
   background-color: var(--color-red);
 }
 
-.options-box-btn-group {
+.form-group-btn-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 4rem;
 }
 
-.options-box-sacuvaj-btn {
-  display: inline-block;
-  text-decoration: none;
-  color: #fff;
+.form-group-btn-save {
   background-color: var(--color-blue-dark);
-  font-size: 2rem;
-  padding: 1.5rem 1.5rem;
-  border-radius: 5px;
 }
 
-.options-box-obrisi-btn {
-  display: inline-block;
-  text-decoration: none;
-  color: #fff;
+.form-group-btn-delete {
   background-color: var(--color-red);
-  font-size: 2rem;
-  padding: 1.5rem 1.5rem;
-  border-radius: 5px;
 }
 
-
-/* Modal to add new subject / professor*/
-
-.modal{
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.487);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  display: none;
-  z-index: 5000;
-}
-.form-add {
-  width: 50%;
-}
-.form-predmet {
-  width: 30%;
-}
-.close-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.close-container span {
-  font-size: 3.5rem;
-  margin-bottom: 2rem;
-  color: var(--color-gray-dark);
-  font-weight: bold;
-}
-.close-container span:hover {
-  cursor: pointer;
-}

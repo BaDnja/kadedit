@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Akademske titule</title>
-</head>
-<body>
-<form action="{% url 'academic_title_search' %}" method='POST'>
-    {% csrf_token %}
-    <input type="text" name="Name" placeholder="Pretraga...">
-    <button type="submit">Pretraga</button>
-</form>
-{% include 'partials/_alerts.html' %}
-{% if obj_list %}
-    {% for obj in obj_list %}
-        <a href="{% url 'single_academic_title' obj.id %}">{{ obj.id }}. - {{ obj.name }}</a>
-    {% endfor %}
-{% endif %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %} Akademske titule {% endblock %}
+
+{% block content %}
+<main class="main">
+    <form class="search-box" action="{% url 'academic_title_search' %}" method='POST'>
+        {% csrf_token %}
+        <input type="text" name="Name" id="search" class="search-box-input" placeholder="Pretraga...">
+        <input type="submit" value="Pretraga" class="btn btn-search">
+        <a href="{% url 'academic_title_add' %}" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
+    </form>
+    {% include 'partials/_alerts.html' %}
+    {% if obj_list %}
+        <div class="card">
+        {% for obj in obj_list %}
+                <a class="card-item" href="{% url 'single_academic_title' obj.id %}">
+                    <h1 class="card-item-title"><span class="card-item-title-name">{{ obj.name }}</span></h1>
+                </a>
+        {% endfor %}
+        </div>
+    {% endif %}
+</main>
+{% endblock %}

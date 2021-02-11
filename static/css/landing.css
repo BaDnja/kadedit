@@ -1,0 +1,69 @@
+.landing {
+    background-color: var(--color-gray-light);
+}
+
+.landing .landing-logo {
+    padding: 3rem;
+}
+
+.landing .landing-logo img {
+    width: 50rem;
+}
+.landing-hero {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.landing-hero .landing-hero-title {
+    color: var(--color-blue-light);
+    font-size: 5rem;
+    letter-spacing: 1rem;
+}
+
+.landing-hero .landing-hero-subtitle {
+    color: var(--color-blue-dark);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.landing-hero .landing-hero-btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5rem;
+}
+
+.landing-hero .landing-hero-btn-container a {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2rem;
+    border-radius: 3px;
+}
+.landing-hero .landing-hero-btn-outline {
+    color: var(--color-blue-dark);
+    padding: 1rem 3rem;
+    border: 1px solid var(--color-blue-light);
+    transition: ease-in .3s;
+}
+
+.landing-hero .landing-hero-btn-outline:hover {
+    background-color: var(--color-blue-light);
+    color: var(--color-white);
+    box-shadow: 0 3px 6px var(--color-shadow);
+    transform: scale(1.1);
+}
+
+.landing-hero .landing-hero-btn-fill {
+    background-color: var(--color-blue-dark);
+    padding: 1rem 5rem;
+    color: var(--color-white);
+    transition: .3s ease-in;
+}
+.landing-hero .landing-hero-btn-fill:hover {
+    background-color: var(--color-blue-light);
+    box-shadow: 0 3px 6px var(--color-shadow);
+    transform: scale(1.1);
+}
