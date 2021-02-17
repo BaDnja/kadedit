@@ -60,9 +60,9 @@
 /* Main */
 
 .main {
-  padding: 5rem 0 0 10%;
+  padding: 0 0 0 10%;
   position: relative;
-  margin-left: 35rem;
+  margin-left: 40rem;
 }
 
 /* Search part */
@@ -154,6 +154,7 @@
   flex-wrap: wrap;
   width: 56vw;
   justify-content: center;
+  min-height: 65vh;
 }
 .card-item {
   background-color: var(--color-gray-light);
@@ -161,7 +162,6 @@
   box-shadow: 0 3px 6px var(--color-shadow);
   border-radius: 1rem;
   padding: 4rem 3rem;
-  margin-bottom: 2rem;
   margin-right: 2rem;
   text-decoration: none;
   display: flex;
@@ -170,8 +170,8 @@
   align-items: center;
   transition: .5s ease-out;
   min-width: 15%;
-  height: 12rem;
-  min-height: 10rem;
+  height: 9rem;
+  min-height: 9rem;
 }
 .card-item:hover {
   cursor: pointer;
@@ -183,7 +183,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .card-item-desc {
   font-size: 1.6rem;

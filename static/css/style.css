@@ -109,7 +109,9 @@ input[type="submit"] {
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 5rem;
   padding: 2rem;
   color: var(--color-blue-dark);
+  font-weight: 300;
+  margin-left: -10rem;
 }

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-    <main class="main">
         <form class="form-group u-w-50" action="{% url 'academic_title_add' %}" method="POST">
             {% csrf_token %}
             <h1 class="form-group-title">Dodavanje nove akademske titule</h1>
@@ -15,5 +14,4 @@
                 <input type="submit" value="Sačuvaj" class="btn form-group-btn-save"/>
             </div>
         </form>
-    </main>
 {% endblock %}
