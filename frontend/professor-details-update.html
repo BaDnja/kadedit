@@ -31,7 +31,8 @@
                     <a href="professor-details-add.html" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
                 </form>
 
-                <form class="form-group">
+                <div class="form-group">
+                    <form action="POST">
                     <h1 class="form-group-title">Ažuriranje profesora</h1>
                     <div class="form-group-input-row">
                         <div class="form-group-input-group">
@@ -74,22 +75,18 @@
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="options-box-input-row">
-                        <div class="options-box-input-group">
-                            <label for="predmeti" class="options-box-label">Predmeti</label>
-                            <select class="options-box-select u-min-width-50" name="predmeti" id="predmeti">
-                                <option value="Fizioterapija">Fizioterapija</option>
-                            </select>
-                        </div>
-                    </div>
-                    <a href="#" class="btn options-box-btn-dodaj-predmet" id="btn-modal-subject-open">Dodaj novi predmet</a>
-                    <a href="#" class="btn options-box-btn-obrisi-predmet">Obriši odabrani predmet</a> -->
                     <div class="form-group-btn-group">
                         <input name="prof-update" type="submit" class="btn form-group-btn-save" value="Sačuvaj promjene">
+                    </form>
+                    <form action="POST">
                         <input name="prof-update" type="submit" class="btn form-group-btn-deactivate" value="Deaktiviraj">
-                        <input name="prof-update" type="submit" class="btn form-group-btn-delete hidden" value="Obriši">
+                    </form>
+                    <form action="POST" class="hidden">
+                        <input name="prof-update" type="submit" class="btn form-group-btn-delete" value="Obriši">
+                    </form>
                     </div>
-                </form>
+                </div>
+
     </main>
 </body>
 </html>

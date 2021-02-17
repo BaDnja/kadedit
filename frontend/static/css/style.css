@@ -29,6 +29,7 @@ html {
 input[type="submit"] {
   border: none;
   cursor: pointer;
+  outline: none;
 }
 /* Utility classes */
 .u-min-width-100 {
