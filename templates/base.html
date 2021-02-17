@@ -14,10 +14,10 @@
         <h1 class="navbar-title" name="Ime i prezime">{{ request.user.get_full_name }}</h1>
         <h3 class="navbar-subtitle" name="Uloga">{{ request.user.groups.all.0 }}</h3>
         <div class="navbar-navigation">
-            <a href="{% url 'professors' %}" class="navbar-navigation-item">PROFESORI</a>
-            <a href="{% url 'engagements' %}" class="navbar-navigation-item navbar-navigation-subitem">ANGAŽOVANJA</a>
-            <a href="{% url 'work_statuses' %}" class="navbar-navigation-item navbar-navigation-subitem">RADNI STATUSI</a>
-            <a href="{% url 'academic_titles' %}" class="navbar-navigation-item navbar-navigation-subitem">AKADEMSKE TITULE</a>
+            <a href="{% url 'professors' %}" class="navbar-navigation-item {% if request.path == '/professors/' %} navbar-navigation-item-active {% endif %}">PROFESORI</a>
+            <a href="{% url 'engagements' %}" class="navbar-navigation-item navbar-navigation-subitem {% if 'engagements' in request.path %} navbar-navigation-item-active {% endif %}">ANGAŽOVANJA</a>
+            <a href="{% url 'work_statuses' %}" class="navbar-navigation-item navbar-navigation-subitem {% if 'work-statuses' in request.path %} navbar-navigation-item-active {% endif %}">RADNI STATUSI</a>
+            <a href="{% url 'academic_titles' %}" class="navbar-navigation-item navbar-navigation-subitem {% if 'academic_titles' in request.path %} navbar-navigation-item-active {% endif %}">AKADEMSKE TITULE</a>
 
             <a href="{% url 'user_logout' %}" class="navbar-navigation-item">ODJAVA</a>
         </div>
