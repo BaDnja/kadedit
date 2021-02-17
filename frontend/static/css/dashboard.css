@@ -293,4 +293,7 @@
 .form-group-btn-delete {
   background-color: var(--color-red);
 }
+.form-group-btn-deactivate {
+  background-color: var(--color-orange);
+}
 
