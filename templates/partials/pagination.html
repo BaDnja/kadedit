@@ -2,9 +2,9 @@
 {% if obj_list.has_other_pages %}
     <div class="pagination">
         {% if obj_list.has_previous %}
-            <a class="pagination-item" href="?page={{ obj_list.previous_page_number }}">&larr;</a>
+            <a class="pagination-item" href="?page={{ obj_list.previous_page_number }}">&lsaquo;</a>
         {% else %}
-            <a class="pagination-item disabled" href="#">&larr;</a>
+            <a class="pagination-item disabled" href="#">&lsaquo;</a>
         {% endif %}
         {% for i in obj_list.paginator.page_range %}
             {% if obj_list.number == i %}
@@ -14,9 +14,9 @@
             {% endif %}
         {% endfor %}
         {% if obj_list.has_next %}
-            <a class="pagination-item" href="?page={{ obj_list.next_page_number }}">&rarr;</a>
+            <a class="pagination-item" href="?page={{ obj_list.next_page_number }}">&rsaquo;</a>
         {% else %}
-            <a class="pagination-item disabled">&rarr;</a>
+            <a class="pagination-item disabled">&rsaquo;</a>
         {% endif %}
     </div>
 {% endif %}
