@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadrovska Evidencija | Panevropski Univerzitet Apeiron</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body class="landing">
+    <div class="landing-logo">
+        <img src="{% static 'img/logo.png' %}" alt="Logo Panevropski univerzitet Apeiron">
+    </div>
+    <div class="landing-hero">
+        <h1 class="landing-hero-title">KADROVSKA <br /> EVIDENCIJA</h1>
+        <h3 class="landing-hero-subtitle">Administracija kadrova <br /> na jednom mjestu.</h3>
+        <div class="landing-hero-btn-container">
+            <a href= "{% url 'admin:index' %}" class="landing-hero-btn-outline">Admin panel</a>
+            <a href= "{% url 'user_login' %}" class="landing-hero-btn-fill">Prijava</a>
+        </div>
+    </div>
+
+</body>
+</html>

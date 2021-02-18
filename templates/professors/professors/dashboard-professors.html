@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | Profesori {% endblock %}
+
+{% block content %}
+
+    <main class="main">
+
+        <form action="{% url 'professor_search' %}" method='POST'>
+            {% csrf_token %}
+            <input type="text" name="Name" placeholder="Pretraga...">
+            <button type="submit">Pretraga</button>
+        </form>
+
+        <!-- List box with professors / subjects with options -->
+
+            <div class="list-box">
+            {% include 'partials/_alerts.html' %}
+            {% if obj_list %}
+                {% for obj in obj_list %}
+                    <div class="list-box-item">
+                        {% if perms.professors.view_professor %}
+                            <a href="{% url 'professor' obj.id %}">{{ obj.id }}</a>
+                        {% endif %}
+                        <h1 class="list-box-item-title"><span class="list-box-item-title-name">{{ obj }}</span></h1>
+                        <p class="list-box-item-desc list-box-item-calling">{{ obj.academic_title|default_if_none:'' }}</p>
+                        <p class="list-box-item-desc list-box-item-engagement">{{ obj.engagement|default_if_none:'' }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h1>Nema dodanih profesora</h1>
+            {% endif %}
+            </div>
+
+            {% include 'partials/pagination.html' %}
+
+    </main>
+
+    <script src="{% static 'js/dashboard-professor.js' %}"></script>
+{% endblock %}

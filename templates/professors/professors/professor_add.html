@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj novog radnika</title>
+</head>
+<body>
+    {% include "partials/_alerts.html" %}
+    <br>
+    <h1>Dodaj novog akademskog radnika</h1>
+    <form action="{% url 'professor_add' %}" method="POST">
+        {% csrf_token %}
+        <label for="first_name">Ime:</label>
+        <input id="first_name" name="first_name" type="text" maxlength="30" required>
+        <br>
+        <br>
+        <label for="last_name">Prezime:</label>
+        <input id="last_name" name="last_name" type="text" maxlength="80" required>
+        <br>
+        <br>
+        <label for="birthdate">Datum rođenja:</label>
+        <input id="birthdate" name="birthdate" type="date">
+        <br>
+        <br>
+        <label for="dissertation">Disertacija:</label>
+        <input id="dissertation" name="dissertation" type="text" maxlength="200">
+        <br>
+        <br>
+        <label for="active">Aktivan:</label>
+        <input id="active" name="active" type="checkbox" checked>
+        <br>
+        <br>
+
+
+        <label for="workstatus">Radni status:</label>
+        <select name="workstatus" id="workstatus">
+            <option value="">-----</option>
+            {% if statuses %}
+                {% for status in statuses %}
+                    <option value="{{ status.id }}">{{ status.name }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <br>
+        <br>
+
+        <label for="engagement">Angažovanje:</label>
+        <select name="engagement" id="engagement">
+            <option value="">-----</option>
+            {% if engagements %}
+                {% for engagement in engagements %}
+                    <option value="{{ engagement.id }}">{{ engagement.name }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <br>
+        <br>
+
+        <label for="academictitle">Akademska titula:</label>
+        <select name="academictitle" id="academictitle">
+            <option value="">-----</option>
+            {% if academictitles %}
+                {% for title in academictitles %}
+                    <option value="{{ title.id }}">{{ title.name }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <br>
+        <button type="submit" value="Add">Dodaj</button>
+    </form>
+</body>
+</html>

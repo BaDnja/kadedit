@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if object %} {{ object }} {% else %} Profesor {% endif %}</title>
+</head>
+<body>
+    {% include "partials/_alerts.html" %}
+    <br>
+    <h1>Azuriranje profesora</h1>
+    <form action="{% url 'professor_update' object.id %}" method="POST">
+        {% csrf_token %}
+        <label for="first_name">Ime:</label>
+        <input value="{{ object.first_name }}" id="first_name" name="first_name" type="text" maxlength="30" required>
+        <br>
+        <br>
+        <label for="last_name">Prezime:</label>
+        <input value="{{ object.last_name }}" id="last_name" name="last_name" type="text" maxlength="80" required>
+        <br>
+        <br>
+        <label for="birthdate">Datum rođenja:</label>
+        <input value="{{ object.birthdate|date:'Y-m-d' }}" id="birthdate" name="birthdate" type="date">
+        <br>
+        <br>
+        <label for="dissertation">Disertacija:</label>
+        <input {{ object.dissertation }} id="dissertation" name="dissertation" type="text" maxlength="200">
+        <br>
+        <br>
+
+
+        <label for="workstatus">Radni status:</label>
+        <select name="workstatus" id="workstatus">
+            <option value="">-----</option>
+            {% if object.work_status %}
+                {% if statuses %}
+                    {% for status in statuses %}
+                        {% if status.id == object.work_status.id %}
+                            <option value="{{ status.id }}" selected>{{ status.name }}</option>
+                        {% else %}
+                            <option value="{{ status.id }}">{{ status.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% else %}
+                {% if statuses %}
+                    {% for status in statuses %}
+                        <option value="{{ status.id }}">{{ status.name }}</option>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+
+        </select>
+        <br>
+        <br>
+
+        <label for="engagement">Angažovanje:</label>
+        <select name="engagement" id="engagement">
+            <option value="">-----</option>
+            {% if object.engagement %}
+                {% if engagements %}
+                    {% for engagement in engagements %}
+                        {% if engagement.id == object.engagement.id %}
+                            <option value="{{ engagement.id }}" selected>{{ engagement.name }}</option>
+                        {% else %}
+                            <option value="{{ engagement.id }}">{{ engagement.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% else %}
+                {% if engagements %}
+                    {% for engagement in engagements %}
+                        <option value="{{ engagement.id }}">{{ engagement.name }}</option>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        </select>
+        <br>
+        <br>
+
+        <label for="academictitle">Akademska titula:</label>
+        <select name="academictitle" id="academictitle">
+            <option value="">-----</option>
+            {% if object.academic_title %}
+                {% if academictitles %}
+                    {% for title in academictitles %}
+                        {% if title.id == object.academic_title.id %}
+                            <option value="{{ title.id }}" selected>{{ title.name }}</option>
+                        {% else %}
+                            <option value="{{ title.id }}">{{ title.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% else %}
+                {% if academictitles %}
+                    {% for title in academictitles %}
+                        <option value="{{ title.id }}">{{ title.name }}</option>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        </select>
+        {% if perms.professors.change_professor %}
+            <br>
+            <br>
+            <button type="submit" value="Update">Azuriraj informacije</button>
+        {% endif %}
+    </form>
+        {% if perms.professors.change_professor %}
+            <br>
+            <br>
+            <form action="{% url 'professor_deactivate' object.id %}" method='POST'>
+                {% csrf_token %}
+                <button type="submit" value="Deactivate">Deaktiviraj profesora</button>
+            </form>
+        {% endif %}
+        {% if perms.professor.delete_professor and request.user.is_superuser %}
+            <br>
+            <br>
+             <form action="{% url 'professor_delete' object.id %}" method='POST'>
+                {% csrf_token %}
+                <button type="submit" value="Delete">Obrisi profesora</button>
+            </form>
+        {% endif %}
+        <br>
+</body>
+</html>

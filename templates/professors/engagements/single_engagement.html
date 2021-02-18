@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angažovanje</title>
+</head>
+<body>
+<form action="{% url 'engagement_update' object.id %}" method="POST">
+    {% csrf_token %}
+
+    <label for="Name"></label>
+    <input id="Name" type="text" value="{{ object.name }}" name="Name" required/>
+    {% if perms.professors.change_engagement %}
+        <button type="submit" value="Save">Spremi promjene</button>
+    {% endif %}
+</form>
+
+{% include 'partials/_alerts.html' %}
+
+{% if perms.professors.delete_engagement %}
+    <form action="{% url 'engagement_delete' object.id %}" method='POST'>
+    {% csrf_token %}
+    <button type="submit" value="Delete">Obrisi angazovanje</button>
+    </form>
+{% endif %}
+</body>
+</html>
