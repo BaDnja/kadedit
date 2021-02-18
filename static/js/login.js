@@ -7,13 +7,15 @@ loginForm.onsubmit = validateLogin;
 
 
 
+
+
 function showError(text) {
   loginError.style.visibility = 'visible';
   loginError.innerHTML = text;
   setTimeout(() => {
     loginError.style.visibility = 'hidden';
   }, 2000);
-}
+};
 
 function validateLogin(e) {
   const loginUsername = document.getElementById('login-username').value;
