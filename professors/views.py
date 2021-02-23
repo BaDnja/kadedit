@@ -132,7 +132,7 @@ def professor(request, professor_id):
 
 
 @login_required
-@permission_required('professor.add_professor', raise_exception=True)
+@permission_required('professors.add_professor', raise_exception=True)
 def professor_add(request):
     """Handle adding new professor to database"""
     if request.method == 'POST':
