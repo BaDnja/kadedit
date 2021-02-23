@@ -141,7 +141,6 @@ def professor_add(request):
         last_name = request.POST['last_name']
         birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
         dissertation = request.POST['dissertation']
-        active = True if request.POST.get('active') else False
         workstatus = None if request.POST.get('workstatus') == '' else request.POST['workstatus']
         engagement = None if request.POST.get('engagement') == '' else request.POST['engagement']
         academictitle = None if request.POST.get('academictitle') == '' else request.POST['academictitle']
@@ -154,8 +153,7 @@ def professor_add(request):
             prof = models.Professor(first_name=first_name.capitalize(),
                                     last_name=last_name.capitalize(),
                                     birthdate=birthdate,
-                                    dissertation=dissertation.capitalize(),
-                                    active=active)
+                                    dissertation=dissertation.capitalize(),)
             prof.save()
 
             if workstatus:
