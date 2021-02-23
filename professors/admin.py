@@ -34,11 +34,11 @@ class AcademicTitleAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-@admin.register(XProfessorSubject)
-class XProfessorSubjectAdmin(admin.ModelAdmin):
-    list_display = ("professor", "subject", "practice")
-    list_per_page = 30
-    list_display_links = ("professor", "subject")
-    search_fields = ("professor__first_name", "professor__last_name", "subject__name")
-    list_editable = ("practice",)
-    list_filter = ("practice",)
+# @admin.register(XProfessorSubject)
+# class XProfessorSubjectAdmin(admin.ModelAdmin):
+#     list_display = ("professor", "subject", "practice")
+#     list_per_page = 30
+#     list_display_links = ("professor", "subject")
+#     search_fields = ("professor__first_name", "professor__last_name", "subject__name")
+#     list_editable = ("practice",)
+#     list_filter = ("practice",)
