@@ -1,72 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dodaj novog radnika</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Profesori | Dodavanje {% endblock %}
+{% block content %}
+    <h1 class="title">Profesori</h1>
     {% include "partials/_alerts.html" %}
-    <br>
-    <h1>Dodaj novog akademskog radnika</h1>
+    <div class="form-group" style="width:50vw;">
     <form action="{% url 'professor_add' %}" method="POST">
         {% csrf_token %}
-        <label for="first_name">Ime:</label>
-        <input id="first_name" name="first_name" type="text" maxlength="30" required>
-        <br>
-        <br>
-        <label for="last_name">Prezime:</label>
-        <input id="last_name" name="last_name" type="text" maxlength="80" required>
-        <br>
-        <br>
-        <label for="birthdate">Datum rođenja:</label>
-        <input id="birthdate" name="birthdate" type="date">
-        <br>
-        <br>
-        <label for="dissertation">Disertacija:</label>
-        <input id="dissertation" name="dissertation" type="text" maxlength="200">
-        <br>
-        <br>
-        <label for="active">Aktivan:</label>
-        <input id="active" name="active" type="checkbox" checked>
-        <br>
-        <br>
+        <h1 class="form-group-title">Dodavanje profesora</h1>
+        <div class="form-group-input-row">
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="first_name">Ime:</label>
+                <input class="form-group-input" id="first_name" name="first_name" type="text" maxlength="30" required>
+            </div>
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="last_name">Prezime:</label>
+                <input class="form-group-input" id="last_name" name="last_name" type="text" maxlength="80" required>
+            </div>
+        </div>
 
+        <div class="form-group-input-row">
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="birthdate">Datum rođenja:</label>
+                <input class="form-group-input" id="birthdate" name="birthdate" type="date">
+            </div>
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="dissertation">Disertacija:</label>
+                <input class="form-group-input" id="dissertation" name="dissertation" type="text" maxlength="200">
+            </div>
+        </div>
 
-        <label for="workstatus">Radni status:</label>
-        <select name="workstatus" id="workstatus">
-            <option value="">-----</option>
-            {% if statuses %}
-                {% for status in statuses %}
-                    <option value="{{ status.id }}">{{ status.name }}</option>
-                {% endfor %}
-            {% endif %}
-        </select>
-        <br>
-        <br>
+        <div class="form-group-input-row">
+            <div class="form-group-input-group" style="text-align: left i !important;">
+                <label class="form-group-label" for="active">Aktivan:</label>
+                <input class="form-group-input" id="active" name="active" type="checkbox" checked>
+            </div>
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="workstatus">Radni status:</label>
+                <select class="form-group-select u-min-width-100" name="workstatus" id="workstatus">
+                    <option value="">-----</option>
+                    {% if statuses %}
+                        {% for status in statuses %}
+                            <option value="{{ status.id }}">{{ status.name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
 
-        <label for="engagement">Angažovanje:</label>
-        <select name="engagement" id="engagement">
-            <option value="">-----</option>
-            {% if engagements %}
-                {% for engagement in engagements %}
-                    <option value="{{ engagement.id }}">{{ engagement.name }}</option>
-                {% endfor %}
-            {% endif %}
-        </select>
-        <br>
-        <br>
-
-        <label for="academictitle">Akademska titula:</label>
-        <select name="academictitle" id="academictitle">
-            <option value="">-----</option>
-            {% if academictitles %}
-                {% for title in academictitles %}
-                    <option value="{{ title.id }}">{{ title.name }}</option>
-                {% endfor %}
-            {% endif %}
-        </select>
-        <br>
-        <button type="submit" value="Add">Dodaj</button>
+        <div class="form-group-input-row">
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="engagement">Angažovanje:</label>
+                <select class="form-group-select u-min-width-100" name="engagement" id="engagement">
+                    <option value="">-----</option>
+                    {% if engagements %}
+                        {% for engagement in engagements %}
+                            <option value="{{ engagement.id }}">{{ engagement.name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="academictitle">Akademska titula:</label>
+                <select class="form-group-select u-min-width-100" name="academictitle" id="academictitle">
+                    <option value="">-----</option>
+                    {% if academictitles %}
+                        {% for title in academictitles %}
+                            <option value="{{ title.id }}">{{ title.name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <input class="btn form-group-btn-save" type="submit" value="Dodaj">
     </form>
-</body>
-</html>
+    </div>
+{% endblock %}
