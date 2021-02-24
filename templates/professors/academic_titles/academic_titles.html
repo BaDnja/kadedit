@@ -16,11 +16,9 @@
     {% if obj_list %}
         <div class="card">
             {% for obj in obj_list %}
-                {% if perms.professors.view_academictitle %}
                 <a class="card-item" href="{% url 'single_academic_title' obj.id %}">
                     <h1 class="card-item-title"><span class="card-item-title-name">{{ obj.name }}</span></h1>
                 </a>
-                {% endif %}
             {% endfor %}
         </div>
     {% endif %}
