@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Radni statusi</title>
-</head>
-<body>
-<form action="{% url 'work_status_search' %}" method='POST'>
+{% extends 'base.html' %}
+{% block title %} Radni statusi {% endblock %}
+
+{% block content %}
+<h1 class="title">Radni statusi</h1>
+<form class="search-box" action="{% url 'work_status_search' %}" method='POST'>
     {% csrf_token %}
     <input type="text" name="Name" placeholder="Pretraga...">
     <button type="submit">Pretraga</button>
