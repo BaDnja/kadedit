@@ -1,27 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Radni status</title>
-</head>
-<body>
-<form action="{% url 'work_status_update' object.id %}" method="POST">
-    {% csrf_token %}
+{% extends 'base.html' %}
+{% block title %} {% if object %} {{ obj.name|capfirst }} {% else %} Akademska titula {% endif %} {% endblock %}
+{% block content %}
+    <h1 class="title">Radni statusi</h1>
+    {% include 'partials/_alerts.html' %}
+    <div class="form-group u-w-50">
+        <h1 class="form-group-title">Ažuriranje radnog statusa</h1>
+        <form action="{% url 'work_status_update' object.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-grup-input-row">
+                <div class="form-group-input-group">
+                    <label class="form-group-label" for="Name">Naziv</label>
+                    <input class="form-group-input" id="Name" type="text" value="{{ object.name }}" name="Name" required/>
+                </div>
+            </div>
+            <div class="form-group-btn-group">
+            {% if perms.professors.change_workstatus %}
+                <input class="btn form-group-btn-save" type="submit" value="Sačuvaj promjene">
+            {% endif %}
+        </form>
 
-    <label for="Name"></label>
-    <input id="Name" type="text" value="{{ object.name }}" name="Name" required/>
-    {% if perms.professors.change_workstatus %}
-        <button type="submit" value="Save">Spremi promjene</button>
-    {% endif %}
-</form>
-
-{% include 'partials/_alerts.html' %}
-
-{% if perms.professors.delete_workstatus %}
-    <form action="{% url 'work_status_delete' object.id %}" method='POST'>
-    {% csrf_token %}
-    <button type="submit" value="Delete">Obrisi radni status</button>
-    </form>
-{% endif %}
-</body>
-</html>
+        {% if perms.professors.delete_workstatus %}
+            <form action="{% url 'work_status_delete' object.id %}" method='POST'>
+                {% csrf_token %}
+                <input class="btn form-group-btn-delete" type="submit" value="Obriši ">
+            </form>
+        {% endif %}
+    </div>
+    {% endblock %}
