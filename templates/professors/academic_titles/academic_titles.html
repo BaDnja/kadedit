@@ -3,6 +3,7 @@
 
 {% block content %}
     <h1 class="title">Akademske titule</h1>
+    {% include 'partials/_alerts.html' %}
     <form class="search-box" action="{% url 'academic_title_search' %}" method='POST'>
         {% csrf_token %}
         <input type="text" name="Name" id="search" class="search-box-input" placeholder="Pretraga...">
@@ -12,7 +13,6 @@
         {% endif %}
     </form>
     <div class="seperator">&nbsp;</div>
-    {% include 'partials/_alerts.html' %}
     {% if obj_list %}
         <div class="card">
             {% for obj in obj_list %}
