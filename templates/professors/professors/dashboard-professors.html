@@ -19,7 +19,7 @@
             <div class="card">
             {% if obj_list %}
                 {% for obj in obj_list %}
-                        <a class="card-item" href="{% url 'professor' obj.id %}">
+                        <a class="card-item" {% if perms.professors.view_professor %} href="{% url 'professor' obj.id %}" {% endif %}>
                             <!-- <a >{{ obj.id }}</a> -->
                             <h1 class="card-item-title"><span class="card-item-title-name">{{ obj }}</span></h1>
                             <p class="card-item-desc card-item-calling">{{ obj.academic_title|default_if_none:'' }}</p>

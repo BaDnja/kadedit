@@ -15,7 +15,7 @@
 {% if obj_list %}
 <div class="card">
     {% for obj in obj_list %}
-        <a class="card-item" href="{% url 'single_work_status' obj.id %}">
+        <a class="card-item" {% if perms.professors.view_workstatus %} href="{% url 'single_work_status' obj.id %}" {% endif %}>
             <h1 class="card-item-title"><span class="card-item-title-name">{{ obj.name }}</span></h1>
         </a>
     {% endfor %}
