@@ -17,6 +17,7 @@
     <div class="landing-hero">
         <h1 class="landing-hero-title">KADROVSKA <br /> EVIDENCIJA</h1>
         <h3 class="landing-hero-subtitle">Administracija kadrova <br /> na jednom mjestu.</h3>
+            {% include 'partials/_alerts.html' %}
         <div class="landing-hero-btn-container">
             <a href= "{% url 'admin:index' %}" class="landing-hero-btn-outline">Admin panel</a>
             <a href= "{% url 'user_login' %}" class="landing-hero-btn-fill">Prijava</a>
