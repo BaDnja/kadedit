@@ -13,7 +13,7 @@
     <form id="login-form" class="login-form" action="{{ request.path }}" method="POST">
         {% csrf_token %}
       <h1 class="login-form-title">PRIJAVA</h1>
-        {% include 'partials/_alerts.html' %}
+      {% include 'partials/_alerts.html' %}
       <div id="login-error"></div>
       <input name="username" type="text" id="login-username" placeholder="Korisničko ime" class="login-text login-form-username">
       <input name="password" type="password" id="login-password" placeholder="Šifra" class="login-text login-form-password">
