@@ -113,7 +113,7 @@
             </form>
         {% endif %}
         {% if perms.professor.delete_professor and request.user.is_superuser %}
-             <form action="{% url 'professor_delete' object.id %}" method='POST'>
+             <form class="form-delete" action="{% url 'professor_delete' object.id %}" method='POST'>
                 {% csrf_token %}
                 <input class="btn form-group-btn-delete" type="submit" value="Obriši profesora" />
             </form>

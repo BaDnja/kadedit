@@ -19,7 +19,7 @@
             {% endif %}
         </form>
         {% if perms.professors.delete_academictitle %}
-            <form action="{% url 'academic_title_delete' object.id %}" method='POST'>
+            <form class="form-delete" action="{% url 'academic_title_delete' object.id %}" method='POST'>
                 {% csrf_token %}
                 <input type="submit" class="btn form-group-btn-delete" value="Obriši"/>
             </form>

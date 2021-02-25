@@ -20,7 +20,7 @@
         </form>
 
         {% if perms.professors.delete_workstatus %}
-            <form action="{% url 'work_status_delete' object.id %}" method='POST'>
+            <form class="form-delete" action="{% url 'work_status_delete' object.id %}" method='POST'>
                 {% csrf_token %}
                 <input class="btn form-group-btn-delete" type="submit" value="Obriši ">
             </form>
