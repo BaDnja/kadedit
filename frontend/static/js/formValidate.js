@@ -15,6 +15,8 @@ function alertOnDelete() {
     else return false;
 }
 
+
+// Can be refactored to be better
 for(let i = 0; i < forms.length; i++) {
     const inputs = forms[i].getElementsByTagName("input");
     let addEvent = false;
