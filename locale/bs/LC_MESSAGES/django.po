@@ -60,7 +60,7 @@ msgid "work statuses"
 msgstr "radni statusi"
 
 #: professors/models.py:32 professors/models.py:38 professors/models.py:58
-msgid "engagement"
+msgid "calling"
 msgstr "angažovanje"
 
 #: professors/models.py:39
@@ -74,6 +74,14 @@ msgstr "akademska titula"
 #: professors/models.py:50
 msgid "academic titles"
 msgstr "akademske titule"
+
+#: professors/models.py:42 #: professors/models.py:48
+msgid "calling"
+msgstr "zvanje"
+
+#: professors/models.py:49
+msgid "callings"
+msgstr "zvanja"
 
 #: professors/models.py:57
 msgid "contract"

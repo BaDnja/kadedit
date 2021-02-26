@@ -4,12 +4,12 @@ from .models import *
 
 @admin.register(Professor)
 class ProfessorAdmin(admin.ModelAdmin):
-    list_display = ("first_name", "last_name", "birthdate", "engagement", "academic_title", "work_status")
+    list_display = ("first_name", "last_name", "birthdate", "calling", "academic_title", "work_status")
     list_per_page = 25
     list_display_links = ("first_name", "last_name")
-    search_fields = ("first_name", "last_name", "engagement__name", "academic_title__name", "work_status__name")
-    list_filter = ("engagement", "work_status", "academic_title")
-    list_editable = ("engagement", "academic_title", "work_status")
+    search_fields = ("first_name", "last_name", "calling__name", "academic_title__name", "work_status__name")
+    list_filter = ("calling", "work_status", "academic_title")
+    list_editable = ("calling", "academic_title", "work_status")
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
@@ -21,14 +21,21 @@ class WorkStatusAdmin(admin.ModelAdmin):
     list_per_page = 15
 
 
-@admin.register(Engagement)
-class EngagementAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-    list_per_page = 10
+# @admin.register(Engagement)
+# class EngagementAdmin(admin.ModelAdmin):
+#     list_display = ("name",)
+#     list_per_page = 10
 
 
 @admin.register(AcademicTitle)
 class AcademicTitleAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    list_per_page = 10
+    search_fields = ("name",)
+
+
+@admin.register(Calling)
+class CallingAdmin(admin.ModelAdmin):
     list_display = ("name",)
     list_per_page = 10
     search_fields = ("name",)

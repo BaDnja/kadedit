@@ -17,13 +17,13 @@ class WorkStatus(models.Model):
 
 
 class Engagement(models.Model):
-    name = models.CharField(_('engagement'), max_length=65, unique=True)
+    name = models.CharField(_('calling'), max_length=65, unique=True)
 
     def __str__(self):
         return f"{self.name}"
 
     class Meta:
-        verbose_name = _("engagement")
+        verbose_name = _("calling")
         verbose_name_plural = _("engagements")
 
 
@@ -38,6 +38,17 @@ class AcademicTitle(models.Model):
         verbose_name_plural = _("academic titles")
 
 
+class Calling(models.Model):
+    name = models.CharField(_('calling'), max_length=65, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = _('calling')
+        verbose_name_plural = _('callings')
+
+
 class Professor(TimeModelMixin):
     first_name = models.CharField(_('first name'), max_length=30)
     last_name = models.CharField(_('last name'), max_length=80)
@@ -46,8 +57,10 @@ class Professor(TimeModelMixin):
     active = models.BooleanField(_("active"), default=True)
     work_status = models.ForeignKey(WorkStatus, blank=True, null=True, on_delete=SET_NULL,
                                     verbose_name=_("work status"))
-    engagement = models.ForeignKey(Engagement, blank=True, null=True, on_delete=SET_NULL,
-                                   verbose_name=_("engagement"))
+    # calling = models.ForeignKey(Engagement, blank=True, null=True, on_delete=SET_NULL,
+    #                                verbose_name=_("calling"))
+    calling = models.ForeignKey(Calling, blank=True, null=True, on_delete=SET_NULL,
+                                verbose_name=_("calling"))
     academic_title = models.ForeignKey(AcademicTitle, blank=True, null=True, on_delete=SET_NULL,
                                        verbose_name=_("academic title"))
 

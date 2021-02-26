@@ -23,7 +23,7 @@
                             <!-- <a >{{ obj.id }}</a> -->
                             <h1 class="card-item-title"><span class="card-item-title-name">{{ obj }}</span></h1>
                             <p class="card-item-desc card-item-calling">{{ obj.academic_title|default_if_none:'' }}</p>
-                            <p class="card-item-desc card-item-engagement">{{ obj.engagement|default_if_none:'' }}</p>
+                            <p class="card-item-desc card-item-engagement">{{ obj.calling|default_if_none:'' }}</p>
                         </a>
                 {% endfor %}
             {% else %}

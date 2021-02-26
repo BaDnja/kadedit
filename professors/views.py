@@ -119,13 +119,13 @@ def professor(request, professor_id):
     """Handle getting single page for professor"""
     obj = get_object_or_404(models.Professor, pk=professor_id)
     statuses_queryset = models.WorkStatus.objects.all().order_by('-id')
-    engagements_queryset = models.Engagement.objects.all().order_by('-id')
+    callings_queryset = models.Calling.objects.all().order_by('-id')
     titles_queryset = models.AcademicTitle.objects.all().order_by('-id')
 
     context = {
         'object': obj,
         'statuses': statuses_queryset,
-        'engagements': engagements_queryset,
+        'callings': callings_queryset,
         'academictitles': titles_queryset,
     }
     return render(request, 'professors/professors/professor.html', context)
@@ -142,46 +142,41 @@ def professor_add(request):
         birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
         dissertation = request.POST['dissertation']
         workstatus = None if request.POST.get('workstatus') == '' else request.POST['workstatus']
-        engagement = None if request.POST.get('engagement') == '' else request.POST['engagement']
+        engagement = None if request.POST.get('calling') == '' else request.POST['calling']
         academictitle = None if request.POST.get('academictitle') == '' else request.POST['academictitle']
 
-        if models.Professor.objects.filter(first_name=first_name.capitalize(),
-                                           last_name=last_name.capitalize()).exists():
-            messages.error(request, "Akademski radnik već postoji")
-            return redirect('professor_add')
-        else:
-            prof = models.Professor(first_name=first_name.capitalize(),
-                                    last_name=last_name.capitalize(),
-                                    birthdate=birthdate,
-                                    dissertation=dissertation.capitalize(),)
-            prof.save()
+        prof = models.Professor(first_name=first_name.capitalize(),
+                                last_name=last_name.capitalize(),
+                                birthdate=birthdate,
+                                dissertation=dissertation.capitalize(), )
+        prof.save()
 
-            if workstatus:
-                prof = models.Professor(
-                    work_status=models.WorkStatus.objects.get(id=workstatus)
-                )
-            if engagement:
-                prof = models.Professor(
-                    engagement=models.Engagement.objects.get(id=engagement)
-                )
-            if academictitle:
-                prof = models.Professor(
-                    academic_title=models.AcademicTitle.objects.get(id=academictitle)
-                )
+        if workstatus:
+            prof = models.Professor(
+                work_status=models.WorkStatus.objects.get(id=workstatus)
+            )
+        if engagement:
+            prof = models.Professor(
+                engagement=models.Engagement.objects.get(id=engagement)
+            )
+        if academictitle:
+            prof = models.Professor(
+                academic_title=models.AcademicTitle.objects.get(id=academictitle)
+            )
 
-            prof.save()
-            messages.success(request, 'Objekat uspješno dodan')
-            return redirect('professors')
+        prof.save()
+        messages.success(request, 'Objekat uspješno dodan')
+        return redirect('professors')
 
     # Get statuses, engagements and titles for drop down menus
     # Add context to html and display page to user
     statuses_queryset = models.WorkStatus.objects.all().order_by('id')
-    engagements_queryset = models.Engagement.objects.all().order_by('id')
+    callings_queryset = models.Calling.objects.all().order_by('id')
     academictitles_queryset = models.AcademicTitle.objects.all().order_by('id')
 
     context = {
         'statuses': statuses_queryset,
-        'engagements': engagements_queryset,
+        'callings': callings_queryset,
         'academictitles': academictitles_queryset,
     }
 
@@ -200,8 +195,8 @@ def professor_update(request, professor_id):
         prof.dissertation = request.POST['dissertation']
         prof.work_status = None if request.POST.get('workstatus') == '' \
             else models.WorkStatus.objects.get(id=request.POST['workstatus'])
-        prof.engagement = None if request.POST.get('engagement') == '' \
-            else models.Engagement.objects.get(id=request.POST['engagement'])
+        prof.calling = None if request.POST.get('calling') == '' \
+            else models.Calling.objects.get(id=request.POST['calling'])
         prof.academic_title = None if request.POST.get('academictitle') == '' \
             else models.AcademicTitle.objects.get(id=request.POST['academictitle'])
 
@@ -356,6 +351,58 @@ def academic_title_search(request):
     return single_field_object_search(request, obj, template)
 
 
+def callings(request):
+    """
+    Handle getting all callings objects with pagination.
+    If user is not authenticated, system redirects to login page with corresponding message.
+    """
+    queryset = models.Calling.objects.all().order_by('id')
+    template = 'professors/callings/callings.html'
+    return view_multiple_objects(request, queryset, template)
+
+
+@permission_required('professors.view_calling', raise_exception=True)
+def single_calling(request, calling_id):
+    """
+    Handles listing single calling for given title id.
+    Function checks if user is authenticated and has permission to view calling. If user is not authenticated
+    or doesn't have permission to view calling, system redirects request user to other pages with corresponding messages.
+    """
+    obj = get_object_or_404(models.Calling, pk=calling_id)
+    template = 'professors/callings/single_calling.html'
+    return view_single_object(request, obj, template)
+
+
+@permission_required('professors.add_calling', raise_exception=True)
+def calling_add(request):
+    model = models.Calling
+    template = 'professors/callings/calling_add.html'
+    err_redirect = 'calling_add'
+    succ_redirect = 'callings'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
+
+
+@permission_required('professors.change_calling', raise_exception=True)
+def calling_update(request, calling_id):
+    obj = get_object_or_404(models.Calling, pk=calling_id)
+    object_id = calling_id
+    succ_redirect = 'single_calling'
+    return update_single_object(request, obj, object_id, succ_redirect)
+
+
+@permission_required('professors.delete_calling', raise_exception=True)
+def calling_delete(request, calling_id):
+    obj = get_object_or_404(models.Calling, pk=calling_id)
+    succ_redirect = 'callings'
+    return delete_single_object(request, obj, succ_redirect)
+
+
+def calling_search(request):
+    obj = models.Calling
+    template = 'professors/callings/callings.html'
+    return single_field_object_search(request, obj, template)
+
+
 def engagements(request):
     """
     Handle getting all engagements objects with pagination.
@@ -369,8 +416,8 @@ def engagements(request):
 @permission_required('professors.view_engagement', raise_exception=True)
 def single_engagement(request, engagement_id):
     """
-    Handles listing single engagement for given title id.
-    Function checks if user is authenticated and has permission to view engagement. If user is not authenticated
+    Handles listing single calling for given title id.
+    Function checks if user is authenticated and has permission to view calling. If user is not authenticated
     or doesn't have permission to view, system redirects request user to other pages with corresponding messages.
     """
     obj = get_object_or_404(models.Engagement, pk=engagement_id)

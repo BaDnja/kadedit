@@ -28,10 +28,10 @@ class Migration(migrations.Migration):
             name='Engagement',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=65, unique=True, verbose_name='engagement')),
+                ('name', models.CharField(max_length=65, unique=True, verbose_name='calling')),
             ],
             options={
-                'verbose_name': 'engagement',
+                'verbose_name': 'calling',
                 'verbose_name_plural': 'engagements',
             },
         ),
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('dissertation', models.CharField(blank=True, max_length=200, null=True, verbose_name='dissertation')),
                 ('active', models.BooleanField(default=True, verbose_name='active')),
                 ('academic_title', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='professors.academictitle', verbose_name='academic title')),
-                ('engagement', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='professors.engagement', verbose_name='engagement')),
+                ('calling', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='professors.calling', verbose_name='calling')),
             ],
             options={
                 'verbose_name': 'professor',

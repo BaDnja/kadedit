@@ -26,7 +26,7 @@
             </div>
             <div class="form-group-input-group">
                 <label class="form-group-label" for="dissertation">Disertacija:</label>
-                <input class="form-group-input" {{ object.dissertation }} id="dissertation" name="dissertation" type="text" maxlength="200">
+                <input class="form-group-input" value="{{ object.dissertation }}" id="dissertation" name="dissertation" type="text" maxlength="200">
             </div>
         </div>
         <div class="form-group-input-row">
@@ -55,23 +55,23 @@
                 </select>
             </div>
             <div class="form-group-input-group">
-                <label class="form-group-label" for="engagement">Angažovanje:</label>
-                <select class="form-group-select u-min-width-100" name="engagement" id="engagement">
+                <label class="form-group-label" for="calling">Zvanje:</label>
+                <select class="form-group-select u-min-width-100" name="calling" id="calling">
                     <option value="">-----</option>
-                    {% if object.engagement %}
-                        {% if engagements %}
-                            {% for engagement in engagements %}
-                                {% if engagement.id == object.engagement.id %}
-                                    <option value="{{ engagement.id }}" selected>{{ engagement.name }}</option>
+                    {% if object.calling %}
+                        {% if callings %}
+                            {% for calling in callings %}
+                                {% if calling.id == object.calling.id %}
+                                    <option value="{{ calling.id }}" selected>{{ calling.name }}</option>
                                 {% else %}
-                                    <option value="{{ engagement.id }}">{{ engagement.name }}</option>
+                                    <option value="{{ calling.id }}">{{ calling.name }}</option>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
                     {% else %}
-                        {% if engagements %}
-                            {% for engagement in engagements %}
-                                <option value="{{ engagement.id }}">{{ engagement.name }}</option>
+                        {% if callings %}
+                            {% for calling in callings %}
+                                <option value="{{ calling.id }}">{{ calling.name }}</option>
                             {% endfor %}
                         {% endif %}
                     {% endif %}

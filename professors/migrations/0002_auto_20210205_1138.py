@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='professor',
-            name='engagement',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='professors.engagement', verbose_name='engagement'),
+            name='calling',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='professors.calling', verbose_name='calling'),
         ),
         migrations.AlterField(
             model_name='professor',

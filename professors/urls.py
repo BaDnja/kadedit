@@ -3,10 +3,10 @@ from . import views
 
 engagements_patterns = [
     path('', views.engagements, name='engagements'),
-    path('engagement/<int:engagement_id>/', views.single_engagement, name='single_engagement'),
-    path('engagement/add', views.engagement_add, name='engagement_add'),
-    path('engagement/update/<int:engagement_id>/', views.engagement_update, name='engagement_update'),
-    path('engagement/delete/<int:engagement_id>/', views.engagement_delete, name='engagement_delete'),
+    path('calling/<int:engagement_id>/', views.single_engagement, name='single_engagement'),
+    path('calling/add', views.engagement_add, name='engagement_add'),
+    path('calling/update/<int:engagement_id>/', views.engagement_update, name='engagement_update'),
+    path('calling/delete/<int:engagement_id>/', views.engagement_delete, name='engagement_delete'),
     path('search/', views.engagement_search, name='engagement_search')
 ]
 
@@ -28,6 +28,15 @@ academic_title_patterns = [
     path('search/', views.academic_title_search, name='academic_title_search'),
 ]
 
+callings_patterns = [
+    path('', views.callings, name='callings'),
+    path('calling/<int:calling_id>/', views.single_calling, name='single_calling'),
+    path('calling/add', views.calling_add, name="calling_add"),
+    path('calling/update/<int:calling_id>/', views.calling_update, name='calling_update'),
+    path('calling/delete/<int:calling_id>/', views.calling_delete, name='calling_delete'),
+    path('search/', views.calling_search, name='calling_search'),
+]
+
 professors_patterns = [
     path('', views.professors, name='professors'),
     path('professor/<int:professor_id>/', views.professor, name='professor'),
@@ -43,4 +52,5 @@ urlpatterns = [
     path('work_statuses/', include(work_statuses_patterns)),
     path('academic_titles/', include(academic_title_patterns)),
     path('engagements/', include(engagements_patterns)),
+    path('callings/', include(callings_patterns)),
 ]
