@@ -6,8 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 
 class TimeModelMixin(models.Model):
     """Mixin that handles model activity dates"""
-    creation_date = models.DateTimeField(verbose_name=_("datum kreiranja"), auto_now_add=True)
-    modification_date = models.DateTimeField(verbose_name=_("datum izmjene"), auto_now=True)
+    creation_date = models.DateTimeField(verbose_name=_("creation date"), auto_now_add=True)
+    modification_date = models.DateTimeField(verbose_name=_("modification date"), auto_now=True)
     #deactivation_date = models.DateTimeField(verbose_name=_("datum deaktivacije"), blank=True, null=True)
 
     class Meta:

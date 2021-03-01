@@ -18,10 +18,10 @@ class Faculty(models.Model):
 
 
 class StudyCycle(models.Model):
-    name = models.CharField(_('study cycle'), max_length=70, unique=True)
+    number = models.IntegerField(_('number'), unique=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.number}'
 
     class Meta:
         verbose_name = _("study cycle")
@@ -55,10 +55,10 @@ class StudyProgram(models.Model):
 
 
 class Semester(models.Model):
-    name = models.CharField(_('semester'), max_length=100, unique=True)
+    number = models.IntegerField(_('number'), blank=True, null=True, unique=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.number}'
 
     class Meta:
         verbose_name = _("semester")
@@ -66,19 +66,20 @@ class Semester(models.Model):
 
 
 class Subject(TimeModelMixin):
-    code = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    code = models.CharField(_("code"), max_length=20, unique=True, blank=True, null=True)
     name = models.CharField(_('subject'), max_length=120, unique=True)
-    semester = models.ManyToManyField(Semester)
-    ects = models.IntegerField(_("ects"), blank=False, null=False)
+    ects = models.IntegerField(_("ects"))
     active = models.BooleanField(_("active"), default=True)
     subject_type = models.ForeignKey(SubjectType, null=True, on_delete=SET_NULL, verbose_name=_("subject type"))
-    study_program = models.ManyToManyField(StudyProgram)
+    faculty = models.ForeignKey(Faculty, null=True, on_delete=SET_NULL, verbose_name=_("faculty"))
+    semester = models.ManyToManyField(Semester, related_name="subjects", related_query_name="subject")
+    study_program = models.ManyToManyField(StudyProgram, related_name="subjects", related_query_name="subject")
 
     def __str__(self):
         return f'{self.name}'
 
     def semesters(self):
-        return ",\n".join([str(s.id) for s in self.semester.all()])
+        return ",\n".join([str(s.number) for s in self.semester.all()])
     semesters.short_description = _("semesters")
 
     def study_programs(self):
