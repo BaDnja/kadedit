@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  Profesori {% endblock %}
+
+{% block content %}
+        <h1 class="title">Profesori</h1>
+        <form class="search-box" action="{% url 'professor_search' %}" method='POST'>
+            {% csrf_token %}
+            <input type="text" name="Name" class="search-box-input" placeholder="Pretraga...">
+            <input class="btn btn-search" type="submit" value="Pretraga">
+            {% if perms.professors.add_professor %}
+            <a href="{% url 'professor_add' %}" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>
+            {% endif %}
+        </form>
+
+        <!-- List box with professors / subjects with options -->
+        {% include 'partials/_alerts.html' %}
+        <div class="seperator">&nbsp;</div>
+            <div class="card">
+            {% if obj_list %}
+                {% for obj in obj_list %}
+                        <a class="card-item" {% if perms.professors.view_professor %} href="{% url 'professor' obj.id %}" {% endif %}>
+                            <!-- <a >{{ obj.id }}</a> -->
+                            <h1 class="card-item-title"><span class="card-item-title-name">{{ obj }}</span></h1>
+                            <p class="card-item-desc card-item-calling">{{ obj.academic_title|default_if_none:'' }}</p>
+                            <p class="card-item-desc card-item-engagement">{{ obj.calling|default_if_none:'' }}</p>
+                        </a>
+                {% endfor %}
+            {% else %}
+                <h1>Nema dodanih profesora</h1>
+            {% endif %}
+            </div>
+
+            {% include 'partials/pagination.html' %}
+{% endblock %}

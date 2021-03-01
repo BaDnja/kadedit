@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %} 
+    <h1 class="title">Radni statusi</h1>
+    {% include "partials/_alerts.html" %}
+    <form class="form-group u-w-50" action="{% url 'work_status_add' %}" method="POST">
+        {% csrf_token %}
+        <h1 class="form-group-title">Dodavanje novog radnog statusa</h1>
+        <div class="form-group-input-row">
+            <div class="form-group-input-group">
+                <label class="form-group-label" for="Name">Naziv</label>
+                <input class="form-group-input" id="Name" name="Name" type="text" required />
+            </div>
+        </div>
+        <div class="form-group-btn-group">
+            <input class="btn form-group-btn-save" type="submit" value="Dodaj">
+        </div>
+    </form>
+{% endblock %}

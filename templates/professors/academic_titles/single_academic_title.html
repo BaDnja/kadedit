@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} {% if object %} {{ object.name|capfirst }} {% else %} Akademska titula {% endif %} {% endblock %}
+{% block content %}
+    <h1 class="title">Akademske titule</h1>
+    <div class="form-group u-w-50">
+        <h1 class="form-group-title">Ažuriranje akademske titule</h1>
+        {% include 'partials/_alerts.html' %}
+        <form action="{% url 'academic_title_update' object.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group-input-row">
+                <div class="form-group-input-group">
+                    <label for="ime" class="form-group-label" name="Name">Naziv</label>
+                    <input type="text" name="Name" id="ime" value="{{ object.name }}" class="form-group-input" required>
+                </div>
+            </div>
+            <div class="form-group-btn-group">
+            {% if perms.professors.change_academictitle %}
+                <input type="submit" class="btn form-group-btn-save" value="Sačuvaj promjene"/>
+            {% endif %}
+        </form>
+        {% if perms.professors.delete_academictitle %}
+            <form class="form-delete" action="{% url 'academic_title_delete' object.id %}" method='POST'>
+                {% csrf_token %}
+                <input type="submit" class="btn form-group-btn-delete" value="Obriši"/>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

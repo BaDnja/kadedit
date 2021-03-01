@@ -20,7 +20,7 @@ class SubjectTypeAdmin(admin.ModelAdmin):
 @admin.register(StudyProgram)
 class StudyProgramAdmin(admin.ModelAdmin):
     list_display = ("name", "short", "study_cycle", "faculty")
-    list_filter = ("name", "faculty")
+    list_filter = ("faculty",)
     search_fields = ("name", "short", "faculty__short")
     list_editable = ("faculty",)
     list_per_page = 25
@@ -28,9 +28,9 @@ class StudyProgramAdmin(admin.ModelAdmin):
 
 @admin.register(Semester)
 class SemesterAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("number",)
 
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "ects", "subject_type", "semesters", "study_programs")
+    list_display = ("name", "faculty", "ects", "subject_type", "semesters", "study_programs")

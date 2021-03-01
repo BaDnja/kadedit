@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Radni statusi {% endblock %}
+
+{% block content %}
+<h1 class="title">Radni statusi</h1>
+<form class="search-box" action="{% url 'work_status_search' %}" method='POST'>
+    {% csrf_token %}
+    <input class="search-box-input" type="text" name="Name" placeholder="Pretraga...">
+    <input type="submit" value="Pretraga" class="btn btn-search">
+    {% if perms.professors.add_workstatus %}
+    <a href="{% url 'work_status_add' %}" class="btn btn-add" id="btn-add-new-professor">Dodaj</a>   
+    {% endif %}
+</form>
+{% include 'partials/_alerts.html' %}
+{% if obj_list %}
+<div class="card">
+    {% for obj in obj_list %}
+        <a class="card-item" {% if perms.professors.view_workstatus %} href="{% url 'single_work_status' obj.id %}" {% endif %}>
+            <h1 class="card-item-title"><span class="card-item-title-name">{{ obj.name }}</span></h1>
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+{% include 'partials/pagination.html' %}
+{% endblock %}

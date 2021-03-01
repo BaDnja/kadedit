@@ -1,15 +1,20 @@
 .login {
-  background: linear-gradient(to bottom right,var(--color-gradient-1), var(--color-gradient-2));
+  background: linear-gradient(
+    to bottom right,
+    var(--color-blue-dark),
+    var(--color-blue-light)
+  );
   height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+
 .login-form {
   background-color: var(--color-white);
-  width: 40%;
-  height: 65%;
+  width: 75rem;
+  height: 60rem;
   border-radius: 1rem;
   box-shadow: 0 3px 6px var(--color-shadow);
   display: flex;
@@ -39,18 +44,18 @@
   font-size: 2rem;
   font-style: italic;
   outline: none;
-  border: .1px solid var(--color-gray-light);
   color: var(--color-gray-dark);
+  transition: 0.5s ease;
 }
 .login-text:focus {
-  box-shadow: 0 3px 6px var(--color-shadow);
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
+  box-shadow: 0 3px 1.5rem rgba(0, 0, 0, 0.4);
 }
 .login-form-password {
   margin-top: 5rem;
 }
 .login-text::placeholder {
-  color:var(--color-gray-dark);
+  color: var(--color-gray-dark);
 }
 .login-form-submit-btn {
   width: 83%;
@@ -63,10 +68,9 @@
   font-weight: bold;
   font-size: 2.5rem;
   outline: none;
-  transition: .3s ease;
+  transition: 0.5s ease;
 }
 .login-form-submit-btn:hover {
   cursor: pointer;
   background-color: var(--color-blue-light);
 }
-

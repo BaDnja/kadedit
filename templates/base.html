@@ -2,26 +2,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Kadrovska Evidencija {% block title %} {% endblock %}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <title>Kadrovska evidencija | {% block title %} {% endblock %}</title>
 </head>
 <body id="dashboard">
     <nav class="navbar">
         <h1 class="navbar-title" name="Ime i prezime">{{ request.user.get_full_name }}</h1>
-        {% if request.user.groups %}
-            <h3 class="navbar-subtitle" name="Uloga">{{ request.user.groups.all.0 }}</h3>
-        {% endif %}
+        <h3 class="navbar-subtitle" name="Uloga">{{ request.user.groups.all.0 }}</h3>
         <div class="navbar-navigation">
-            <a href="{% url 'professors' %}" class="navbar-navigation-item">PROFESORI</a>
-            <a href="{% url 'subjects' %}" class="navbar-navigation-item">PREDMETI</a>
+            <a href="{% url 'professors' %}" class="navbar-navigation-item {% if request.path == '/professors/' %} navbar-navigation-item-active {% endif %}">PROFESORI</a>
+            <a href="{% url 'callings' %}" class="navbar-navigation-item navbar-navigation-subitem {% if 'callings' in request.path %} navbar-navigation-item-active {% endif %}">ZVANJA</a>
+            <a href="{% url 'work_statuses' %}" class="navbar-navigation-item navbar-navigation-subitem {% if 'work-statuses' in request.path %} navbar-navigation-item-active {% endif %}">RADNI STATUSI</a>
+            <a href="{% url 'academic_titles' %}" class="navbar-navigation-item navbar-navigation-subitem {% if 'academic_titles' in request.path %} navbar-navigation-item-active {% endif %}">AKADEMSKE TITULE</a>
             <a href="{% url 'user_logout' %}" class="navbar-navigation-item">ODJAVA</a>
         </div>
     </nav>
+    <main class="main">
     {% block content %}
 
     {% endblock %}
+    </main>
+    <script src="{% static 'js/formValidate.js' %}"></script>
 </body>
 </html>

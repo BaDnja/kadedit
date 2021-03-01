@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} Akademske titule {% endblock %}
+{% block content %}
+        <h1 class="title">Akademske titule</h1>
+        {% include "partials/_alerts.html" %}
+        <form class="form-group u-w-50" action="{% url 'academic_title_add' %}" method="POST">
+            {% csrf_token %}
+            <h1 class="form-group-title">Dodavanje nove akademske titule</h1>
+            <div class="form-group-input-row">
+                <div class="form-group-input-group">
+                    <label for="ime" class="form-group-label" name="Name">Naziv</label>
+                    <input type="text" name="Name" id="ime" class="form-group-input" required>
+                </div>
+            </div>
+            <div class="form-group-btn-group">
+                <input type="submit" value="Sačuvaj" class="btn form-group-btn-save"/>
+            </div>
+        </form>
+{% endblock %}

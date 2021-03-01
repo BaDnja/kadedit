@@ -1,43 +1,249 @@
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from . import models
 
 
+@login_required
+def view_multiple_objects(request, queryset, template):
+    """Handle getting and displaying multiple objects"""
+    query = queryset
+
+    paginator = Paginator(query, 15)
+    page = request.GET.get('page')
+
+    try:
+        paged_query = paginator.get_page(page)
+    except PageNotAnInteger:
+        paged_query = paginator.page(1)
+    except EmptyPage:
+        paged_query = paginator.page(paginator.num_pages)
+
+    context = {
+        'obj_list': paged_query,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def view_single_object(request, query, template):
+    """Handle getting single object page"""
+    obj = query
+    context = {
+        'object': obj,
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def add_single_object(request, model, template, error_redirect, success_redirect):
+    """
+    Function adds new object to a database with only one field: name.
+    Handles adding new object to database while checking if the user is authenticated.
+    Function also checks if there already exists object with the same name.
+
+    query: checks if the particular object already exists.
+    model: which model gets checked of form submit.
+    template: returns template for rendering.
+    error_redirect: redirects to error view if object exists.
+    success_redirect: redirects to success view after saving new object.
+    """
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        if model.objects.filter(name=name).exists():
+            messages.error(request, "Objekat već postoji")
+            return redirect(error_redirect)
+        else:
+            new_object = model(name=name)
+            new_object.save()
+            messages.success(request, "Objekat uspješno dodan")
+            return redirect(success_redirect)
+    return render(request, template)
+
+
+@login_required
+def update_single_object(request, object_to_update, object_id, success_redirect):
+    """
+    Updating single object checks if user is logged in,
+    and function that calls this one, checks is user has permission to update object by it's id.
+    If request user doesn't have permission to update object, system redirects user to all objects of that view and shows
+    corresponding message.
+    """
+    obj = object_to_update
+    if request.method == 'POST':
+        obj.name = request.POST.get("Name")
+        obj.save()
+        messages.success(request, "Uspješna izmjena")
+        return redirect(success_redirect, object_id)
+
+
+@login_required
+def delete_single_object(request, object_to_update, success_redirect):
+    """
+    Deleting single object checks if request user has permission to delete, and if not, system redirects user 403 page
+    """
+    obj = object_to_update
+    if request.method == 'POST':
+        obj.delete()
+        messages.success(request, "Objekat uspješno obrisan")
+        return redirect(success_redirect)
+
+
+@login_required
+def single_field_object_search(request, search_object, template):
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        obj = search_object.objects.filter(name__icontains=name)
+
+        context = {
+            'obj_list': obj,
+        }
+
+        return render(request, template, context)
+
+
 def professors(request):
     """Handle getting main page for professors"""
-    if request.user.is_authenticated:
-        all_professors = models.Professor.objects.filter(active=True).order_by('-id')
-
-        paginator = Paginator(all_professors, 15)
-        page = request.GET.get('page')
-
-        try:
-            paged_professors = paginator.get_page(page)
-        except PageNotAnInteger:
-            paged_professors = paginator.page(1)
-        except EmptyPage:
-            paged_professors = paginator.page(paginator.num_pages)
-
-        context = {
-            'obj_list': paged_professors,
-        }
-        return render(request, 'professors/dashboard-professors.html', context)
-    else:
-        return redirect('user_login')
+    queryset = models.Professor.objects.filter(active=True).order_by('-id')
+    template = 'professors/professors/dashboard-professors.html'
+    return view_multiple_objects(request, queryset, template)
 
 
+@login_required
+@permission_required('professors.view_professor', raise_exception=True)
 def professor(request, professor_id):
     """Handle getting single page for professor"""
-    if request.user.is_authenticated:
+    obj = get_object_or_404(models.Professor, pk=professor_id)
+    statuses_queryset = models.WorkStatus.objects.all().order_by('-id')
+    callings_queryset = models.Calling.objects.all().order_by('-id')
+    titles_queryset = models.AcademicTitle.objects.all().order_by('-id')
+
+    context = {
+        'object': obj,
+        'statuses': statuses_queryset,
+        'callings': callings_queryset,
+        'academictitles': titles_queryset,
+    }
+    return render(request, 'professors/professors/professor.html', context)
+
+
+@login_required
+@permission_required('professors.add_professor', raise_exception=True)
+def professor_add(request):
+    """Handle adding new professor to database"""
+    if request.method == 'POST':
+        # Get data of the form submit
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
+        dissertation = request.POST['dissertation']
+        workstatus = None if request.POST.get('workstatus') == '' else request.POST['workstatus']
+        engagement = None if request.POST.get('calling') == '' else request.POST['calling']
+        academictitle = None if request.POST.get('academictitle') == '' else request.POST['academictitle']
+
+        prof = models.Professor(first_name=first_name.capitalize(),
+                                last_name=last_name.capitalize(),
+                                birthdate=birthdate,
+                                dissertation=dissertation.capitalize(), )
+        prof.save()
+
+        if workstatus:
+            prof = models.Professor(
+                work_status=models.WorkStatus.objects.get(id=workstatus)
+            )
+        if engagement:
+            prof = models.Professor(
+                engagement=models.Engagement.objects.get(id=engagement)
+            )
+        if academictitle:
+            prof = models.Professor(
+                academic_title=models.AcademicTitle.objects.get(id=academictitle)
+            )
+
+        prof.save()
+        messages.success(request, 'Objekat uspješno dodan')
+        return redirect('professors')
+
+    # Get statuses, engagements and titles for drop down menus
+    # Add context to html and display page to user
+    statuses_queryset = models.WorkStatus.objects.all().order_by('id')
+    callings_queryset = models.Calling.objects.all().order_by('id')
+    academictitles_queryset = models.AcademicTitle.objects.all().order_by('id')
+
+    context = {
+        'statuses': statuses_queryset,
+        'callings': callings_queryset,
+        'academictitles': academictitles_queryset,
+    }
+
+    return render(request, 'professors/professors/professor_add.html', context)
+
+
+@login_required
+@permission_required('professors.change_professor', raise_exception=True)
+def professor_update(request, professor_id):
+    if request.method == 'POST':
         prof = get_object_or_404(models.Professor, pk=professor_id)
+        # Get data of the form submit
+        prof.first_name = request.POST['first_name']
+        prof.last_name = request.POST['last_name']
+        prof.birthdate = None if request.POST.get('birthdate') == '' else request.POST['birthdate']
+        prof.dissertation = request.POST['dissertation']
+        prof.work_status = None if request.POST.get('workstatus') == '' \
+            else models.WorkStatus.objects.get(id=request.POST['workstatus'])
+        prof.calling = None if request.POST.get('calling') == '' \
+            else models.Calling.objects.get(id=request.POST['calling'])
+        prof.academic_title = None if request.POST.get('academictitle') == '' \
+            else models.AcademicTitle.objects.get(id=request.POST['academictitle'])
+
+        prof.save()
+        messages.success(request, "Uspješna izmjena")
+
+        return redirect('professor', professor_id)
+
+
+@login_required
+@permission_required('professors.delete_professor', raise_exception=True)
+def professor_delete(request, professor_id):
+    prof = get_object_or_404(models.Professor, pk=professor_id)
+    if request.method == 'POST':
+        if request.user.is_superuser:
+            prof.delete()
+            messages.success(request, "Objekat uspješno obrisan")
+            return redirect('professors')
+        else:
+            messages.error(request, "Niste ovlašteni za brisanje")
+            return redirect('professors')
+
+
+@login_required
+@permission_required('professors.change_professor', raise_exception=True)
+def professor_deactivate(request, professor_id):
+    prof = get_object_or_404(models.Professor, pk=professor_id)
+    if request.method == 'POST':
+        prof.active = False
+        prof.save()
+        messages.success(request, "Objekat uspješno deaktiviran")
+        return redirect('professors')
+
+
+@login_required
+def professor_search(request):
+    if request.method == 'POST':
+        name = request.POST['Name']
+
+        profs = models.Professor.objects.filter(first_name__icontains=name).filter(active=True) or \
+                models.Professor.objects.filter(last_name__icontains=name).filter(active=True)
+
         context = {
-            'professor': prof
+            'obj_list': profs,
         }
 
-        return render(request, 'professors/professor.html', context)
-    else:
-        return redirect('user_login')
+        return render(request, 'professors/professors/dashboard-professors.html', context)
 
 
 def work_statuses(request):
@@ -46,106 +252,205 @@ def work_statuses(request):
     Function check if request user is authenticated. If not, it redirects the user to the login page.
     If user is authenticated, it creates pagination and lists all work statuses for that pagination page.
     """
-    if request.user.is_authenticated:
-        all_work_statuses = models.WorkStatus.objects.all().order_by('id')
-
-        paginator = Paginator(all_work_statuses, 10)
-        page = request.GET.get('page')
-
-        try:
-            paged_statuses = paginator.get_page(page)
-        except PageNotAnInteger:
-            paged_statuses = paginator.page(1)
-        except EmptyPage:
-            paged_statuses = paginator.page(paginator.num_pages)
-
-        context = {
-            'statuses': paged_statuses,
-        }
-
-        return render(request, 'professors/work_statuses.html', context)
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    queryset = models.WorkStatus.objects.all().order_by('id')
+    template = 'professors/work_statuses/work_statuses.html'
+    return view_multiple_objects(request, queryset, template)
 
 
+@permission_required('professors.view_workstatus', raise_exception=True)
 def single_work_status(request, status_id):
     """
     Handles listing single work status for given status id.
     Function checks if user is authenticated and has permission to view status. If user is not authenticated
     or doesn't have permission to view status, system redirects request user to other pages with corresponding messages.
     """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.view_workstatus"):
-            status = get_object_or_404(models.WorkStatus, pk=status_id)
-            context = {
-                'status': status,
-            }
-            return render(request, 'professors/single_work_status.html', context)
-        else:
-            messages.error(request, "Niste ovlašteni za pregled radnog statusa")
-            return redirect('work_statuses')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    obj = get_object_or_404(models.WorkStatus, pk=status_id)
+    template = 'professors/work_statuses/single_work_status.html'
+    return view_single_object(request, obj, template)
 
 
+@permission_required('professors.add_workstatus', raise_exception=True)
 def work_status_add(request):
-    """
-    Handles adding status to database while checking if the user is authenticated and has permission to add work status.
-    Function also checks if there already exists work status by the same name.
-    """
-    if request.user.is_authenticated:
-        if request.user.has_perm("professors.add_workstatus"):
-            if request.method == 'POST':
-                name = request.POST['Name']
-
-                if models.WorkStatus.objects.filter(name=name).exists():
-                    messages.error(request, "Status već postoji")
-                    return redirect('work_status_add')
-                else:
-                    status = models.WorkStatus(name=name)
-                    status.save()
-                    messages.success(request, "Uspješno dodan status")
-                    return redirect('work_statuses')
-            return render(request, 'professors/work_status_add.html')
-        else:
-            messages.error(request, "Nemate ovlaštenje za dodavanje radnog statusa")
-            return redirect('work_statuses')
-    else:
-        messages.error(request, "Prijavite se na sistem")
-        return redirect('user_login')
+    model = models.WorkStatus
+    template = 'professors/work_statuses/work_status_add.html'
+    err_redirect = 'work_status_add'
+    succ_redirect = 'work_statuses'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
 
 
+@permission_required('professors.change_workstatus', raise_exception=True)
 def work_status_update(request, status_id):
-    """
-    Updating work status only checks if user has permission to update status by it's id.
-    If request user doesn't have permission to update status, system redirects user to all statuses and shows
-    corresponding message.
-    """
-    status = get_object_or_404(models.WorkStatus, pk=status_id)
-    if request.user.has_perm("professors.change_workstatus"):
-        if request.method == 'POST':
-            status.name = request.POST.get("Name")
-            status.save()
-            messages.success(request, "Uspješna izmjena")
-            return redirect('single_work_status', status_id=status_id)
-    else:
-        messages.error(request, "Nemate ovlaštenje za izmjenu radnog statusa")
-        return redirect("work_statuses")
+    obj = get_object_or_404(models.WorkStatus, pk=status_id)
+    obj_id = status_id
+    succ_redirect = 'single_work_status'
+    return update_single_object(request, obj, obj_id, succ_redirect)
 
 
+@permission_required('professors.delete_workstatus', raise_exception=True)
 def work_status_delete(request, status_id):
+    obj = get_object_or_404(models.WorkStatus, pk=status_id)
+    succ_redirect = 'work_statuses'
+    return delete_single_object(request, obj, succ_redirect)
+
+
+def work_status_search(request):
+    obj = models.WorkStatus
+    template = 'professors/work_statuses/work_statuses.html'
+    return single_field_object_search(request, obj, template)
+
+
+def academic_titles(request):
     """
-    Deleting work status checks if request user has permission to delete, and if not, system redirects user to
-    page for viewing that status and shows corresponding message.
+    Handle getting all academic titles objects with pagination.
+    If user is not authenticated, system redirects to login page with corresponding message.
     """
-    status = get_object_or_404(models.WorkStatus, pk=status_id)
-    if request.user.has_perm("professors.delete_workstatus"):
-        if request.method == 'POST':
-            status.delete()
-            messages.success(request, "Uspješno obrisan status")
-            return redirect('work_statuses')
-    else:
-        messages.error(request, "Nemate ovlaštenje za brisanje radnog statusa")
-        return redirect('single_work_status', status_id=status_id)
+    queryset = models.AcademicTitle.objects.all().order_by('id')
+    template = 'professors/academic_titles/academic_titles.html'
+    return view_multiple_objects(request, queryset, template)
+
+
+@permission_required('professors.view_academictitle', raise_exception=True)
+def single_academic_title(request, title_id):
+    """
+    Handles listing single academic title for given title id.
+    Function checks if user is authenticated and has permission to view title. If user is not authenticated
+    or doesn't have permission to view title, system redirects request user to other pages with corresponding messages.
+    """
+    obj = get_object_or_404(models.AcademicTitle, pk=title_id)
+    template = 'professors/academic_titles/single_academic_title.html'
+    return view_single_object(request, obj, template)
+
+
+@permission_required('professors.add_academictitle', raise_exception=True)
+def academic_title_add(request):
+    model = models.AcademicTitle
+    template = 'professors/academic_titles/academic_title_add.html'
+    err_redirect = 'academic_title_add'
+    succ_redirect = 'academic_titles'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
+
+
+@permission_required('professors.change_academictitle', raise_exception=True)
+def academic_title_update(request, title_id):
+    obj = get_object_or_404(models.AcademicTitle, pk=title_id)
+    object_id = title_id
+    succ_redirect = 'single_academic_title'
+    return update_single_object(request, obj, object_id, succ_redirect)
+
+
+@permission_required('professors.delete_academictitle', raise_exception=True)
+def academic_title_delete(request, title_id):
+    obj = get_object_or_404(models.AcademicTitle, pk=title_id)
+    succ_redirect = 'academic_titles'
+    return delete_single_object(request, obj, succ_redirect)
+
+
+def academic_title_search(request):
+    obj = models.AcademicTitle
+    template = 'professors/academic_titles/academic_titles.html'
+    return single_field_object_search(request, obj, template)
+
+
+def callings(request):
+    """
+    Handle getting all callings objects with pagination.
+    If user is not authenticated, system redirects to login page with corresponding message.
+    """
+    queryset = models.Calling.objects.all().order_by('id')
+    template = 'professors/callings/callings.html'
+    return view_multiple_objects(request, queryset, template)
+
+
+@permission_required('professors.view_calling', raise_exception=True)
+def single_calling(request, calling_id):
+    """
+    Handles listing single calling for given title id.
+    Function checks if user is authenticated and has permission to view calling. If user is not authenticated
+    or doesn't have permission to view calling, system redirects request user to other pages with corresponding messages.
+    """
+    obj = get_object_or_404(models.Calling, pk=calling_id)
+    template = 'professors/callings/single_calling.html'
+    return view_single_object(request, obj, template)
+
+
+@permission_required('professors.add_calling', raise_exception=True)
+def calling_add(request):
+    model = models.Calling
+    template = 'professors/callings/calling_add.html'
+    err_redirect = 'calling_add'
+    succ_redirect = 'callings'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
+
+
+@permission_required('professors.change_calling', raise_exception=True)
+def calling_update(request, calling_id):
+    obj = get_object_or_404(models.Calling, pk=calling_id)
+    object_id = calling_id
+    succ_redirect = 'single_calling'
+    return update_single_object(request, obj, object_id, succ_redirect)
+
+
+@permission_required('professors.delete_calling', raise_exception=True)
+def calling_delete(request, calling_id):
+    obj = get_object_or_404(models.Calling, pk=calling_id)
+    succ_redirect = 'callings'
+    return delete_single_object(request, obj, succ_redirect)
+
+
+def calling_search(request):
+    obj = models.Calling
+    template = 'professors/callings/callings.html'
+    return single_field_object_search(request, obj, template)
+
+
+def engagements(request):
+    """
+    Handle getting all engagements objects with pagination.
+    If user is not authenticated, system redirects to login page with corresponding message.
+    """
+    queryset = models.Engagement.objects.all().order_by('id')
+    template = 'professors/engagements/engagements.html'
+    return view_multiple_objects(request, queryset, template)
+
+
+@permission_required('professors.view_engagement', raise_exception=True)
+def single_engagement(request, engagement_id):
+    """
+    Handles listing single calling for given title id.
+    Function checks if user is authenticated and has permission to view calling. If user is not authenticated
+    or doesn't have permission to view, system redirects request user to other pages with corresponding messages.
+    """
+    obj = get_object_or_404(models.Engagement, pk=engagement_id)
+    template = 'professors/engagements/single_engagement.html'
+    return view_single_object(request, obj, template)
+
+
+@permission_required('professors.add_engagement', raise_exception=True)
+def engagement_add(request):
+    model = models.Engagement
+    template = 'professors/engagements/engagement_add.html'
+    err_redirect = 'engagement_add'
+    succ_redirect = 'engagements'
+    return add_single_object(request, model, template, err_redirect, succ_redirect)
+
+
+@permission_required('professors.change_engagement', raise_exception=True)
+def engagement_update(request, engagement_id):
+    obj = get_object_or_404(models.Engagement, pk=engagement_id)
+    object_id = engagement_id
+    succ_redirect = 'single_engagement'
+    return update_single_object(request, obj, object_id, succ_redirect)
+
+
+@permission_required('professors.delete_engagement', raise_exception=True)
+def engagement_delete(request, engagement_id):
+    obj = get_object_or_404(models.Engagement, pk=engagement_id)
+    succ_redirect = 'engagements'
+    return delete_single_object(request, obj, succ_redirect)
+
+
+@login_required
+def engagement_search(request):
+    obj = models.Engagement
+    template = 'professors/engagements/engagements.html'
+    return single_field_object_search(request, obj, template)
